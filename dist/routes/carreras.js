@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const carrera_1 = require("../controller/carrera");
+const verify_token_1 = require("../middleware/verify_token");
+const router = (0, express_1.Router)();
+router.post("/", verify_token_1.autorizar, carrera_1.crearCarrera);
+router.delete("/:clave", verify_token_1.autorizar, carrera_1.borrarCarrera);
+router.get("/", carrera_1.obtenerTCarreras);
+router.get("/:clave", carrera_1.obtenerCarreraClave);
+router.put("/:clave", verify_token_1.autorizar, carrera_1.actualizarCarrera);
+exports.default = router;

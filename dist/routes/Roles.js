@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const roles_1 = require("../controller/roles");
+const verify_token_1 = require("../middleware/verify_token");
+const router = (0, express_1.Router)();
+router.post("/", verify_token_1.autorizar, roles_1.crearRol);
+router.delete("/:id", verify_token_1.autorizar, roles_1.borrarRol);
+router.get("/", verify_token_1.autorizar, roles_1.obtenerTRoles);
+router.put("/:id", verify_token_1.autorizar, roles_1.actualizarRol);
+exports.default = router;
