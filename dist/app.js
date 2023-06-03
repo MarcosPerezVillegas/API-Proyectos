@@ -9,6 +9,8 @@ const usuarios_1 = __importDefault(require("./routes/usuarios"));
 const auth_1 = __importDefault(require("./routes/auth"));
 const carreras_1 = __importDefault(require("./routes/carreras"));
 const proyectos_1 = __importDefault(require("./routes/proyectos"));
+const documentos_1 = __importDefault(require("./routes/documentos"));
+const tareas_1 = __importDefault(require("./routes/tareas"));
 const config_1 = __importDefault(require("./db/config"));
 const body_parser_1 = require("body-parser");
 const app = (0, express_1.default)();
@@ -19,6 +21,8 @@ app.use("/Usuarios", usuarios_1.default);
 app.use("/Login", auth_1.default);
 app.use("/Carreras", carreras_1.default);
 app.use("/Proyectos", proyectos_1.default);
+app.use("/Documentos", documentos_1.default);
+app.use("/Tareas", tareas_1.default);
 app.use((err, req, res, next) => {
     res.status(500).json({ messege: err.message });
 });

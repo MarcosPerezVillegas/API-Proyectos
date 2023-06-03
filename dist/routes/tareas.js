@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const tareas_1 = require("../controller/tareas");
+const verify_token_1 = require("../middleware/verify_token");
+const router = (0, express_1.Router)();
+router.post("/", verify_token_1.autorizar, tareas_1.adddoc);
+router.delete("/:id", verify_token_1.autorizar, tareas_1.dropdoc);
+router.get("/", tareas_1.obtdoc);
+exports.default = router;
