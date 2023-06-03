@@ -3,15 +3,15 @@ import { Proyecto } from "./proyectos";
 
 @Table({
     timestamps: false,
-    tableName: "status"
+    tableName: "Status"
 })
 export class Status extends Model{
     @Column({
-        type: DataType.TINYINT,
+        type: DataType.STRING,
         primaryKey: true,
         allowNull:false
     })
-    Estado!:boolean
+    Estado!:string
 
     @Column({
         type: DataType.INTEGER,

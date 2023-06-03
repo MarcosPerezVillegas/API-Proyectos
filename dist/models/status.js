@@ -6,49 +6,31 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.documentos = void 0;
+exports.Status = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
 const proyectos_1 = require("./proyectos");
-let documentos = class documentos extends sequelize_typescript_1.Model {
+let Status = class Status extends sequelize_typescript_1.Model {
 };
 __decorate([
     (0, sequelize_typescript_1.Column)({
-        type: sequelize_typescript_1.DataType.INTEGER,
-        allowNull: false,
-        primaryKey: true
-    })
-], documentos.prototype, "id", void 0);
-__decorate([
-    (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.STRING,
-        allowNull: true
+        primaryKey: true,
+        allowNull: false
     })
-], documentos.prototype, "nombre", void 0);
-__decorate([
-    (0, sequelize_typescript_1.Column)({
-        type: sequelize_typescript_1.DataType.STRING,
-        allowNull: true
-    })
-], documentos.prototype, "descripcion", void 0);
-__decorate([
-    (0, sequelize_typescript_1.Column)({
-        type: sequelize_typescript_1.DataType.STRING,
-        allowNull: true
-    })
-], documentos.prototype, "tipo_archivo", void 0);
+], Status.prototype, "Estado", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.INTEGER,
         allowNull: false
     })
-], documentos.prototype, "Proyecto_id", void 0);
+], Status.prototype, "Proyecto_id", void 0);
 __decorate([
     (0, sequelize_typescript_1.BelongsTo)(() => proyectos_1.Proyecto, "Proyecto_id")
-], documentos.prototype, "proyecto", void 0);
-documentos = __decorate([
+], Status.prototype, "proyecto", void 0);
+Status = __decorate([
     (0, sequelize_typescript_1.Table)({
         timestamps: false,
-        tableName: "archivos_documentos"
+        tableName: "Status"
     })
-], documentos);
-exports.documentos = documentos;
+], Status);
+exports.Status = Status;
