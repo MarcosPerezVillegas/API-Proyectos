@@ -3,6 +3,7 @@ import { Rol } from "../models/roles";
 import { Usuario } from "../models/usuarios";
 import { Carrera } from "../models/carrera";
 import { Proyecto } from "../models/proyectos";
+import { documentos } from "../models/documento";
 
 const connection = new Sequelize({
     dialect: "mysql",
@@ -11,7 +12,7 @@ const connection = new Sequelize({
     password: "wasd",
     database: "BancoDeProyectos",
     logging: true,
-    models:[Rol,Usuario,Carrera,Proyecto],
+    models:[Rol,Usuario,Carrera,Proyecto, documentos],
     
     port: 33061
 });
