@@ -10,6 +10,7 @@ exports.Proyecto = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
 const carrera_1 = require("./carrera");
 const usuarios_1 = require("./usuarios");
+const tareas_1 = require("./tareas");
 let Proyecto = class Proyecto extends sequelize_typescript_1.Model {
 };
 __decorate([
@@ -19,6 +20,9 @@ __decorate([
         primaryKey: true,
     })
 ], Proyecto.prototype, "id", void 0);
+__decorate([
+    (0, sequelize_typescript_1.HasMany)(() => tareas_1.Tarea, "Proyecto_id")
+], Proyecto.prototype, "tareas", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.STRING,

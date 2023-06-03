@@ -85,7 +85,7 @@ const BuscarProyectosCarrera = (req, res) => __awaiter(void 0, void 0, void 0, f
         ],
         attributes: { exclude: ["usuario_codigo", "carrera_clave"] },
     });
-    return res.status(200).json({ message: "Proyecto encontrado", data: proyecto });
+    return res.status(200).json({ message: "Proyectos encontrados", data: proyecto });
 });
 exports.BuscarProyectosCarrera = BuscarProyectosCarrera;
 const actualizarProyecto = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { adddoc, dropdoc, obtdoc } from "../controller/documentos";
+import { adddoc, dropdoc, obtdoc } from "../controller/tareas";
 import { autorizar } from "../middleware/verify_token";
 
 const router = Router();
