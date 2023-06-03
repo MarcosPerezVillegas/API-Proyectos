@@ -5,6 +5,7 @@ import rutaLogin from "./routes/auth"
 import rutaCarreras from "./routes/carreras"
 import rutaProyectos from "./routes/proyectos"
 import rutasDocumentos from "./routes/documentos"
+import rutasStatus from "./routes/status";
 import connection from "./db/config";
 import { json, urlencoded } from "body-parser";
 
@@ -19,6 +20,7 @@ app.use("/Login",rutaLogin);
 app.use("/Carreras",rutaCarreras);
 app.use("/Proyectos",rutaProyectos);
 app.use("/Documenos", rutasDocumentos);
+app.use("/Status", rutasStatus);
 
 app.use(
     (
