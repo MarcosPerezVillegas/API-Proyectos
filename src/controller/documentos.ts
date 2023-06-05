@@ -40,9 +40,9 @@ export const obtdocID:RequestHandler = async (req,res,next) =>{
 
 export const obtuserdoc:RequestHandler = async (req,res,next) =>{
     const userdoc = await Proyecto.findByPk(req.body.Proyecto_id,{
-        include:{model: Proyecto,
-            attributes: {exclude:["password", "email", "celular", "rol_id"]}},
-        attributes: {exclude:["id", "nombrep", "objetivos", "fechainicio", "fechafinal","usuario_codigo","carrera_clave"]}
+        include:{model: Usuario,
+            attributes: {exclude:["password", "email", "telefono", "rol_id"]}},
+        attributes: {exclude:["id", "nombre", "objetivos", "fechainicio", "fechafinal","usuario_codigo","carrera_clave"]}
     });
     return res.status(200).json({message: "Usuarios obtenidos: ", data:userdoc});   
 }
