@@ -17,9 +17,9 @@ const addstat = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
 });
 exports.addstat = addstat;
 const dropstat = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { Proyecto_id } = req.params;
-    const stateliminado = yield status_1.Status.findByPk(Proyecto_id);
-    yield status_1.Status.destroy({ where: { Proyecto_id } });
+    const { proyecto_id } = req.params;
+    const stateliminado = yield status_1.Status.findByPk(proyecto_id);
+    yield status_1.Status.destroy({ where: { proyecto_id } });
     return res.status(200).json({ message: "status eliminado", data: stateliminado });
 });
 exports.dropstat = dropstat;

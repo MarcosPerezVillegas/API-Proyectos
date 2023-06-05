@@ -8,5 +8,6 @@ router.post("/", verify_token_1.autorizar, carrera_1.crearCarrera);
 router.delete("/:clave", verify_token_1.autorizar, carrera_1.borrarCarrera);
 router.get("/", carrera_1.obtenerTCarreras);
 router.get("/:clave", carrera_1.obtenerCarreraClave);
+router.get("/Nombre/:nombre", carrera_1.obtenerCarreraNombre);
 router.put("/:clave", verify_token_1.autorizar, carrera_1.actualizarCarrera);
 exports.default = router;

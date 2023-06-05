@@ -30,7 +30,7 @@ __decorate([
 Status = __decorate([
     (0, sequelize_typescript_1.Table)({
         timestamps: false,
-        tableName: "Status"
+        tableName: "status"
     })
 ], Status);
 exports.Status = Status;

@@ -9,41 +9,74 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.actualizarCarrera = exports.obtenerCarreraClave = exports.obtenerTCarreras = exports.borrarCarrera = exports.crearCarrera = void 0;
+exports.actualizarCarrera = exports.obtenerCarreraNombre = exports.obtenerCarreraClave = exports.obtenerTCarreras = exports.borrarCarrera = exports.crearCarrera = void 0;
 const carrera_1 = require("../models/carrera");
 const proyectos_1 = require("../models/proyectos");
 const crearCarrera = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var carrera = yield carrera_1.Carrera.create(Object.assign({}, req.body));
+    if (!carrera) {
+        return res.status(401).json({ message: "No se pudo crear la tarea" });
+    }
     return res.status(200).json({ message: "Carrera creada ok!", data: carrera });
 });
 exports.crearCarrera = crearCarrera;
 const borrarCarrera = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { clave } = req.params;
     const carreraEliminada = yield carrera_1.Carrera.findByPk(clave);
-    yield carrera_1.Carrera.destroy({ where: { clave } });
-    return res.status(200).json({ messege: "Carrera borrado ok!", data: carreraEliminada });
+    var carrera = yield carrera_1.Carrera.destroy({ where: { clave } });
+    if (!carrera) {
+        return res.status(401).json({ message: "No se pudo eliminar la tarea" });
+    }
+    return res.status(200).json({ messege: "Carrera eliminada ok!", data: carreraEliminada });
 });
 exports.borrarCarrera = borrarCarrera;
 const obtenerTCarreras = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const todosLasCarreras = yield carrera_1.Carrera.findAll({
-        include: proyectos_1.Proyecto
-    });
+    const todosLasCarreras = yield carrera_1.Carrera.findAll();
+    if (!todosLasCarreras) {
+        return res.status(401).json({ message: "No se pudo obtener las carreras" });
+    }
     return res.status(200).json({ message: "Carrera obtenidos ok!", data: todosLasCarreras });
 });
 exports.obtenerTCarreras = obtenerTCarreras;
 const obtenerCarreraClave = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { clave } = req.params;
-    const carreraActualizado = yield carrera_1.Carrera.findByPk(clave);
-    if (!carreraActualizado) {
-        return res.status(401).json({ message: "Carrera no encontrada" });
+    const carreraClave = yield carrera_1.Carrera.findByPk(clave, {
+        include: [
+            {
+                model: proyectos_1.Proyecto,
+                attributes: { exclude: ["usuario_codigo"] },
+            },
+        ],
+    });
+    if (!carreraClave) {
+        return res.status(401).json({ message: "No se pudo encontrar la carrera" });
     }
-    return res.status(200).json({ message: "Carrera encontrada!", data: carreraActualizado });
+    return res.status(200).json({ message: "Carrera encontrada!", data: carreraClave });
 });
 exports.obtenerCarreraClave = obtenerCarreraClave;
+const obtenerCarreraNombre = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { nombre } = req.params;
+    const CarreraNombre = yield carrera_1.Carrera.findOne({ where: { nombre },
+        include: [
+            {
+                model: proyectos_1.Proyecto,
+                attributes: { exclude: ["usuario_codigo"] },
+            },
+        ],
+    });
+    if (!CarreraNombre) {
+        return res.status(401).json({ message: "No se pudo encontrar la carrera" });
+    }
+    return res.status(200).json({ message: "Carrera encontrada!", data: CarreraNombre });
+});
+exports.obtenerCarreraNombre = obtenerCarreraNombre;
 const actualizarCarrera = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { clave } = req.params;
     const carreraActualizada = yield carrera_1.Carrera.findByPk(clave);
     var carrera = yield carrera_1.Carrera.update(Object.assign({}, req.body), { where: { clave } });
+    if (!carrera) {
+        return res.status(401).json({ message: "No se pudo actualizar la carrera" });
+    }
     return res.status(200).json({ message: "Carrera actualizada!", carreraActualizada });
 });
 exports.actualizarCarrera = actualizarCarrera;

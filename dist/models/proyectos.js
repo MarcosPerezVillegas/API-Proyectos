@@ -28,7 +28,7 @@ __decorate([
         type: sequelize_typescript_1.DataType.STRING,
         allowNull: false
     })
-], Proyecto.prototype, "nombrep", void 0);
+], Proyecto.prototype, "nombre", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.STRING,
@@ -68,7 +68,7 @@ __decorate([
 Proyecto = __decorate([
     (0, sequelize_typescript_1.Table)({
         timestamps: false,
-        tableName: "Proyecto",
+        tableName: "proyecto",
     })
 ], Proyecto);
 exports.Proyecto = Proyecto;

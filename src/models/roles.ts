@@ -19,6 +19,6 @@ export class Rol extends Model{
     })
     id!:number
     @HasMany(()=>Usuario,"rol_id")
-    usuario!:Usuario[]
+    usuarios!:Usuario[]
 
 }

@@ -3,7 +3,7 @@ import { Proyecto } from "./proyectos";
 
 @Table({
     timestamps: false,
-    tableName: "Status"
+    tableName: "status"
 })
 export class Status extends Model{
     @Column({

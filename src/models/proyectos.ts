@@ -5,7 +5,7 @@ import { Tarea } from "./tareas";
 
 @Table({
     timestamps: false,
-    tableName: "Proyecto",
+    tableName: "proyecto",
 })
 export class Proyecto extends Model{
     @Column({
@@ -20,7 +20,7 @@ export class Proyecto extends Model{
         type:DataType.STRING,
         allowNull:false
     })
-    nombrep!:string
+    nombre!:string
     @Column({
         type:DataType.STRING,
         allowNull:false

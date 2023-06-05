@@ -26,7 +26,7 @@ __decorate([
 ], Rol.prototype, "id", void 0);
 __decorate([
     (0, sequelize_typescript_1.HasMany)(() => usuarios_1.Usuario, "rol_id")
-], Rol.prototype, "usuario", void 0);
+], Rol.prototype, "usuarios", void 0);
 Rol = __decorate([
     (0, sequelize_typescript_1.Table)({
         timestamps: false,
