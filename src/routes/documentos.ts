@@ -10,6 +10,6 @@ router.get("/", obtdoc);
 router.get("/Usuarios/:id", obtuserdoc);
 router.get("/ID/:id", obtdocID);
 router.get("/Exel", obtexel);
-router.put("/:id", upddoc);
+router.put("/:id", autorizar, upddoc);
 
 export default router;

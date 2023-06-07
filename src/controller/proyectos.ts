@@ -4,9 +4,19 @@ import {Op, STRING} from "sequelize";
 import bcrypt from 'bcrypt';
 import { Usuario } from "../models/usuarios";
 import { Carrera } from "../models/carrera";
+import { addstat } from "../controller/status";
+import {connection} from "../db/config"
 
 export const crearProyecto:RequestHandler =async (req,res) => {
     var proyecto = await Proyecto.create({...req.body});
+    if(!proyecto){
+        return res.status(401).json({ message: "No se pudo crear el proyecto"});
+    }
+    var id = req.body.id
+    var status = await connection.query("INSERT INTO `status`(`proyecto_id`, `estado`) VALUES ('"+id+"','Disponible')")
+    if(!status){
+        return res.status(401).json({ message: "No se pudo asignar un estado al proyecto"});
+    }
     return res.status(200).json({message:"Proyecto creado!", data:proyecto});
 }
 
@@ -14,6 +24,9 @@ export const listarProyectos:RequestHandler =async (req,res) => {
     var proyectos = await Proyecto.findAll({
         attributes: {exclude:["usuario_codigo"]},
     });
+    if(!proyectos){
+        return res.status(401).json({ message: "No se pudo encontrar los proyectos"});
+    }
     return res.status(200).json({message:"Proyectos encontrados: "+proyectos.length, data:proyectos});
 }
 
@@ -29,7 +42,10 @@ export const BuscarProyectoId:RequestHandler =async (req,res) => {
         ],
         attributes: {exclude:["usuario_codigo","carrera_clave"]},
     });
-    return res.status(200).json({message:"Proyecto encontrado por ID",data:proyecto});
+    if(!proyecto){
+        return res.status(401).json({ message: "No se pudo encontrar el proyecto"});
+    }
+    return res.status(200).json({message:"Proyecto encontrado",data:proyecto});
 }
 
 export const BuscarProyectoNombre:RequestHandler =async (req,res) => {
@@ -45,6 +61,9 @@ export const BuscarProyectoNombre:RequestHandler =async (req,res) => {
         ],
         attributes: {exclude:["usuario_codigo","carrera_clave"]},
     });
+    if(!proyecto){
+        return res.status(401).json({ message: "No se pudo encontrar el proyecto"});
+    }
     return res.status(200).json({message:"Proyecto encontrado",data:proyecto});
 }
 
@@ -61,6 +80,9 @@ export const BuscarProyectoUsuario:RequestHandler =async (req,res) => {
         ],
         attributes: {exclude:["usuario_codigo","carrera_clave"]},
     });
+    if(!proyecto){
+        return res.status(401).json({ message: "No se pudo encontrar el proyecto"});
+    }
     return res.status(200).json({message:"Proyecto encontrado",data:proyecto});
 }
 
@@ -77,6 +99,9 @@ export const BuscarProyectosCarrera:RequestHandler =async (req,res) => {
         ],
         attributes: {exclude:["usuario_codigo","carrera_clave"]},
     });
+    if(!proyecto){
+        return res.status(401).json({ message: "No se pudo encontrar el proyecto"});
+    }
     return res.status(200).json({message:"Proyectos encontrados",data:proyecto});
 }
 
@@ -84,6 +109,9 @@ export const actualizarProyecto:RequestHandler =async (req,res) => {
     const {id} = req.params;
     const proyectoActualizado:Proyecto|null = await Proyecto.findByPk(id);
     var proyecto = await Proyecto.update({...req.body},{where:{id}});
+    if(!proyecto){
+        return res.status(401).json({ message: "No se pudo actualizar el proyecto"});
+    }
     return res.status(200).json({message:"Proyecto actualizado", data:proyectoActualizado});
 }
 
@@ -99,6 +127,9 @@ export const eliminarProyecto:RequestHandler =async (req,res) => {
         ],
         attributes: {exclude:["usuario_codigo","carrera_clave"]},
     });
+    if(!proyectoEliminado){
+        return res.status(401).json({ message: "No se pudo eliminar el proyecto"});
+    }
     await Proyecto.destroy({where:{id}});
     return res.status(200).json({message:"Proyecto eliminado",data:proyectoEliminado});    
 }

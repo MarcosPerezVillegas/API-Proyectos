@@ -9,8 +9,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.obtdoc = exports.dropdoc = exports.adddoc = void 0;
+exports.obtexel = exports.upddoc = exports.obtuserdoc = exports.obtdocID = exports.obtdoc = exports.dropdoc = exports.adddoc = void 0;
 const documento_1 = require("../models/documento");
+const sequelize_typescript_1 = require("sequelize-typescript");
+const proyectos_1 = require("../models/proyectos");
+const usuarios_1 = require("../models/usuarios");
+const db = new sequelize_typescript_1.Sequelize({
+    dialect: "mysql",
+    host: "localhost",
+    username: "root",
+    password: "wasd",
+    database: "BancoDeProyectos",
+    port: 33061
+});
 const adddoc = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var doc = yield documento_1.documentos.create(Object.assign({}, req.body));
     return res.status(200).json({ message: "documento creado", data: doc });
@@ -25,6 +36,52 @@ const dropdoc = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
 exports.dropdoc = dropdoc;
 const obtdoc = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const obtdocumento = yield documento_1.documentos.findAll();
-    return res.status(200).json({ message: "documentos obtenidos", data: obtdocumento });
+    return res.status(200).json({ message: "Documentos obtenidos: " + obtdocumento.length, data: obtdocumento });
 });
 exports.obtdoc = obtdoc;
+const obtdocID = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const docobtenido = yield documento_1.documentos.findByPk(id, {
+        include: proyectos_1.Proyecto
+    });
+    return res.status(200).json({ message: "Documento obtenido: ", data: docobtenido });
+});
+exports.obtdocID = obtdocID;
+const obtuserdoc = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const userdoc = yield documento_1.documentos.findByPk(id, {
+        include: [
+            {
+                model: proyectos_1.Proyecto,
+                include: [
+                    {
+                        model: usuarios_1.Usuario,
+                        attributes: { exclude: ["password", "email", "telefono", "rol_id"] }
+                    },
+                ],
+                attributes: { exclude: ["objetivos", "fechainicio", "fechafinal", "usuario_codigo", "carrera_clave"] }
+            }
+        ],
+        attributes: { exclude: ["Proyecto_id"] }
+    });
+    return res.status(200).json({ message: "Usuarios obtenidos: ", data: userdoc });
+});
+exports.obtuserdoc = obtuserdoc;
+const upddoc = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const docActualizado = yield documento_1.documentos.findByPk(id);
+    yield documento_1.documentos.update(Object.assign({}, req.body), { where: { id } });
+    return res.status(200).json({ message: "Documento actualizado!", docActualizado });
+});
+exports.upddoc = upddoc;
+const obtexel = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    var XLSX = require("xlsx");
+    const [results] = yield db.query('SELECT * FROM archivos_documentos');
+    const workBook = XLSX.utils.book_new();
+    const workSheet = XLSX.utils.json_to_sheet(results);
+    XLSX.utils.book_append_sheet(workBook, workSheet, "Sheet 1");
+    const filepatch = "C:\\Users\\Marcos\\Desktop\\Ecxel\\Ecxelplantilla_exel.xlsx";
+    XLSX.writeFile(workBook, filepatch);
+    return res.status(200).json({ message: "Excel generado: ", data: results });
+});
+exports.obtexel = obtexel;

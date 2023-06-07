@@ -9,8 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.obtstat = exports.dropstat = exports.addstat = void 0;
+exports.updstat = exports.BuscarProyecto = exports.obtstat = exports.dropstat = exports.addstat = void 0;
 const status_1 = require("../models/status");
+const proyectos_1 = require("../models/proyectos");
 const addstat = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var stat = yield status_1.Status.create(Object.assign({}, req.body));
     return res.status(200).json({ message: "status creado", data: stat });
@@ -28,3 +29,20 @@ const obtstat = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
     return res.status(200).json({ message: "status obtenidos", data: obtstatus });
 });
 exports.obtstat = obtstat;
+const BuscarProyecto = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { Proyecto_id } = req.params;
+    const proyecto = yield status_1.Status.findOne({
+        where: { Proyecto_id },
+        include: proyectos_1.Proyecto,
+        attributes: { exclude: ["Proyecto_id"] }
+    });
+    return res.status(200).json({ message: "Proyecto encontrado", data: proyecto });
+});
+exports.BuscarProyecto = BuscarProyecto;
+const updstat = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { Proyecto_id } = req.params;
+    const statActualizado = yield status_1.Status.findOne({ where: { Proyecto_id } });
+    yield status_1.Status.update(Object.assign({}, req.body), { where: { Proyecto_id } });
+    return res.status(200).json({ message: "Status actualizado!", statActualizado });
+});
+exports.updstat = updstat;

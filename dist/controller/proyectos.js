@@ -13,8 +13,11 @@ exports.eliminarProyecto = exports.actualizarProyecto = exports.BuscarProyectosC
 const proyectos_1 = require("../models/proyectos");
 const usuarios_1 = require("../models/usuarios");
 const carrera_1 = require("../models/carrera");
+const config_1 = require("../db/config");
 const crearProyecto = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var proyecto = yield proyectos_1.Proyecto.create(Object.assign({}, req.body));
+    var id = req.body.id;
+    var status = yield config_1.connection.query("INSERT INTO `status`(`proyecto_id`, `estado`) VALUES ('" + id + "','Disponible')");
     return res.status(200).json({ message: "Proyecto creado!", data: proyecto });
 });
 exports.crearProyecto = crearProyecto;

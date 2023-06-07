@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.obtdoc = exports.dropdoc = exports.adddoc = void 0;
+exports.updtarea = exports.obttareaid = exports.obtdoc = exports.dropdoc = exports.adddoc = void 0;
 const tareas_1 = require("../models/tareas");
 const adddoc = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var doc = yield tareas_1.Tarea.create(Object.assign({}, req.body));
@@ -28,3 +28,16 @@ const obtdoc = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
     return res.status(200).json({ message: "documentos obtenidos", data: obtdocumento });
 });
 exports.obtdoc = obtdoc;
+const obttareaid = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const obtdocumento = yield tareas_1.Tarea.findByPk(id);
+    return res.status(200).json({ message: "tarea obtenida", data: obtdocumento });
+});
+exports.obttareaid = obttareaid;
+const updtarea = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const tareaActualizado = yield tareas_1.Tarea.findByPk(id);
+    yield tareas_1.Tarea.update(Object.assign({}, req.body), { where: { id } });
+    return res.status(200).json({ message: "Tarea actualizada!", tareaActualizado });
+});
+exports.updtarea = updtarea;

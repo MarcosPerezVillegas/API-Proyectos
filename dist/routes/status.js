@@ -6,5 +6,7 @@ const verify_token_1 = require("../middleware/verify_token");
 const router = (0, express_1.Router)();
 router.post("/", verify_token_1.autorizar, status_1.addstat);
 router.delete("/:Proyecto_id", verify_token_1.autorizar, status_1.dropstat);
+router.put("/:Proyecto_id", verify_token_1.autorizar, status_1.updstat);
 router.get("/", status_1.obtstat);
+router.get("/:Proyecto_id", status_1.BuscarProyecto);
 exports.default = router;

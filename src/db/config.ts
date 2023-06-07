@@ -8,7 +8,7 @@ import { Status } from "../models/status";
 import { Tarea } from "../models/tareas";
 
 
-const connection = new Sequelize({
+export const connection = new Sequelize({
     dialect: "mysql",
     host: "localhost",
     username: "root",

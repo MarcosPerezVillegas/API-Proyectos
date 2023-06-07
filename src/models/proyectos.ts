@@ -2,6 +2,8 @@ import { Table, Column, Model, DataType, BelongsTo, HasMany } from "sequelize-ty
 import { Carrera } from "./carrera";
 import { Usuario } from "./usuarios";
 import { Tarea } from "./tareas";
+import { documentos } from "./documento";
+import { Status } from "./status";
 
 @Table({
     timestamps: false,
@@ -16,6 +18,10 @@ export class Proyecto extends Model{
     id!:number;
     @HasMany(()=>Tarea,"Proyecto_id")
     tareas!:Tarea[]
+    @HasMany(()=>documentos,"Proyecto_id")
+    documentos!:documentos[]
+    @HasMany(()=>Status,"Proyecto_id")
+    status!:Status[]
     @Column({
         type:DataType.STRING,
         allowNull:false
