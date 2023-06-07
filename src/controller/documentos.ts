@@ -68,7 +68,7 @@ export const obtuserdoc: RequestHandler = async (req, res, next) => {
             }
         ],
         attributes: { exclude: ["Proyecto_id"] }
-        
+
     });
     if(!userdoc){
         return res.status(401).json({ message: "No se pudo encontrar a los usuarios"});
