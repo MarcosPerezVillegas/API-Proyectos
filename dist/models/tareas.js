@@ -53,7 +53,7 @@ __decorate([
 ], Tarea.prototype, "fecha_limite", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({
-        type: sequelize_typescript_1.DataType.DATE,
+        type: sequelize_typescript_1.DataType.TIME,
         allowNull: true
     })
 ], Tarea.prototype, "hora_limite", void 0);

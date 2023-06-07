@@ -41,7 +41,7 @@ export class Tarea extends Model{
     })
     fecha_limite!:string
     @Column({
-        type: DataType.DATE,
+        type: DataType.TIME,
         allowNull: true
     })
     hora_limite!:string

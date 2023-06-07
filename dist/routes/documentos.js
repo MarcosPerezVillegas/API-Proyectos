@@ -10,5 +10,5 @@ router.get("/", documentos_1.obtdoc);
 router.get("/Usuarios/:id", documentos_1.obtuserdoc);
 router.get("/ID/:id", documentos_1.obtdocID);
 router.get("/Exel", documentos_1.obtexel);
-router.put("/:id", documentos_1.upddoc);
+router.put("/:id", verify_token_1.autorizar, documentos_1.upddoc);
 exports.default = router;
