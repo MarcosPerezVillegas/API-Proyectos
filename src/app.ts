@@ -9,8 +9,16 @@ import rutasStatus from "./routes/status";
 import rutasTareas from "./routes/tareas"
 import connection from "./db/config";
 import { json, urlencoded } from "body-parser";
+import cors from 'cors';
 
 const app = express();
+
+app.use(cors());
+app.use(cors({
+    origin: '*',
+    methods: '*',
+    allowedHeaders: ['Content-Type', 'Authorization']
+}))
 
 app.use(json());
 app.use(urlencoded({extended:true}))
