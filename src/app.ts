@@ -48,6 +48,6 @@ connection.sync().then(()=>{
 }).catch((error)=>{
     console.log("Error",error);
 });
-app.listen(3000,()=>{
-    console.log("Server iniciado en el puerto 3000");
+app.listen(3001,()=>{
+    console.log("Server iniciado en el puerto 3001");
 });
