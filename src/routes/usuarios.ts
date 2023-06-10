@@ -13,6 +13,6 @@ router.delete("/:codigo",autorizar,eliminarUsuario);
 router.get("/",listarUsuarios);
 router.get("/:codigo",autorizar,infoCompletaUsuario);
 router.put("/:codigo",autorizar,actualizarUsuario);
-router.get("/",autorizar,restaurarUsuario);
+router.get("/restaurar/:codigo",autorizar,restaurarUsuario);
 
 export default router;
