@@ -157,7 +157,16 @@ export const actualizarProyecto: RequestHandler = async (req, res) => {
 
 export const eliminarProyecto: RequestHandler = async (req, res) => {
     const { id } = req.params;
+    const proyecto_id=id;
     try {
+        console.log(proyecto_id)
+        const statusEliminado: Status | null = await Status.findOne({
+            where: {proyecto_id},
+        });
+        if (!statusEliminado) {
+            return res.status(401).json({ message: "No se pudo eliminar el status ligado al proyecto" });
+        }
+        await Status.destroy({ where: { proyecto_id } });
         const proyectoEliminado: Proyecto | null = await Proyecto.findByPk(id, {
             include: [
                 {
