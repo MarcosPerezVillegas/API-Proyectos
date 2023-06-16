@@ -9,6 +9,7 @@ const proyectos_1 = require("../models/proyectos");
 const documento_1 = require("../models/documento");
 const status_1 = require("../models/status");
 const tareas_1 = require("../models/tareas");
+const statusProyecto_1 = require("../models/statusProyecto");
 exports.connection = new sequelize_typescript_1.Sequelize({
     dialect: "mysql",
     host: "localhost",
@@ -16,7 +17,7 @@ exports.connection = new sequelize_typescript_1.Sequelize({
     password: "wasd",
     database: "BancoDeProyectos",
     logging: true,
-    models: [roles_1.Rol, usuarios_1.Usuario, carrera_1.Carrera, proyectos_1.Proyecto, documento_1.documentos, status_1.Status, tareas_1.Tarea],
+    models: [roles_1.Rol, usuarios_1.Usuario, carrera_1.Carrera, proyectos_1.Proyecto, documento_1.documentos, status_1.Status, tareas_1.Tarea, statusProyecto_1.statusProyecto],
     port: 33061
 });
 exports.default = exports.connection;

@@ -13,18 +13,13 @@ exports.eliminarProyecto = exports.actualizarProyecto = exports.BuscarProyectosC
 const proyectos_1 = require("../models/proyectos");
 const usuarios_1 = require("../models/usuarios");
 const carrera_1 = require("../models/carrera");
-const config_1 = require("../db/config");
 const status_1 = require("../models/status");
 const crearProyecto = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         var proyecto = yield proyectos_1.Proyecto.create(Object.assign({}, req.body));
+        status_1.Status.create({ Estado: "Disponible", proyecto_id: proyecto.id });
         if (!proyecto) {
             return res.status(401).json({ message: "No se pudo crear el proyecto" });
-        }
-        var id = req.body.id;
-        var status = yield config_1.connection.query("INSERT INTO `status`(`proyecto_id`, `estado`) VALUES ('" + id + "','Disponible')");
-        if (!status) {
-            return res.status(401).json({ message: "No se pudo asignar un estado al proyecto" });
         }
         return res.status(200).json({ message: "Proyecto creado!", data: proyecto });
     }
@@ -39,8 +34,7 @@ const listarProyectos = (req, res) => __awaiter(void 0, void 0, void 0, function
             include: [
                 { model: carrera_1.Carrera,
                     attributes: { exclude: ["clave"] } },
-                { model: status_1.Status,
-                    attributes: { exclude: ["Proyecto_id"] } }
+                { model: status_1.Status }
             ],
             attributes: { exclude: ["usuario_codigo", "carrera_clave"] },
         });

@@ -39,11 +39,48 @@ export const listarUsuarios: RequestHandler = async (req, res) => {
 
 }
 
+export const listarUsuariosElimidanos: RequestHandler = async (req, res) => {
+    try {
+        var usuarios = await Usuario.findAll({
+            where: {
+                deletedAt: {[Op.not]: null}
+            },
+            paranoid: false,
+            attributes: { exclude: ["password"] }
+        });
+        if (!usuarios) {
+            return res.status(401).json({ message: "No se pudo encontar los usuarios", data: usuarios });
+        }
+        return res.status(200).json({ message: "Usuarios encontrados: " + usuarios.length, data: usuarios });
+    } catch (error) {
+        return res.status(404).json({ message: "", error });
+    }
+
+}
+
 export const infoCompletaUsuario: RequestHandler = async (req, res) => {
     const { codigo } = req.params
     try {
         var usuario = await Usuario.findByPk(codigo, {
             include: Rol,
+            attributes: { exclude: ["rol_id"] }
+        });
+        if (!usuario) {
+            return res.status(401).json({ message: "No se pudo encontar al usuario", data: usuario });
+        }
+        return res.status(200).json({ message: "Usuario encontrado con toda su info", data: usuario });
+    } catch (error) {
+        return res.status(404).json({ message: "", error });
+    }
+
+}
+
+export const infoCompletaUsuarioEliminado: RequestHandler = async (req, res) => {
+    const { codigo } = req.params
+    try {
+        var usuario = await Usuario.findByPk(codigo, {
+            include: Rol,
+            paranoid: false,
             attributes: { exclude: ["rol_id"] }
         });
         if (!usuario) {

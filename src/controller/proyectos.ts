@@ -5,17 +5,14 @@ import { Carrera } from "../models/carrera";
 import { connection } from "../db/config"
 import { Model } from "sequelize";
 import { Status } from "../models/status";
+import { statusProyecto } from "../models/statusProyecto";
 
 export const crearProyecto: RequestHandler = async (req, res) => {
     try {
         var proyecto = await Proyecto.create({ ...req.body });
+        Status.create({ Estado: "Disponible", proyecto_id: proyecto.id })
         if (!proyecto) {
             return res.status(401).json({ message: "No se pudo crear el proyecto" });
-        }
-        var id = req.body.id
-        var status = await connection.query("INSERT INTO `status`(`proyecto_id`, `estado`) VALUES ('" + id + "','Disponible')")
-        if (!status) {
-            return res.status(401).json({ message: "No se pudo asignar un estado al proyecto" });
         }
         return res.status(200).json({ message: "Proyecto creado!", data: proyecto });
     } catch (error) {
@@ -30,8 +27,7 @@ export const listarProyectos: RequestHandler = async (req, res) => {
             include: [
                 {model: Carrera,
                 attributes: { exclude: ["clave"] }},
-                {model:Status,
-                attributes: { exclude: ["Proyecto_id"] }}
+                {model: Status}
             ],
             attributes: { exclude: ["usuario_codigo", "carrera_clave"] },
         });

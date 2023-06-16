@@ -6,6 +6,7 @@ import { Proyecto } from "../models/proyectos";
 import { documentos } from "../models/documento";
 import { Status } from "../models/status";
 import { Tarea } from "../models/tareas";
+import { statusProyecto } from "../models/statusProyecto";
 
 
 export const connection = new Sequelize({
@@ -15,7 +16,7 @@ export const connection = new Sequelize({
     password: "wasd",
     database: "BancoDeProyectos",
     logging: true,
-    models:[Rol,Usuario,Carrera,Proyecto, documentos, Status, Tarea],
+    models:[Rol,Usuario,Carrera,Proyecto, documentos, Status, Tarea, statusProyecto],
 
 
     port: 33061

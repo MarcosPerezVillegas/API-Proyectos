@@ -6,33 +6,44 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Status = void 0;
+exports.statusProyecto = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
 const proyectos_1 = require("./proyectos");
-const statusProyecto_1 = require("./statusProyecto");
-let Status = class Status extends sequelize_typescript_1.Model {
+const status_1 = require("./status");
+let statusProyecto = class statusProyecto extends sequelize_typescript_1.Model {
 };
 __decorate([
     (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.INTEGER,
-        primaryKey: true,
         allowNull: false,
-        autoIncrement: true
+        primaryKey: true,
     })
-], Status.prototype, "id", void 0);
-__decorate([
-    (0, sequelize_typescript_1.BelongsToMany)(() => proyectos_1.Proyecto, () => statusProyecto_1.statusProyecto)
-], Status.prototype, "proyectos", void 0);
+], statusProyecto.prototype, "status_id", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({
-        type: sequelize_typescript_1.DataType.STRING,
-        allowNull: false
+        type: sequelize_typescript_1.DataType.INTEGER,
+        allowNull: false,
+        primaryKey: true,
     })
-], Status.prototype, "Estado", void 0);
-Status = __decorate([
+], statusProyecto.prototype, "proyecto_id", void 0);
+__decorate([
+    (0, sequelize_typescript_1.ForeignKey)(() => status_1.Status),
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.INTEGER,
+        allowNull: false,
+    })
+], statusProyecto.prototype, "statusId", void 0);
+__decorate([
+    (0, sequelize_typescript_1.ForeignKey)(() => proyectos_1.Proyecto),
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.INTEGER,
+        allowNull: false,
+    })
+], statusProyecto.prototype, "proyectoId", void 0);
+statusProyecto = __decorate([
     (0, sequelize_typescript_1.Table)({
+        tableName: "status_proyecto",
         timestamps: false,
-        tableName: "status"
     })
-], Status);
-exports.Status = Status;
+], statusProyecto);
+exports.statusProyecto = statusProyecto;
