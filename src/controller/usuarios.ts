@@ -123,6 +123,20 @@ export const eliminarUsuario: RequestHandler = async (req, res) => {
 
 }
 
+export const eliminarUsuarioPerma: RequestHandler = async (req, res) => {
+    const { codigo } = req.params;
+    try {
+        const usuarioEliminado: Usuario | null = await Usuario.findByPk(codigo);
+        var usuario = await Usuario.destroy({ where: { codigo}, force: true });
+        if (!usuario) {
+            return res.status(401).json({ message: "No se pudo eliminar el usuario", data: usuario });
+        }
+        return res.status(200).json({ message: "Usuario eliminado", data: usuarioEliminado });
+    } catch (error) {
+        return res.status(404).json({ message: "", error });
+    }
+
+}
 export const restaurarUsuario: RequestHandler = async (req, res) => {
     const { codigo } = req.params;
     try {

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.restaurarUsuario = exports.eliminarUsuario = exports.actualizarUsuario = exports.infoCompletaUsuarioEliminado = exports.infoCompletaUsuario = exports.listarUsuariosElimidanos = exports.listarUsuarios = exports.crearUsuario = void 0;
+exports.restaurarUsuario = exports.eliminarUsuarioPerma = exports.eliminarUsuario = exports.actualizarUsuario = exports.infoCompletaUsuarioEliminado = exports.infoCompletaUsuario = exports.listarUsuariosElimidanos = exports.listarUsuarios = exports.crearUsuario = void 0;
 const usuarios_1 = require("../models/usuarios");
 const sequelize_1 = require("sequelize");
 const bcrypt_1 = __importDefault(require("bcrypt"));
@@ -136,6 +136,21 @@ const eliminarUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.eliminarUsuario = eliminarUsuario;
+const eliminarUsuarioPerma = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { codigo } = req.params;
+    try {
+        const usuarioEliminado = yield usuarios_1.Usuario.findByPk(codigo);
+        var usuario = yield usuarios_1.Usuario.destroy({ where: { codigo }, force: true });
+        if (!usuario) {
+            return res.status(401).json({ message: "No se pudo eliminar el usuario", data: usuario });
+        }
+        return res.status(200).json({ message: "Usuario eliminado", data: usuarioEliminado });
+    }
+    catch (error) {
+        return res.status(404).json({ message: "", error });
+    }
+});
+exports.eliminarUsuarioPerma = eliminarUsuarioPerma;
 const restaurarUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { codigo } = req.params;
     try {
