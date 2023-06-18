@@ -11,7 +11,7 @@ import { crearUsuario,
 import { autorizar } from "../middleware/verify_token";
 
 const router = Router();
-router.post("/",autorizar,crearUsuario);
+router.post("/",crearUsuario);
 router.delete("/:codigo",autorizar,eliminarUsuario);
 router.get("/",listarUsuarios);
 router.get("/Eliminados",autorizar,listarUsuariosElimidanos);

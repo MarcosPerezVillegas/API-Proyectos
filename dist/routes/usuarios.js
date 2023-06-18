@@ -4,7 +4,7 @@ const express_1 = require("express");
 const usuarios_1 = require("../controller/usuarios");
 const verify_token_1 = require("../middleware/verify_token");
 const router = (0, express_1.Router)();
-router.post("/", verify_token_1.autorizar, usuarios_1.crearUsuario);
+router.post("/", usuarios_1.crearUsuario);
 router.delete("/:codigo", verify_token_1.autorizar, usuarios_1.eliminarUsuario);
 router.get("/", usuarios_1.listarUsuarios);
 router.get("/Eliminados", verify_token_1.autorizar, usuarios_1.listarUsuariosElimidanos);
