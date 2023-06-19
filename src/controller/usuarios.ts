@@ -75,6 +75,20 @@ export const infoCompletaUsuario: RequestHandler = async (req, res) => {
 
 }
 
+export const infoemailUsuario: RequestHandler = async (req, res) => {
+    const { email } = req.params
+    try {
+        var usuario: Usuario | null = await Usuario.findOne({where: { email}});
+        if (!usuario) {
+            return res.status(401).json({ message: "No se pudo encontar al usuario", data: usuario });
+        }
+        return res.status(200).json({ message: "Usuario encontrado con toda su info", data: usuario });
+    } catch (error) {
+        return res.status(404).json({ message: "", error });
+    }
+
+}
+
 export const infoCompletaUsuarioEliminado: RequestHandler = async (req, res) => {
     const { codigo } = req.params
     try {
