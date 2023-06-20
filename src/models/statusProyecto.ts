@@ -7,31 +7,26 @@ import { Status } from "./status";
   timestamps: false,
 })
 export class statusProyecto extends Model<statusProyecto> {
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: false,
-    primaryKey: true,
-  })
-  status_id!: number;
 
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
     primaryKey: true,
+    autoIncrement:true
   })
-  proyecto_id!: number;
+  id!: number;
 
   @ForeignKey(() => Status)
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
   })
-  statusId!: number;
+  status_id!: number;
 
   @ForeignKey(() => Proyecto)
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
   })
-  proyectoId!: number;
+  proyecto_id!: number;
 }

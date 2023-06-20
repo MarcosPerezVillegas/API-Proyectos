@@ -30,9 +30,10 @@ export class documentos extends Model{
     tipo_archivo!:string
     @Column({
         type: DataType.INTEGER,
-        allowNull: false
+        allowNull: false,
     })
     Proyecto_id!:number
     @BelongsTo(()=>Proyecto,"Proyecto_id")
     proyecto!:Proyecto
+    
 }

@@ -10,7 +10,6 @@ import { statusProyecto } from "../models/statusProyecto";
 export const crearProyecto: RequestHandler = async (req, res) => {
     try {
         var proyecto = await Proyecto.create({ ...req.body });
-        Status.create({ Estado: "Disponible", proyecto_id: proyecto.id })
         if (!proyecto) {
             return res.status(401).json({ message: "No se pudo crear el proyecto" });
         }
@@ -27,7 +26,6 @@ export const listarProyectos: RequestHandler = async (req, res) => {
             include: [
                 {model: Carrera,
                 attributes: { exclude: ["clave"] }},
-                {model: Status}
             ],
             attributes: { exclude: ["usuario_codigo", "carrera_clave"] },
         });
@@ -47,8 +45,11 @@ export const BuscarProyectoId: RequestHandler = async (req, res) => {
         const proyecto: Proyecto | null = await Proyecto.findByPk(id, {
             include: [
                 {
+                    model: Carrera,
+                    attributes: { exclude: ["clave"] },
+                },
+                {
                     model: Usuario,
-                    attributes: { exclude: ["password"] },
                 },
                 Carrera,
             ],
@@ -153,16 +154,16 @@ export const actualizarProyecto: RequestHandler = async (req, res) => {
 
 export const eliminarProyecto: RequestHandler = async (req, res) => {
     const { id } = req.params;
-    const proyecto_id=id;
+    //const proyecto_id=id;
     try {
-        console.log(proyecto_id)
+       /* console.log(proyecto_id)
         const statusEliminado: Status | null = await Status.findOne({
             where: {proyecto_id},
         });
         if (!statusEliminado) {
             return res.status(401).json({ message: "No se pudo eliminar el status ligado al proyecto" });
         }
-        await Status.destroy({ where: { proyecto_id } });
+        await Status.destroy({ where: { proyecto_id } });*/
         const proyectoEliminado: Proyecto | null = await Proyecto.findByPk(id, {
             include: [
                 {

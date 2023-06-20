@@ -15,7 +15,8 @@ export class Proyecto extends Model{
         type:DataType.INTEGER,
         allowNull:false,
         primaryKey:true,
-        autoIncrement: true,
+        autoIncrement:true,
+        onDelete:'Cascade'
     })
     id!:number;
     @BelongsToMany(() => Status, () => statusProyecto)
@@ -49,9 +50,17 @@ export class Proyecto extends Model{
         type:DataType.STRING,
         allowNull:false
     })
-    usuario_codigo!:string
-    @BelongsTo(()=>Usuario,"usuario_codigo")
-    usuarios!:Usuario
+    encargado_codigo!:string
+    @BelongsTo(()=>Usuario,"encargado_codigo")
+    encargado!:Usuario
+
+    @Column({
+        type:DataType.STRING,
+        allowNull:true
+    })
+    alumnos_codigos!:string
+    @HasMany(()=>Usuario,"alumnos_codigos")
+    alumnos!:Usuario[]
 
     @Column({
         type:DataType.STRING,

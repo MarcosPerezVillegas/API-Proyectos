@@ -14,8 +14,10 @@ export class Usuario extends Model{
         primaryKey:true,
     })
     codigo!:string;
-    @HasMany(()=>Proyecto,"usuario_codigo")
+    @BelongsTo(()=>Proyecto,"codigo")
     proyecto!:Proyecto
+    @HasMany(()=>Proyecto,"codigo")
+    proyectos!:Proyecto[]
 
     @Column({
         type:DataType.STRING,

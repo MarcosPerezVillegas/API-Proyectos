@@ -60,8 +60,27 @@ export const listarUsuariosElimidanos: RequestHandler = async (req, res) => {
 
 export const infoCompletaUsuario: RequestHandler = async (req, res) => {
     const { codigo } = req.params
+    console.log(codigo)
     try {
         var usuario = await Usuario.findByPk(codigo, {
+            include: Rol,
+            attributes: { exclude: ["rol_id"] }
+        });
+        if (!usuario) {
+            return res.status(401).json({ message: "No se pudo encontar al usuario", data: usuario });
+        }
+        return res.status(200).json({ message: "Usuario encontrado con toda su info", data: usuario });
+    } catch (error) {
+        return res.status(404).json({ message: "", error });
+    }
+
+}
+
+export const buscarUsuarioNombre: RequestHandler = async (req, res) => {
+    const { nombre } = req.params
+    try {
+        console.log(nombre)
+        var usuario = await Usuario.findOne({where: {nombre},
             include: Rol,
             attributes: { exclude: ["rol_id"] }
         });
@@ -78,7 +97,7 @@ export const infoCompletaUsuario: RequestHandler = async (req, res) => {
 export const infoemailUsuario: RequestHandler = async (req, res) => {
     const { email } = req.params
     try {
-        var usuario: Usuario | null = await Usuario.findOne({where: { email}});
+        var usuario: Usuario | null = await Usuario.findOne({where: { email}, attributes: {exclude: ['password','telefono']}});
         if (!usuario) {
             return res.status(401).json({ message: "No se pudo encontar al usuario", data: usuario });
         }
