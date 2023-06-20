@@ -12,6 +12,7 @@ export class Status extends Model{
         primaryKey: true,
         allowNull: false,
         autoIncrement: true
+        
     })
     id!:number
     @BelongsToMany(() => Proyecto, () => statusProyecto)
