@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.restaurarUsuario = exports.eliminarUsuarioPerma = exports.eliminarUsuario = exports.actualizarUsuario = exports.infoCompletaUsuarioEliminado = exports.infoCompletaUsuario = exports.listarUsuariosElimidanos = exports.listarUsuarios = exports.crearUsuario = void 0;
+exports.restaurarUsuario = exports.eliminarUsuarioPerma = exports.eliminarUsuario = exports.actualizarUsuario = exports.infoCompletaUsuarioEliminado = exports.infoemailUsuario = exports.buscarUsuarioNombre = exports.infoCompletaUsuario = exports.listarUsuariosElimidanos = exports.listarUsuarios = exports.crearUsuario = void 0;
 const usuarios_1 = require("../models/usuarios");
 const sequelize_1 = require("sequelize");
 const bcrypt_1 = __importDefault(require("bcrypt"));
@@ -73,6 +73,7 @@ const listarUsuariosElimidanos = (req, res) => __awaiter(void 0, void 0, void 0,
 exports.listarUsuariosElimidanos = listarUsuariosElimidanos;
 const infoCompletaUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { codigo } = req.params;
+    console.log(codigo);
     try {
         var usuario = yield usuarios_1.Usuario.findByPk(codigo, {
             include: roles_1.Rol,
@@ -88,6 +89,38 @@ const infoCompletaUsuario = (req, res) => __awaiter(void 0, void 0, void 0, func
     }
 });
 exports.infoCompletaUsuario = infoCompletaUsuario;
+const buscarUsuarioNombre = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { nombre } = req.params;
+    try {
+        console.log(nombre);
+        var usuario = yield usuarios_1.Usuario.findOne({ where: { nombre },
+            include: roles_1.Rol,
+            attributes: { exclude: ["rol_id"] }
+        });
+        if (!usuario) {
+            return res.status(401).json({ message: "No se pudo encontar al usuario", data: usuario });
+        }
+        return res.status(200).json({ message: "Usuario encontrado con toda su info", data: usuario });
+    }
+    catch (error) {
+        return res.status(404).json({ message: "", error });
+    }
+});
+exports.buscarUsuarioNombre = buscarUsuarioNombre;
+const infoemailUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { email } = req.params;
+    try {
+        var usuario = yield usuarios_1.Usuario.findOne({ where: { email }, attributes: { exclude: ['password', 'telefono'] } });
+        if (!usuario) {
+            return res.status(401).json({ message: "No se pudo encontar al usuario", data: usuario });
+        }
+        return res.status(200).json({ message: "Usuario encontrado con toda su info", data: usuario });
+    }
+    catch (error) {
+        return res.status(404).json({ message: "", error });
+    }
+});
+exports.infoemailUsuario = infoemailUsuario;
 const infoCompletaUsuarioEliminado = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { codigo } = req.params;
     try {

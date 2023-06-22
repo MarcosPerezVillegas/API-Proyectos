@@ -45,22 +45,6 @@ export class Proyecto extends Model{
         allowNull:false
     })
     fechafinal!:string
-    
-    @Column({
-        type:DataType.STRING,
-        allowNull:false
-    })
-    encargado_codigo!:string
-    @BelongsTo(()=>Usuario,"encargado_codigo")
-    encargado!:Usuario
-
-    @Column({
-        type:DataType.STRING,
-        allowNull:true
-    })
-    alumnos_codigos!:string
-    @HasMany(()=>Usuario,"alumnos_codigos")
-    alumnos!:Usuario[]
 
     @Column({
         type:DataType.STRING,

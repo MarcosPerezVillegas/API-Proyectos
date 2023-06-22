@@ -17,29 +17,23 @@ __decorate([
         type: sequelize_typescript_1.DataType.INTEGER,
         allowNull: false,
         primaryKey: true,
+        autoIncrement: true
     })
-], statusProyecto.prototype, "status_id", void 0);
-__decorate([
-    (0, sequelize_typescript_1.Column)({
-        type: sequelize_typescript_1.DataType.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-    })
-], statusProyecto.prototype, "proyecto_id", void 0);
+], statusProyecto.prototype, "id", void 0);
 __decorate([
     (0, sequelize_typescript_1.ForeignKey)(() => status_1.Status),
     (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.INTEGER,
         allowNull: false,
     })
-], statusProyecto.prototype, "statusId", void 0);
+], statusProyecto.prototype, "status_id", void 0);
 __decorate([
     (0, sequelize_typescript_1.ForeignKey)(() => proyectos_1.Proyecto),
     (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.INTEGER,
         allowNull: false,
     })
-], statusProyecto.prototype, "proyectoId", void 0);
+], statusProyecto.prototype, "proyecto_id", void 0);
 statusProyecto = __decorate([
     (0, sequelize_typescript_1.Table)({
         tableName: "status_proyecto",

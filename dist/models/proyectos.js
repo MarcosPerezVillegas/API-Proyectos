@@ -9,7 +9,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Proyecto = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
 const carrera_1 = require("./carrera");
-const usuarios_1 = require("./usuarios");
 const tareas_1 = require("./tareas");
 const documento_1 = require("./documento");
 const status_1 = require("./status");
@@ -22,6 +21,7 @@ __decorate([
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
+        onDelete: 'Cascade'
     })
 ], Proyecto.prototype, "id", void 0);
 __decorate([
@@ -57,15 +57,6 @@ __decorate([
         allowNull: false
     })
 ], Proyecto.prototype, "fechafinal", void 0);
-__decorate([
-    (0, sequelize_typescript_1.Column)({
-        type: sequelize_typescript_1.DataType.STRING,
-        allowNull: false
-    })
-], Proyecto.prototype, "usuario_codigo", void 0);
-__decorate([
-    (0, sequelize_typescript_1.BelongsTo)(() => usuarios_1.Usuario, "usuario_codigo")
-], Proyecto.prototype, "usuarios", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.STRING,

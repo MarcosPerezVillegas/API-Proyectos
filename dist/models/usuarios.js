@@ -9,7 +9,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Usuario = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
 const roles_1 = require("./roles");
-const proyectos_1 = require("./proyectos");
 let Usuario = class Usuario extends sequelize_typescript_1.Model {
 };
 __decorate([
@@ -19,9 +18,6 @@ __decorate([
         primaryKey: true,
     })
 ], Usuario.prototype, "codigo", void 0);
-__decorate([
-    (0, sequelize_typescript_1.HasMany)(() => proyectos_1.Proyecto, "usuario_codigo")
-], Usuario.prototype, "proyecto", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.STRING,

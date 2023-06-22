@@ -13,11 +13,9 @@ exports.eliminarProyecto = exports.actualizarProyecto = exports.BuscarProyectosC
 const proyectos_1 = require("../models/proyectos");
 const usuarios_1 = require("../models/usuarios");
 const carrera_1 = require("../models/carrera");
-const status_1 = require("../models/status");
 const crearProyecto = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         var proyecto = yield proyectos_1.Proyecto.create(Object.assign({}, req.body));
-        status_1.Status.create({ Estado: "Disponible", proyecto_id: proyecto.id });
         if (!proyecto) {
             return res.status(401).json({ message: "No se pudo crear el proyecto" });
         }
@@ -34,7 +32,6 @@ const listarProyectos = (req, res) => __awaiter(void 0, void 0, void 0, function
             include: [
                 { model: carrera_1.Carrera,
                     attributes: { exclude: ["clave"] } },
-                { model: status_1.Status }
             ],
             attributes: { exclude: ["usuario_codigo", "carrera_clave"] },
         });
@@ -54,8 +51,11 @@ const BuscarProyectoId = (req, res) => __awaiter(void 0, void 0, void 0, functio
         const proyecto = yield proyectos_1.Proyecto.findByPk(id, {
             include: [
                 {
+                    model: carrera_1.Carrera,
+                    attributes: { exclude: ["clave"] },
+                },
+                {
                     model: usuarios_1.Usuario,
-                    attributes: { exclude: ["password"] },
                 },
                 carrera_1.Carrera,
             ],
@@ -160,16 +160,16 @@ const actualizarProyecto = (req, res) => __awaiter(void 0, void 0, void 0, funct
 exports.actualizarProyecto = actualizarProyecto;
 const eliminarProyecto = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const proyecto_id = id;
+    //const proyecto_id=id;
     try {
-        console.log(proyecto_id);
-        const statusEliminado = yield status_1.Status.findOne({
-            where: { proyecto_id },
-        });
-        if (!statusEliminado) {
-            return res.status(401).json({ message: "No se pudo eliminar el status ligado al proyecto" });
-        }
-        yield status_1.Status.destroy({ where: { proyecto_id } });
+        /* console.log(proyecto_id)
+         const statusEliminado: Status | null = await Status.findOne({
+             where: {proyecto_id},
+         });
+         if (!statusEliminado) {
+             return res.status(401).json({ message: "No se pudo eliminar el status ligado al proyecto" });
+         }
+         await Status.destroy({ where: { proyecto_id } });*/
         const proyectoEliminado = yield proyectos_1.Proyecto.findByPk(id, {
             include: [
                 {
