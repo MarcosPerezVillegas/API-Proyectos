@@ -8,7 +8,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Rol = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
-const usuarios_1 = require("./usuarios");
+const maestros_1 = require("./maestros");
+const alumnos_1 = require("./alumnos");
 let Rol = class Rol extends sequelize_typescript_1.Model {
 };
 __decorate([
@@ -25,8 +26,11 @@ __decorate([
     })
 ], Rol.prototype, "id", void 0);
 __decorate([
-    (0, sequelize_typescript_1.HasMany)(() => usuarios_1.Usuario, "rol_id")
-], Rol.prototype, "usuarios", void 0);
+    (0, sequelize_typescript_1.HasMany)(() => maestros_1.Maestros, "rol_id")
+], Rol.prototype, "maestros", void 0);
+__decorate([
+    (0, sequelize_typescript_1.HasMany)(() => alumnos_1.Alumnos, "rol_id")
+], Rol.prototype, "alumnos", void 0);
 Rol = __decorate([
     (0, sequelize_typescript_1.Table)({
         timestamps: false,

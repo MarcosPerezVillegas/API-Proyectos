@@ -1,12 +1,13 @@
 import {Sequelize} from "sequelize-typescript";
-import { Rol } from "../models/roles";
-import { Usuario } from "../models/usuarios";
 import { Carrera } from "../models/carrera";
 import { Proyecto } from "../models/proyectos";
 import { documentos } from "../models/documento";
 import { Status } from "../models/status";
 import { Tarea } from "../models/tareas";
 import { statusProyecto } from "../models/statusProyecto";
+import { Maestros } from "../models/maestros";
+import { Alumnos } from "../models/alumnos";
+import { encargadosProyectos } from "../models/encargadosProyectos";
 
 
 export const connection = new Sequelize({
@@ -16,7 +17,7 @@ export const connection = new Sequelize({
     password: "wasd",
     database: "BancoDeProyectos",
     logging: true,
-    models:[Rol,Usuario,Carrera,Proyecto, documentos, Status, Tarea, statusProyecto],
+    models:[Carrera,Proyecto, documentos, Status, Tarea, statusProyecto,Maestros,Alumnos, encargadosProyectos],
 
 
     port: 33061

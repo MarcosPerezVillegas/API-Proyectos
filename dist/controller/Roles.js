@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.actualizarRol = exports.obtenerRolId = exports.obtenerTRoles = exports.borrarRol = exports.crearRol = void 0;
 const roles_1 = require("../models/roles");
-const usuarios_1 = require("../models/usuarios");
+//import { Usuario } from "../models/maestros";
 const crearRol = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         var rol = yield roles_1.Rol.create(Object.assign({}, req.body));
@@ -58,7 +58,7 @@ const obtenerRolId = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     try {
         const rolId = yield roles_1.Rol.findByPk(id, {
             include: {
-                model: usuarios_1.Usuario,
+                //model: Usuario,
                 attributes: { exclude: ["password"] },
             },
         });

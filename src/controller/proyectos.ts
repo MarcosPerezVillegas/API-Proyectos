@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import { Proyecto } from "../models/proyectos";
-import { Usuario } from "../models/usuarios";
+//import { Usuario } from "../models/maestros";
 import { Carrera } from "../models/carrera";
 import { connection } from "../db/config"
 import { Model } from "sequelize";
@@ -49,7 +49,7 @@ export const BuscarProyectoId: RequestHandler = async (req, res) => {
                     attributes: { exclude: ["clave"] },
                 },
                 {
-                    model: Usuario,
+                    //model: Usuario,
                 },
                 Carrera,
             ],
@@ -72,7 +72,7 @@ export const BuscarProyectoNombre: RequestHandler = async (req, res) => {
             where: { nombrep },
             include: [
                 {
-                    model: Usuario,
+                    //model: Usuario,
                     attributes: { exclude: ["password"] },
                 },
                 Carrera,
@@ -96,7 +96,7 @@ export const BuscarProyectoUsuario: RequestHandler = async (req, res) => {
             where: { usuario_codigo },
             include: [
                 {
-                    model: Usuario,
+                    //model: Usuario,
                     attributes: { exclude: ["password"] },
                 },
                 Carrera,
@@ -120,7 +120,7 @@ export const BuscarProyectosCarrera: RequestHandler = async (req, res) => {
             where: { carrera_clave },
             include: [
                 {
-                    model: Usuario,
+                    //model: Usuario,
                     attributes: { exclude: ["password"] },
                 },
                 Carrera,
@@ -167,7 +167,7 @@ export const eliminarProyecto: RequestHandler = async (req, res) => {
         const proyectoEliminado: Proyecto | null = await Proyecto.findByPk(id, {
             include: [
                 {
-                    model: Usuario,
+                    //model: Usuario,
                     attributes: { exclude: ["password"] },
                 },
                 Carrera,

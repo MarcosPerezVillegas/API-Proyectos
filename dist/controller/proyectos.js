@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.eliminarProyecto = exports.actualizarProyecto = exports.BuscarProyectosCarrera = exports.BuscarProyectoUsuario = exports.BuscarProyectoNombre = exports.BuscarProyectoId = exports.listarProyectos = exports.crearProyecto = void 0;
 const proyectos_1 = require("../models/proyectos");
-const usuarios_1 = require("../models/usuarios");
+//import { Usuario } from "../models/maestros";
 const carrera_1 = require("../models/carrera");
 const crearProyecto = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -55,7 +55,7 @@ const BuscarProyectoId = (req, res) => __awaiter(void 0, void 0, void 0, functio
                     attributes: { exclude: ["clave"] },
                 },
                 {
-                    model: usuarios_1.Usuario,
+                //model: Usuario,
                 },
                 carrera_1.Carrera,
             ],
@@ -78,7 +78,7 @@ const BuscarProyectoNombre = (req, res) => __awaiter(void 0, void 0, void 0, fun
             where: { nombrep },
             include: [
                 {
-                    model: usuarios_1.Usuario,
+                    //model: Usuario,
                     attributes: { exclude: ["password"] },
                 },
                 carrera_1.Carrera,
@@ -102,7 +102,7 @@ const BuscarProyectoUsuario = (req, res) => __awaiter(void 0, void 0, void 0, fu
             where: { usuario_codigo },
             include: [
                 {
-                    model: usuarios_1.Usuario,
+                    //model: Usuario,
                     attributes: { exclude: ["password"] },
                 },
                 carrera_1.Carrera,
@@ -126,7 +126,7 @@ const BuscarProyectosCarrera = (req, res) => __awaiter(void 0, void 0, void 0, f
             where: { carrera_clave },
             include: [
                 {
-                    model: usuarios_1.Usuario,
+                    //model: Usuario,
                     attributes: { exclude: ["password"] },
                 },
                 carrera_1.Carrera,
@@ -173,7 +173,7 @@ const eliminarProyecto = (req, res) => __awaiter(void 0, void 0, void 0, functio
         const proyectoEliminado = yield proyectos_1.Proyecto.findByPk(id, {
             include: [
                 {
-                    model: usuarios_1.Usuario,
+                    //model: Usuario,
                     attributes: { exclude: ["password"] },
                 },
                 carrera_1.Carrera,

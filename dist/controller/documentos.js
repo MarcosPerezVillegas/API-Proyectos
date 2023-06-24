@@ -13,7 +13,6 @@ exports.obtexel = exports.upddoc = exports.obtuserdoc = exports.obtdocID = expor
 const documento_1 = require("../models/documento");
 const sequelize_typescript_1 = require("sequelize-typescript");
 const proyectos_1 = require("../models/proyectos");
-const usuarios_1 = require("../models/usuarios");
 const db = new sequelize_typescript_1.Sequelize({
     dialect: "mysql",
     host: "localhost",
@@ -67,7 +66,7 @@ const obtuserdoc = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
                 model: proyectos_1.Proyecto,
                 include: [
                     {
-                        model: usuarios_1.Usuario,
+                        //model: Usuario,
                         attributes: { exclude: ["password", "email", "telefono", "rol_id"] }
                     },
                 ],

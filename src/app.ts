@@ -1,6 +1,6 @@
 import express from "express";
-import rutasRoles from "./routes/roles";
-import rutasUsuarios from "./routes/usuarios"
+import rutasMaestros from "./routes/maestros"
+import rutasAlumnos from "./routes/alumnos"
 import rutaLogin from "./routes/auth"
 import rutaCarreras from "./routes/carreras"
 import rutaProyectos from "./routes/proyectos"
@@ -23,8 +23,8 @@ app.use(cors({
 app.use(json());
 app.use(urlencoded({extended:true}))
 
-app.use("/Roles",rutasRoles);
-app.use("/Usuarios",rutasUsuarios);
+app.use("/Alumnos",rutasAlumnos);
+app.use("/Maestros",rutasMaestros);
 app.use("/Login",rutaLogin);
 app.use("/Carreras",rutaCarreras);
 app.use("/Proyectos",rutaProyectos);

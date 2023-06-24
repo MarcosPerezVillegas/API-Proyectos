@@ -2,7 +2,7 @@ import { RequestHandler } from "express";
 import { documentos } from "../models/documento";
 import { Sequelize } from "sequelize-typescript";
 import { Proyecto } from "../models/proyectos";
-import { Usuario } from "../models/usuarios";
+//import { Usuario } from "../models/maestros";
 import XLSX from 'xlsx';
 
 
@@ -60,7 +60,7 @@ export const obtuserdoc: RequestHandler = async (req, res, next) => {
                 model: Proyecto,
                 include: [
                     {
-                        model: Usuario,
+                        //model: Usuario,
                         attributes: { exclude: ["password", "email", "telefono", "rol_id"] }
                     },
                 ],

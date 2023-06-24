@@ -4,8 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const roles_1 = __importDefault(require("./routes/roles"));
-const usuarios_1 = __importDefault(require("./routes/usuarios"));
+const maestros_1 = __importDefault(require("./routes/maestros"));
+const alumnos_1 = __importDefault(require("./routes/alumnos"));
 const auth_1 = __importDefault(require("./routes/auth"));
 const carreras_1 = __importDefault(require("./routes/carreras"));
 const proyectos_1 = __importDefault(require("./routes/proyectos"));
@@ -24,8 +24,8 @@ app.use(cors({
 }));
 app.use((0, body_parser_1.json)());
 app.use((0, body_parser_1.urlencoded)({ extended: true }));
-app.use("/Roles", roles_1.default);
-app.use("/Usuarios", usuarios_1.default);
+app.use("/Alumnos", alumnos_1.default);
+app.use("/Maestros", maestros_1.default);
 app.use("/Login", auth_1.default);
 app.use("/Carreras", carreras_1.default);
 app.use("/Proyectos", proyectos_1.default);

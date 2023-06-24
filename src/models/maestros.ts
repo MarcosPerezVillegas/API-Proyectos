@@ -1,19 +1,21 @@
-import { Table, Column, Model, DataType, BelongsTo, HasMany } from "sequelize-typescript";
-import { Rol } from "./roles";
+import { Table, Column, Model, DataType, BelongsTo, HasMany, BelongsToMany } from "sequelize-typescript";
 import { Proyecto } from "./proyectos";
+import { encargadosProyectos } from "./encargadosProyectos";
 
 @Table({
     timestamps: true,
-    tableName: "usuario",
+    tableName: "maestros",
     paranoid:true
 })
-export class Usuario extends Model{
+export class Maestros extends Model{
     @Column({
         type:DataType.STRING,
         allowNull:false,
         primaryKey:true,
     })
     codigo!:string;
+    @BelongsToMany(() => Proyecto, () => encargadosProyectos)
+    Proyectos!: Proyecto[]
 
     @Column({
         type:DataType.STRING,
@@ -35,12 +37,4 @@ export class Usuario extends Model{
         allowNull:true
     })
     telefono!:string
-    
-    @Column({
-        type:DataType.INTEGER,
-        allowNull:false
-    })
-    rol_id!:number
-    @BelongsTo(()=>Rol,"rol_id")
-    Rol_Usuario!:Rol
 }
