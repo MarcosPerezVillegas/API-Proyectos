@@ -71,14 +71,11 @@ export const infoCompletaMaestro: RequestHandler = async (req, res) => {
 
 }
 
-/*export const buscarmaestroNombre: RequestHandler = async (req, res) => {
+export const buscarmaestroNombre: RequestHandler = async (req, res) => {
     const { nombre } = req.params
     try {
         console.log(nombre)
-        var maestro = await Maestros.findOne({where: {nombre},
-            include: Rol,
-            attributes: { exclude: ["rol_id"] }
-        });
+        var maestro = await Maestros.findOne({where: {nombre}});
         if (!maestro) {
             return res.status(401).json({ message: "No se pudo encontar al maestro", data: maestro });
         }
@@ -87,7 +84,7 @@ export const infoCompletaMaestro: RequestHandler = async (req, res) => {
         return res.status(404).json({ message: "", error });
     }
 
-}*/
+}
 
 export const infoemailMaestro: RequestHandler = async (req, res) => {
     const { email } = req.params

@@ -23,11 +23,7 @@ export const crearProyecto: RequestHandler = async (req, res) => {
 export const listarProyectos: RequestHandler = async (req, res) => {
     try {
         var proyectos = await Proyecto.findAll({
-            include: [
-                {model: Carrera,
-                attributes: { exclude: ["clave"] }},
-            ],
-            attributes: { exclude: ["usuario_codigo", "carrera_clave"] },
+            attributes: { exclude: ["carrera_clave"] },
         });
         if (!proyectos) {
             return res.status(401).json({ message: "No se pudo encontrar los proyectos" });
@@ -42,19 +38,7 @@ export const listarProyectos: RequestHandler = async (req, res) => {
 export const BuscarProyectoId: RequestHandler = async (req, res) => {
     const { id } = req.params
     try {
-        const proyecto: Proyecto | null = await Proyecto.findByPk(id, {
-            include: [
-                {
-                    model: Carrera,
-                    attributes: { exclude: ["clave"] },
-                },
-                {
-                    //model: Usuario,
-                },
-                Carrera,
-            ],
-            attributes: { exclude: ["usuario_codigo", "carrera_clave"] },
-        });
+        const proyecto: Proyecto | null = await Proyecto.findByPk(id);
         if (!proyecto) {
             return res.status(401).json({ message: "No se pudo encontrar el proyecto" });
         }
@@ -95,13 +79,9 @@ export const BuscarProyectoUsuario: RequestHandler = async (req, res) => {
         const proyecto: Proyecto | null = await Proyecto.findOne({
             where: { usuario_codigo },
             include: [
-                {
-                    //model: Usuario,
-                    attributes: { exclude: ["password"] },
-                },
                 Carrera,
             ],
-            attributes: { exclude: ["usuario_codigo", "carrera_clave"] },
+            attributes: { exclude: [ "carrera_clave"] },
         });
         if (!proyecto) {
             return res.status(401).json({ message: "No se pudo encontrar el proyecto" });
@@ -164,16 +144,7 @@ export const eliminarProyecto: RequestHandler = async (req, res) => {
             return res.status(401).json({ message: "No se pudo eliminar el status ligado al proyecto" });
         }
         await Status.destroy({ where: { proyecto_id } });*/
-        const proyectoEliminado: Proyecto | null = await Proyecto.findByPk(id, {
-            include: [
-                {
-                    //model: Usuario,
-                    attributes: { exclude: ["password"] },
-                },
-                Carrera,
-            ],
-            attributes: { exclude: ["usuario_codigo", "carrera_clave"] },
-        });
+        const proyectoEliminado: Proyecto | null = await Proyecto.findByPk(id);
         if (!proyectoEliminado) {
             return res.status(401).json({ message: "No se pudo eliminar el proyecto" });
         }

@@ -42,6 +42,12 @@ export class Proyecto extends Model{
         type:DataType.STRING,
         allowNull:false
     })
+    nombre!:string
+
+    @Column({
+        type:DataType.STRING,
+        allowNull:false
+    })
     objetivos!:string
 
     @Column({
@@ -58,7 +64,7 @@ export class Proyecto extends Model{
 
     @Column({
         type:DataType.STRING,
-        allowNull:false
+        allowNull:true
     })
     alumnos!:string
     @HasMany(()=>Alumnos,"proyecto_id")
