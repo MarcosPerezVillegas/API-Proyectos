@@ -1,4 +1,5 @@
 import express from "express";
+import rutasAdministradores from "./routes/administradores"
 import rutasMaestros from "./routes/maestros"
 import rutasAlumnos from "./routes/alumnos"
 import rutaLogin from "./routes/auth"
@@ -25,6 +26,7 @@ app.use(urlencoded({extended:true}))
 
 app.use("/Alumnos",rutasAlumnos);
 app.use("/Maestros",rutasMaestros);
+app.use("/Administradores",rutasAdministradores);
 app.use("/Login",rutaLogin);
 app.use("/Carreras",rutaCarreras);
 app.use("/Proyectos",rutaProyectos);

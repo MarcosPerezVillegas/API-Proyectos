@@ -11,6 +11,7 @@ const statusProyecto_1 = require("../models/statusProyecto");
 const maestros_1 = require("../models/maestros");
 const alumnos_1 = require("../models/alumnos");
 const encargadosProyectos_1 = require("../models/encargadosProyectos");
+const administradores_1 = require("../models/administradores");
 exports.connection = new sequelize_typescript_1.Sequelize({
     dialect: "mysql",
     host: "localhost",
@@ -18,7 +19,7 @@ exports.connection = new sequelize_typescript_1.Sequelize({
     password: "wasd",
     database: "BancoDeProyectos",
     logging: true,
-    models: [carrera_1.Carrera, proyectos_1.Proyecto, documento_1.documentos, status_1.Status, tareas_1.Tarea, statusProyecto_1.statusProyecto, maestros_1.Maestros, alumnos_1.Alumnos, encargadosProyectos_1.encargadosProyectos],
+    models: [carrera_1.Carrera, proyectos_1.Proyecto, documento_1.documentos, status_1.Status, tareas_1.Tarea, statusProyecto_1.statusProyecto, maestros_1.Maestros, alumnos_1.Alumnos, administradores_1.Administradores, encargadosProyectos_1.encargadosProyectos],
     port: 33061
 });
 exports.default = exports.connection;

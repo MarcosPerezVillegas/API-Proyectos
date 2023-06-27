@@ -16,7 +16,7 @@ export const crearMaestro: RequestHandler = async (req, res) => {
         if (!maestro) {
             return res.status(401).json({ message: "No se pudo crear al maestro", data: maestro });
         }
-        return res.status(200).json({ message: "maestro creado", data: maestro });
+        return res.status(200).json({ message: "Maestro creado", data: maestro });
     } catch (error) {
         return res.status(404).json({ message: "", error });
     }
@@ -31,7 +31,7 @@ export const listarMaestros: RequestHandler = async (req, res) => {
         if (!maestros) {
             return res.status(401).json({ message: "No se pudo encontar los maestros", data: maestros });
         }
-        return res.status(200).json({ message: "maestros encontrados: " + maestros.length, data: maestros });
+        return res.status(200).json({ message: "Maestros encontrados: " + maestros.length, data: maestros });
     } catch (error) {
         return res.status(404).json({ message: "", error });
     }
@@ -50,7 +50,7 @@ export const listarMaestrosElimidanos: RequestHandler = async (req, res) => {
         if (!maestros) {
             return res.status(401).json({ message: "No se pudo encontar los maestros", data: maestros });
         }
-        return res.status(200).json({ message: "maestros encontrados: " + maestros.length, data: maestros });
+        return res.status(200).json({ message: "Maestros encontrados: " + maestros.length, data: maestros });
     } catch (error) {
         return res.status(404).json({ message: "", error });
     }
@@ -64,7 +64,7 @@ export const infoCompletaMaestro: RequestHandler = async (req, res) => {
         if (!maestro) {
             return res.status(401).json({ message: "No se pudo encontar al maestro", data: maestro });
         }
-        return res.status(200).json({ message: "maestro encontrado con toda su info", data: maestro });
+        return res.status(200).json({ message: "Maestro encontrado con toda su info", data: maestro });
     } catch (error) {
         return res.status(404).json({ message: "", error });
     }
@@ -79,7 +79,7 @@ export const buscarmaestroNombre: RequestHandler = async (req, res) => {
         if (!maestro) {
             return res.status(401).json({ message: "No se pudo encontar al maestro", data: maestro });
         }
-        return res.status(200).json({ message: "maestro encontrado con toda su info", data: maestro });
+        return res.status(200).json({ message: "Maestro encontrado con toda su info", data: maestro });
     } catch (error) {
         return res.status(404).json({ message: "", error });
     }
@@ -93,7 +93,7 @@ export const infoemailMaestro: RequestHandler = async (req, res) => {
         if (!maestro) {
             return res.status(401).json({ message: "No se pudo encontar al maestro", data: maestro });
         }
-        return res.status(200).json({ message: "maestro encontrado con toda su info", data: maestro });
+        return res.status(200).json({ message: "Maestro encontrado con toda su info", data: maestro });
     } catch (error) {
         return res.status(404).json({ message: "", error });
     }
@@ -107,7 +107,7 @@ export const infoCompletaMaestroEliminado: RequestHandler = async (req, res) => 
         if (!maestro) {
             return res.status(401).json({ message: "No se pudo encontar al maestro", data: maestro });
         }
-        return res.status(200).json({ message: "maestro encontrado con toda su info", data: maestro });
+        return res.status(200).json({ message: "Maestro encontrado con toda su info", data: maestro });
     } catch (error) {
         return res.status(404).json({ message: "", error });
     }
@@ -122,7 +122,7 @@ export const actualizarMaestro: RequestHandler = async (req, res) => {
         if (!maestro) {
             return res.status(401).json({ message: "No se pudo actualizar el maestro", data: maestro });
         }
-        return res.status(200).json({ message: "maestro actualizado", data: maestroActualizado });
+        return res.status(200).json({ message: "Maestro actualizado", data: maestroActualizado });
     } catch (error) {
         return res.status(404).json({ message: "", error });
     }
@@ -137,7 +137,7 @@ export const eliminarMaestro: RequestHandler = async (req, res) => {
         if (!maestro) {
             return res.status(401).json({ message: "No se pudo eliminar el maestro", data: maestro });
         }
-        return res.status(200).json({ message: "maestro eliminado", data: maestroEliminado });
+        return res.status(200).json({ message: "Maestro eliminado", data: maestroEliminado });
     } catch (error) {
         return res.status(404).json({ message: "", error });
     }
@@ -152,7 +152,7 @@ export const eliminarMaestroPerma: RequestHandler = async (req, res) => {
         if (!maestro) {
             return res.status(401).json({ message: "No se pudo eliminar el maestro", data: maestro });
         }
-        return res.status(200).json({ message: "maestro eliminado", data: maestroEliminado });
+        return res.status(200).json({ message: "Maestro eliminado", data: maestroEliminado });
     } catch (error) {
         return res.status(404).json({ message: "", error });
     }

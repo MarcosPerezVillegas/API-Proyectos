@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const administradores_1 = __importDefault(require("./routes/administradores"));
 const maestros_1 = __importDefault(require("./routes/maestros"));
 const alumnos_1 = __importDefault(require("./routes/alumnos"));
 const auth_1 = __importDefault(require("./routes/auth"));
@@ -26,6 +27,7 @@ app.use((0, body_parser_1.json)());
 app.use((0, body_parser_1.urlencoded)({ extended: true }));
 app.use("/Alumnos", alumnos_1.default);
 app.use("/Maestros", maestros_1.default);
+app.use("/Administradores", administradores_1.default);
 app.use("/Login", auth_1.default);
 app.use("/Carreras", carreras_1.default);
 app.use("/Proyectos", proyectos_1.default);
