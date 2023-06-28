@@ -13,6 +13,8 @@ exports.eliminarProyecto = exports.actualizarProyecto = exports.BuscarProyectosC
 const proyectos_1 = require("../models/proyectos");
 //import { Usuario } from "../models/maestros";
 const carrera_1 = require("../models/carrera");
+const status_1 = require("../models/status");
+const alumnos_1 = require("../models/alumnos");
 const crearProyecto = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         var proyecto = yield proyectos_1.Proyecto.create(Object.assign({}, req.body));
@@ -28,12 +30,16 @@ const crearProyecto = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 exports.crearProyecto = crearProyecto;
 const listarProyectos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        console.log("a");
         var proyectos = yield proyectos_1.Proyecto.findAll({
             include: [
+                alumnos_1.Alumnos,
+                status_1.Status,
                 { model: carrera_1.Carrera,
-                    attributes: { exclude: ["clave"] } },
+                    required: true
+                }
             ],
-            attributes: { exclude: ["usuario_codigo", "carrera_clave"] },
+            attributes: { exclude: ["carrera_clave"] },
         });
         if (!proyectos) {
             return res.status(401).json({ message: "No se pudo encontrar los proyectos" });
@@ -48,19 +54,7 @@ exports.listarProyectos = listarProyectos;
 const BuscarProyectoId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
-        const proyecto = yield proyectos_1.Proyecto.findByPk(id, {
-            include: [
-                {
-                    model: carrera_1.Carrera,
-                    attributes: { exclude: ["clave"] },
-                },
-                {
-                //model: Usuario,
-                },
-                carrera_1.Carrera,
-            ],
-            attributes: { exclude: ["usuario_codigo", "carrera_clave"] },
-        });
+        const proyecto = yield proyectos_1.Proyecto.findByPk(id);
         if (!proyecto) {
             return res.status(401).json({ message: "No se pudo encontrar el proyecto" });
         }
@@ -101,13 +95,9 @@ const BuscarProyectoUsuario = (req, res) => __awaiter(void 0, void 0, void 0, fu
         const proyecto = yield proyectos_1.Proyecto.findOne({
             where: { usuario_codigo },
             include: [
-                {
-                    //model: Usuario,
-                    attributes: { exclude: ["password"] },
-                },
                 carrera_1.Carrera,
             ],
-            attributes: { exclude: ["usuario_codigo", "carrera_clave"] },
+            attributes: { exclude: ["carrera_clave"] },
         });
         if (!proyecto) {
             return res.status(401).json({ message: "No se pudo encontrar el proyecto" });
@@ -170,16 +160,7 @@ const eliminarProyecto = (req, res) => __awaiter(void 0, void 0, void 0, functio
              return res.status(401).json({ message: "No se pudo eliminar el status ligado al proyecto" });
          }
          await Status.destroy({ where: { proyecto_id } });*/
-        const proyectoEliminado = yield proyectos_1.Proyecto.findByPk(id, {
-            include: [
-                {
-                    //model: Usuario,
-                    attributes: { exclude: ["password"] },
-                },
-                carrera_1.Carrera,
-            ],
-            attributes: { exclude: ["usuario_codigo", "carrera_clave"] },
-        });
+        const proyectoEliminado = yield proyectos_1.Proyecto.findByPk(id);
         if (!proyectoEliminado) {
             return res.status(401).json({ message: "No se pudo eliminar el proyecto" });
         }

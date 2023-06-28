@@ -26,7 +26,7 @@ export async function login(req:Request, res:Response){
             return res.status(401).json({message:"La contraseña es incorrecta"})
         }
         const token = jwt.sign(
-            {codigo:administrador.codigo},
+            {codigo:administrador.codigo, rol:'administrador'},
             "Prueba 123",
             {expiresIn:'5h'}
             );
@@ -38,7 +38,7 @@ export async function login(req:Request, res:Response){
             return res.status(401).json({message:"La contraseña es incorrecta"})
         }
         const token = jwt.sign(
-            {codigo:maestro.codigo},
+            {codigo:maestro.codigo, rol:'maestro'},
             "Prueba 123",
             {expiresIn:'5h'}
             );
@@ -50,7 +50,7 @@ export async function login(req:Request, res:Response){
             return res.status(401).json({message:"La contraseña es incorrecta"})
         }
         const token = jwt.sign(
-            {codigo:alumno.codigo},
+            {codigo:alumno.codigo, rol:'alumno'},
             "Prueba 123",
             {expiresIn:'5h'}
             );

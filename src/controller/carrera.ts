@@ -33,7 +33,9 @@ export const borrarCarrera: RequestHandler = async (req, res) => {
 
 export const obtenerTCarreras: RequestHandler = async (req, res) => {
     try {
-        const todosLasCarreras: Carrera[] = await Carrera.findAll();
+        const todosLasCarreras: Carrera[] = await Carrera.findAll({
+            include: Proyecto
+        });
         if (!todosLasCarreras) {
             return res.status(401).json({ message: "No se pudo obtener las carreras" });
         }

@@ -6,6 +6,7 @@ import { connection } from "../db/config"
 import { Model } from "sequelize";
 import { Status } from "../models/status";
 import { statusProyecto } from "../models/statusProyecto";
+import { Alumnos } from "../models/alumnos";
 
 export const crearProyecto: RequestHandler = async (req, res) => {
     try {
@@ -22,7 +23,15 @@ export const crearProyecto: RequestHandler = async (req, res) => {
 
 export const listarProyectos: RequestHandler = async (req, res) => {
     try {
+        console.log("a")
         var proyectos = await Proyecto.findAll({
+            include: [
+                Alumnos,
+                Status,
+                {model: Carrera,
+                    required: true
+                }
+            ],
             attributes: { exclude: ["carrera_clave"] },
         });
         if (!proyectos) {

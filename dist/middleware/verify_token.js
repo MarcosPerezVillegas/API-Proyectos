@@ -34,6 +34,7 @@ function autorizar(req, res, next) {
     try {
         const payload = jwt.verify(token, "Prueba 123");
         req.usuarioCodigo = payload.codigo;
+        req.usuarioRol = payload.rol;
         next();
     }
     catch (error) {

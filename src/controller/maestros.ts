@@ -71,7 +71,7 @@ export const infoCompletaMaestro: RequestHandler = async (req, res) => {
 
 }
 
-export const buscarmaestroNombre: RequestHandler = async (req, res) => {
+export const buscarMaestroNombre: RequestHandler = async (req, res) => {
     const { nombre } = req.params
     try {
         console.log(nombre)

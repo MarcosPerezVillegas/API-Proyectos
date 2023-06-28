@@ -38,7 +38,7 @@ function login(req, res) {
             if (!passValida) {
                 return res.status(401).json({ message: "La contraseña es incorrecta" });
             }
-            const token = jsonwebtoken_1.default.sign({ codigo: administrador.codigo }, "Prueba 123", { expiresIn: '5h' });
+            const token = jsonwebtoken_1.default.sign({ codigo: administrador.codigo, rol: 'administrador' }, "Prueba 123", { expiresIn: '5h' });
             return res.json({ token });
         }
         if (maestro) {
@@ -46,7 +46,7 @@ function login(req, res) {
             if (!passValida) {
                 return res.status(401).json({ message: "La contraseña es incorrecta" });
             }
-            const token = jsonwebtoken_1.default.sign({ codigo: maestro.codigo }, "Prueba 123", { expiresIn: '5h' });
+            const token = jsonwebtoken_1.default.sign({ codigo: maestro.codigo, rol: 'maestro' }, "Prueba 123", { expiresIn: '5h' });
             return res.json({ token });
         }
         if (alumno) {
@@ -54,7 +54,7 @@ function login(req, res) {
             if (!passValida) {
                 return res.status(401).json({ message: "La contraseña es incorrecta" });
             }
-            const token = jsonwebtoken_1.default.sign({ codigo: alumno.codigo }, "Prueba 123", { expiresIn: '5h' });
+            const token = jsonwebtoken_1.default.sign({ codigo: alumno.codigo, rol: 'alumno' }, "Prueba 123", { expiresIn: '5h' });
             return res.json({ token });
         }
     });

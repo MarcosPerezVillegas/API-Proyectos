@@ -53,6 +53,12 @@ __decorate([
         type: sequelize_typescript_1.DataType.STRING,
         allowNull: false
     })
+], Proyecto.prototype, "nombre", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.STRING,
+        allowNull: false
+    })
 ], Proyecto.prototype, "objetivos", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({
@@ -69,7 +75,7 @@ __decorate([
 __decorate([
     (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.STRING,
-        allowNull: false
+        allowNull: true
     })
 ], Proyecto.prototype, "alumnos", void 0);
 __decorate([
