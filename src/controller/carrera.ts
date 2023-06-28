@@ -24,7 +24,7 @@ export const borrarCarrera: RequestHandler = async (req, res) => {
         if (!carrera) {
             return res.status(401).json({ message: "No se pudo eliminar la tarea" });
         }
-        return res.status(200).json({ messege: "Carrera eliminada ok!", data: carreraEliminada })
+        return res.status(200).json({ message: "Carrera eliminada ok!", data: carreraEliminada })
     } catch (error) {
         return res.status(404).json({ message: "", error });
     }
