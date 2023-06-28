@@ -14,7 +14,6 @@ const tareas_1 = require("./tareas");
 const documento_1 = require("./documento");
 const status_1 = require("./status");
 const statusProyecto_1 = require("./statusProyecto");
-const encargadosProyectos_1 = require("./encargadosProyectos");
 const alumnos_1 = require("./alumnos");
 let Proyecto = Proyecto_1 = class Proyecto extends sequelize_typescript_1.Model {
 };
@@ -31,8 +30,8 @@ __decorate([
     (0, sequelize_typescript_1.BelongsToMany)(() => status_1.Status, () => statusProyecto_1.statusProyecto)
 ], Proyecto.prototype, "statuses", void 0);
 __decorate([
-    (0, sequelize_typescript_1.BelongsToMany)(() => maestros_1.Maestros, () => encargadosProyectos_1.encargadosProyectos)
-], Proyecto.prototype, "encargados", void 0);
+    (0, sequelize_typescript_1.BelongsTo)(() => maestros_1.Maestros, 'id')
+], Proyecto.prototype, "encargado", void 0);
 __decorate([
     (0, sequelize_typescript_1.HasMany)(() => tareas_1.Tarea, "Proyecto_id")
 ], Proyecto.prototype, "tareas", void 0);

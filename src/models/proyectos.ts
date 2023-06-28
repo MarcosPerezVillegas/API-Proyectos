@@ -5,7 +5,6 @@ import { Tarea } from "./tareas";
 import { documentos } from "./documento";
 import { Status } from "./status";
 import { statusProyecto } from "./statusProyecto";
-import { encargadosProyectos } from "./encargadosProyectos";
 import { Alumnos } from "./alumnos";
 
 @Table({
@@ -23,8 +22,8 @@ export class Proyecto extends Model{
     id!:number;
     @BelongsToMany(() => Status, () => statusProyecto)
     statuses!: Status[];
-    @BelongsToMany(() => Maestros, () => encargadosProyectos)
-    encargados!: Maestros[];
+    @BelongsTo(() => Maestros,'id')
+    encargado!: Maestros
     @HasMany(()=>Tarea,"Proyecto_id")
     tareas!:Tarea[]
     @HasMany(()=>documentos,"Proyecto_id")
