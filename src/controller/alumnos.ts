@@ -11,7 +11,6 @@ export const crearAlumno: RequestHandler = async (req, res) => {
             email: req.body.email,
             password: await bcrypt.hash(req.body.password, 10),//cuando creamos el alumno, hasheamos el password con bcrypt
             telefono: req.body.telefono,
-            rol_id: req.body.rol_id
         });
         if (!alumno) {
             return res.status(401).json({ message: "No se pudo crear al alumno", data: alumno });

@@ -9,81 +9,169 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.actualizarRol = exports.obtenerRolId = exports.obtenerTRoles = exports.borrarRol = exports.crearRol = void 0;
-const roles_1 = require("../models/roles");
-//import { Usuario } from "../models/maestros";
-const crearRol = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.alumnToMaest = exports.alumnToAdmin = exports.maestToAlumn = exports.maestToAdmin = exports.adminToMaest = exports.adminToAlumn = void 0;
+const alumnos_1 = require("../models/alumnos");
+const administradores_1 = require("../models/administradores");
+const maestros_1 = require("../models/maestros");
+const adminToAlumn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { codigo } = req.params;
     try {
-        var rol = yield roles_1.Rol.create(Object.assign({}, req.body));
-        if (!rol) {
-            return res.status(401).json({ message: "No se pudo crear el rol", data: rol });
+        var admin = yield administradores_1.Administradores.findByPk(codigo);
+        if (!admin) {
+            return res.status(401).json({ message: "No se pudo encontar al administrador", data: admin });
         }
-        return res.status(200).json({ message: "Rol creado ok!", data: rol });
+        try {
+            var alumno = yield alumnos_1.Alumnos.create({
+                codigo: admin.codigo,
+                nombre: admin.nombre,
+                email: admin.email,
+                password: admin.password,
+                telefono: admin.telefono,
+            });
+            yield administradores_1.Administradores.destroy({ where: { codigo: admin.codigo }, force: true });
+        }
+        catch (error) {
+            return res.status(401).json({ message: "No se pudo modificar el usuario: ", error });
+        }
+        return res.status(200).json({ message: "Usuario modificado con exito" });
     }
     catch (error) {
-        return res.status(404).json({ message: "", error });
+        return res.status(404).json({ message: "Algo salió mal: ", error });
     }
 });
-exports.crearRol = crearRol;
-const borrarRol = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
+exports.adminToAlumn = adminToAlumn;
+const adminToMaest = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { codigo } = req.params;
     try {
-        const rolEliminado = yield roles_1.Rol.findByPk(id);
-        yield roles_1.Rol.destroy({ where: { id } });
-        if (!rolEliminado) {
-            return res.status(401).json({ message: "No se pudo eliminar el rol", data: rolEliminado });
+        var admin = yield administradores_1.Administradores.findByPk(codigo);
+        if (!admin) {
+            return res.status(401).json({ message: "No se pudo encontar al administrador", data: admin });
         }
-        return res.status(200).json({ messege: "Rol Eliminado ok!", data: rolEliminado });
+        try {
+            var maestro = yield maestros_1.Maestros.create({
+                codigo: admin.codigo,
+                nombre: admin.nombre,
+                email: admin.email,
+                password: admin.password,
+                telefono: admin.telefono,
+            });
+            yield administradores_1.Administradores.destroy({ where: { codigo: admin.codigo }, force: true });
+        }
+        catch (error) {
+            return res.status(401).json({ message: "No se pudo modificar el usuario: ", error });
+        }
+        return res.status(200).json({ message: "Usuario modificado con exito" });
     }
     catch (error) {
-        return res.status(404).json({ message: "", error });
+        return res.status(404).json({ message: "Algo salió mal: ", error });
     }
 });
-exports.borrarRol = borrarRol;
-const obtenerTRoles = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.adminToMaest = adminToMaest;
+const maestToAdmin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { codigo } = req.params;
     try {
-        const todosLosRoles = yield roles_1.Rol.findAll();
-        if (!todosLosRoles) {
-            return res.status(401).json({ message: "No se pudo obtener los roles", data: todosLosRoles });
+        var maestro = yield maestros_1.Maestros.findByPk(codigo);
+        if (!maestro) {
+            return res.status(401).json({ message: "No se pudo encontar al maestro", data: maestro });
         }
-        return res.status(200).json({ message: "Roles obtenidos ok!", data: todosLosRoles });
+        try {
+            var administrador = yield administradores_1.Administradores.create({
+                codigo: maestro.codigo,
+                nombre: maestro.nombre,
+                email: maestro.email,
+                password: maestro.password,
+                telefono: maestro.telefono,
+            });
+            yield maestros_1.Maestros.destroy({ where: { codigo: maestro.codigo }, force: true });
+        }
+        catch (error) {
+            return res.status(401).json({ message: "No se pudo modificar el usuario: ", error });
+        }
+        return res.status(200).json({ message: "Usuario modificado con exito" });
     }
     catch (error) {
-        return res.status(404).json({ message: "", error });
+        return res.status(404).json({ message: "Algo salió mal: ", error });
     }
 });
-exports.obtenerTRoles = obtenerTRoles;
-const obtenerRolId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
+exports.maestToAdmin = maestToAdmin;
+const maestToAlumn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { codigo } = req.params;
     try {
-        const rolId = yield roles_1.Rol.findByPk(id, {
-            include: {
-                //model: Usuario,
-                attributes: { exclude: ["password"] },
-            },
-        });
-        if (!rolId) {
-            return res.status(401).json({ message: "No se pudo obtener el rol", data: rolId });
+        var maestro = yield maestros_1.Maestros.findByPk(codigo);
+        if (!maestro) {
+            return res.status(401).json({ message: "No se pudo encontar al administrador", data: maestro });
         }
-        return res.status(200).json({ message: "Rol obtenido ok!", data: rolId });
+        try {
+            var alumno = yield alumnos_1.Alumnos.create({
+                codigo: maestro.codigo,
+                nombre: maestro.nombre,
+                email: maestro.email,
+                password: maestro.password,
+                telefono: maestro.telefono,
+            });
+            yield maestros_1.Maestros.destroy({ where: { codigo: maestro.codigo }, force: true });
+        }
+        catch (error) {
+            return res.status(401).json({ message: "No se pudo modificar el usuario: ", error });
+        }
+        return res.status(200).json({ message: "Usuario modificado con exito" });
     }
     catch (error) {
-        return res.status(404).json({ message: "", error });
+        return res.status(404).json({ message: "Algo salió mal: ", error });
     }
 });
-exports.obtenerRolId = obtenerRolId;
-const actualizarRol = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
+exports.maestToAlumn = maestToAlumn;
+const alumnToAdmin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { codigo } = req.params;
     try {
-        yield roles_1.Rol.update(Object.assign({}, req.body), { where: { id } });
-        const rolActualizado = yield roles_1.Rol.findByPk(id);
-        if (!rolActualizado) {
-            return res.status(401).json({ message: "No se pudo actualizar el rol", data: rolActualizado });
+        var alumno = yield alumnos_1.Alumnos.findByPk(codigo);
+        if (!alumno) {
+            return res.status(401).json({ message: "No se pudo encontar al alumno", data: alumno });
         }
-        return res.status(200).json({ message: "Rol actualizado!", data: rolActualizado });
+        try {
+            var administrador = yield administradores_1.Administradores.create({
+                codigo: alumno.codigo,
+                nombre: alumno.nombre,
+                email: alumno.email,
+                password: alumno.password,
+                telefono: alumno.telefono,
+            });
+            yield alumnos_1.Alumnos.destroy({ where: { codigo: alumno.codigo }, force: true });
+        }
+        catch (error) {
+            return res.status(401).json({ message: "No se pudo modificar el usuario: ", error });
+        }
+        return res.status(200).json({ message: "Usuario modificado con exito" });
     }
     catch (error) {
-        return res.status(404).json({ message: "", error });
+        return res.status(404).json({ message: "Algo salió mal: ", error });
     }
 });
-exports.actualizarRol = actualizarRol;
+exports.alumnToAdmin = alumnToAdmin;
+const alumnToMaest = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { codigo } = req.params;
+    try {
+        var alumno = yield alumnos_1.Alumnos.findByPk(codigo);
+        if (!alumno) {
+            return res.status(401).json({ message: "No se pudo encontar al alumno", data: alumno });
+        }
+        try {
+            var maestro = yield maestros_1.Maestros.create({
+                codigo: alumno.codigo,
+                nombre: alumno.nombre,
+                email: alumno.email,
+                password: alumno.password,
+                telefono: alumno.telefono,
+            });
+            yield alumnos_1.Alumnos.destroy({ where: { codigo: alumno.codigo }, force: true });
+        }
+        catch (error) {
+            return res.status(401).json({ message: "No se pudo modificar el usuario: ", error });
+        }
+        return res.status(200).json({ message: "Usuario modificado con exito" });
+    }
+    catch (error) {
+        return res.status(404).json({ message: "Algo salió mal: ", error });
+    }
+});
+exports.alumnToMaest = alumnToMaest;

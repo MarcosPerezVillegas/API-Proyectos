@@ -11,7 +11,6 @@ export const crearAdministrador: RequestHandler = async (req, res) => {
             email: req.body.email,
             password: await bcrypt.hash(req.body.password, 10),//cuando creamos el administrador, hasheamos el password con bcrypt
             telefono: req.body.telefono,
-            rol_id: req.body.rol_id
         });
         if (!administrador) {
             return res.status(401).json({ message: "No se pudo crear al administrador", data: administrador });
