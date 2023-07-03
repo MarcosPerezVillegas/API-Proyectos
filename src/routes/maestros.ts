@@ -3,7 +3,9 @@ import { crearMaestro,
     actualizarMaestro,
     eliminarMaestro,
     listarMaestros,
+    listarAdmins,
     listarMaestrosElimidanos,
+    listarAdminsElimidanos,
     infoemailMaestro,
     infoCompletaMaestro,
     infoCompletaMaestroEliminado,
@@ -15,7 +17,9 @@ import { autorizar } from "../middleware/verify_token";
 const router = Router();
 router.post("/",crearMaestro);
 router.delete("/:codigo",autorizar,eliminarMaestro);
-router.get("/",listarMaestros);
+router.get("/",autorizar,listarMaestros);
+router.get("/Admins",autorizar,listarAdmins);
+router.get("/Admins/Eliminados",autorizar,listarAdminsElimidanos);
 router.get("/Email/:email",autorizar,infoemailMaestro);
 router.get("/Eliminados",autorizar,listarMaestrosElimidanos);
 router.get("/Eliminados/:codigo",autorizar,infoCompletaMaestroEliminado);

@@ -1,5 +1,4 @@
 import express from "express";
-import rutasAdministradores from "./routes/administradores"
 import rutasMaestros from "./routes/maestros"
 import rutasAlumnos from "./routes/alumnos"
 import rutaLogin from "./routes/auth"
@@ -8,7 +7,6 @@ import rutaProyectos from "./routes/proyectos"
 import rutasDocumentos from "./routes/documentos"
 import rutasStatus from "./routes/status";
 import rutasTareas from "./routes/tareas"
-import rutasRoles from "./routes/roles"
 import connection from "./db/config";
 import { json, urlencoded } from "body-parser";
 
@@ -27,14 +25,12 @@ app.use(urlencoded({extended:true}))
 
 app.use("/Alumnos",rutasAlumnos);
 app.use("/Maestros",rutasMaestros);
-app.use("/Administradores",rutasAdministradores);
 app.use("/Login",rutaLogin);
 app.use("/Carreras",rutaCarreras);
 app.use("/Proyectos",rutaProyectos);
 app.use("/Status", rutasStatus);
 app.use("/Documentos", rutasDocumentos);
 app.use("/Tareas", rutasTareas);
-app.use("/Roles", rutasRoles);
 
 app.use(
     (

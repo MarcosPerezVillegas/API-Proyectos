@@ -8,6 +8,4 @@ router.get("/AdminToAlumn/:codigo", verify_token_1.autorizar, roles_1.adminToAlu
 router.get("/AdminToMaest/:codigo", verify_token_1.autorizar, roles_1.adminToMaest);
 router.get("/MaestToAdmin/:codigo", verify_token_1.autorizar, roles_1.maestToAdmin);
 router.get("/MaestToAlumn/:codigo", verify_token_1.autorizar, roles_1.maestToAlumn);
-router.get("/AlumnToAdmin/:codigo", verify_token_1.autorizar, roles_1.alumnToAdmin);
-router.get("/AlumnToMaest/:codigo", verify_token_1.autorizar, roles_1.alumnToMaest);
 exports.default = router;

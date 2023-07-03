@@ -15,7 +15,7 @@ import { autorizar } from "../middleware/verify_token";
 const router = Router();
 router.post("/",crearAlumno);
 router.delete("/:codigo",autorizar,eliminarAlumno);
-router.get("/",listarAlumnos);
+router.get("/",autorizar,listarAlumnos);
 router.get("/Email/:email",autorizar,infoemailAlumno);
 router.get("/Eliminados",autorizar,listarAlumnosElimidanos);
 router.get("/Eliminados/:codigo",autorizar,infoCompletaAlumnoEliminado);

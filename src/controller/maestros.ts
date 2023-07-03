@@ -11,6 +11,7 @@ export const crearMaestro: RequestHandler = async (req, res) => {
             email: req.body.email,
             password: await bcrypt.hash(req.body.password, 10),//cuando creamos el maestro, hasheamos el password con bcrypt
             telefono: req.body.telefono,
+            admin: req.body.admin
         });
         if (!maestro) {
             return res.status(401).json({ message: "No se pudo crear al maestro", data: maestro });
@@ -25,6 +26,9 @@ export const crearMaestro: RequestHandler = async (req, res) => {
 export const listarMaestros: RequestHandler = async (req, res) => {
     try {
         var maestros = await Maestros.findAll({
+            where: {
+                admin: 0
+            },
             attributes: { exclude: ["password"] }
         });
         if (!maestros) {
@@ -37,10 +41,29 @@ export const listarMaestros: RequestHandler = async (req, res) => {
 
 }
 
+export const listarAdmins: RequestHandler = async (req, res) => {
+    try {
+        var maestros = await Maestros.findAll({
+            where: {
+                admin: 1
+            },
+            attributes: { exclude: ["password", "admin"] }
+        });
+        if (!maestros) {
+            return res.status(401).json({ message: "No se pudo encontar los administradores", data: maestros });
+        }
+        return res.status(200).json({ message: "Administradores encontrados: " + maestros.length, data: maestros });
+    } catch (error) {
+        return res.status(404).json({ message: "", error });
+    }
+
+}
+
 export const listarMaestrosElimidanos: RequestHandler = async (req, res) => {
     try {
         var maestros = await Maestros.findAll({
             where: {
+                admin: 0,
                 deletedAt: {[Op.not]: null}
             },
             paranoid: false,
@@ -50,6 +73,26 @@ export const listarMaestrosElimidanos: RequestHandler = async (req, res) => {
             return res.status(401).json({ message: "No se pudo encontar los maestros", data: maestros });
         }
         return res.status(200).json({ message: "Maestros encontrados: " + maestros.length, data: maestros });
+    } catch (error) {
+        return res.status(404).json({ message: "", error });
+    }
+
+}
+
+export const listarAdminsElimidanos: RequestHandler = async (req, res) => {
+    try {
+        var maestros = await Maestros.findAll({
+            where: {
+                admin: 1,
+                deletedAt: {[Op.not]: null}
+            },
+            paranoid: false,
+            attributes: { exclude: ["password"] }
+        });
+        if (!maestros) {
+            return res.status(401).json({ message: "No se pudo encontar los administradores", data: maestros });
+        }
+        return res.status(200).json({ message: "Administradores encontrados: " + maestros.length, data: maestros });
     } catch (error) {
         return res.status(404).json({ message: "", error });
     }

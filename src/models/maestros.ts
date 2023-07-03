@@ -36,4 +36,9 @@ export class Maestros extends Model{
         allowNull:true
     })
     telefono!:string
+    @Column({
+        type:DataType.INTEGER,
+        allowNull:true
+    })
+    admin!:number
 }

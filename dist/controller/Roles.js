@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.alumnToMaest = exports.alumnToAdmin = exports.maestToAlumn = exports.maestToAdmin = exports.adminToMaest = exports.adminToAlumn = void 0;
+exports.maestToAlumn = exports.maestToAdmin = exports.adminToMaest = exports.adminToAlumn = void 0;
 const alumnos_1 = require("../models/alumnos");
 const administradores_1 = require("../models/administradores");
 const maestros_1 = require("../models/maestros");
@@ -121,57 +121,3 @@ const maestToAlumn = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.maestToAlumn = maestToAlumn;
-const alumnToAdmin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { codigo } = req.params;
-    try {
-        var alumno = yield alumnos_1.Alumnos.findByPk(codigo);
-        if (!alumno) {
-            return res.status(401).json({ message: "No se pudo encontar al alumno", data: alumno });
-        }
-        try {
-            var administrador = yield administradores_1.Administradores.create({
-                codigo: alumno.codigo,
-                nombre: alumno.nombre,
-                email: alumno.email,
-                password: alumno.password,
-                telefono: alumno.telefono,
-            });
-            yield alumnos_1.Alumnos.destroy({ where: { codigo: alumno.codigo }, force: true });
-        }
-        catch (error) {
-            return res.status(401).json({ message: "No se pudo modificar el usuario: ", error });
-        }
-        return res.status(200).json({ message: "Usuario modificado con exito" });
-    }
-    catch (error) {
-        return res.status(404).json({ message: "Algo salió mal: ", error });
-    }
-});
-exports.alumnToAdmin = alumnToAdmin;
-const alumnToMaest = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { codigo } = req.params;
-    try {
-        var alumno = yield alumnos_1.Alumnos.findByPk(codigo);
-        if (!alumno) {
-            return res.status(401).json({ message: "No se pudo encontar al alumno", data: alumno });
-        }
-        try {
-            var maestro = yield maestros_1.Maestros.create({
-                codigo: alumno.codigo,
-                nombre: alumno.nombre,
-                email: alumno.email,
-                password: alumno.password,
-                telefono: alumno.telefono,
-            });
-            yield alumnos_1.Alumnos.destroy({ where: { codigo: alumno.codigo }, force: true });
-        }
-        catch (error) {
-            return res.status(401).json({ message: "No se pudo modificar el usuario: ", error });
-        }
-        return res.status(200).json({ message: "Usuario modificado con exito" });
-    }
-    catch (error) {
-        return res.status(404).json({ message: "Algo salió mal: ", error });
-    }
-});
-exports.alumnToMaest = alumnToMaest;
