@@ -5,17 +5,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var Proyecto_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Proyecto = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
+const carrera_1 = require("./carrera");
 const maestros_1 = require("./maestros");
 const tareas_1 = require("./tareas");
 const documento_1 = require("./documento");
 const status_1 = require("./status");
 const statusProyecto_1 = require("./statusProyecto");
 const alumnos_1 = require("./alumnos");
-let Proyecto = Proyecto_1 = class Proyecto extends sequelize_typescript_1.Model {
+let Proyecto = class Proyecto extends sequelize_typescript_1.Model {
 };
 __decorate([
     (0, sequelize_typescript_1.Column)({
@@ -45,7 +45,7 @@ __decorate([
     })
 ], Proyecto.prototype, "carrera_clave", void 0);
 __decorate([
-    (0, sequelize_typescript_1.BelongsTo)(() => Proyecto_1, "carrera_clave")
+    (0, sequelize_typescript_1.BelongsTo)(() => carrera_1.Carrera, "carrera_clave")
 ], Proyecto.prototype, "Carrera", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({
@@ -80,7 +80,7 @@ __decorate([
 __decorate([
     (0, sequelize_typescript_1.HasMany)(() => alumnos_1.Alumnos, "proyecto_id")
 ], Proyecto.prototype, "Alumnos", void 0);
-Proyecto = Proyecto_1 = __decorate([
+Proyecto = __decorate([
     (0, sequelize_typescript_1.Table)({
         timestamps: false,
         tableName: "proyecto",

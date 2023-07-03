@@ -17,10 +17,14 @@ const status_1 = require("../models/status");
 const alumnos_1 = require("../models/alumnos");
 const crearProyecto = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        var proyecto = yield proyectos_1.Proyecto.create(Object.assign({}, req.body));
-        if (!proyecto) {
-            return res.status(401).json({ message: "No se pudo crear el proyecto" });
+        const proyecto = yield proyectos_1.Proyecto.create(Object.assign({}, req.body));
+        // Buscar el estado con ID 1 en la tabla Status
+        const estado = yield status_1.Status.findByPk(1);
+        if (!estado) {
+            return res.status(404).json({ message: "No se encontró el estado inicial" });
         }
+        // Asociar el estado al proyecto creado
+        yield proyecto.$add('statuses', estado);
         return res.status(200).json({ message: "Proyecto creado!", data: proyecto });
     }
     catch (error) {
@@ -30,14 +34,12 @@ const crearProyecto = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 exports.crearProyecto = crearProyecto;
 const listarProyectos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log("a");
         var proyectos = yield proyectos_1.Proyecto.findAll({
             include: [
                 alumnos_1.Alumnos,
-                status_1.Status,
-                { model: carrera_1.Carrera,
-                    required: true
-                }
+                carrera_1.Carrera,
+                { model: status_1.Status,
+                },
             ],
             attributes: { exclude: ["carrera_clave"] },
         });

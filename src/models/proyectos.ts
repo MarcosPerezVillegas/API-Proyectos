@@ -34,7 +34,7 @@ export class Proyecto extends Model{
         allowNull:false
     })
     carrera_clave!:string
-    @BelongsTo(()=>Proyecto,"carrera_clave")
+    @BelongsTo(()=>Carrera,"carrera_clave")
     Carrera!:Carrera
 
     @Column({

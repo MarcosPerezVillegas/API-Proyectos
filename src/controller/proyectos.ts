@@ -10,27 +10,31 @@ import { Alumnos } from "../models/alumnos";
 
 export const crearProyecto: RequestHandler = async (req, res) => {
     try {
-        var proyecto = await Proyecto.create({ ...req.body });
-        if (!proyecto) {
-            return res.status(401).json({ message: "No se pudo crear el proyecto" });
+        const proyecto = await Proyecto.create({ ...req.body });
+
+        // Buscar el estado con ID 1 en la tabla Status
+        const estado = await Status.findByPk(1);
+        if (!estado) {
+            return res.status(404).json({ message: "No se encontró el estado inicial" });
         }
+
+        // Asociar el estado al proyecto creado
+        await proyecto.$add('statuses', estado);
+
         return res.status(200).json({ message: "Proyecto creado!", data: proyecto });
     } catch (error) {
         return res.status(404).json({ message: "", error });
     }
-
 }
 
 export const listarProyectos: RequestHandler = async (req, res) => {
     try {
-        console.log("a")
         var proyectos = await Proyecto.findAll({
             include: [
                 Alumnos,
-                Status,
-                {model: Carrera,
-                    required: true
-                }
+                Carrera,
+                {model: Status,
+                },
             ],
             attributes: { exclude: ["carrera_clave"] },
         });
