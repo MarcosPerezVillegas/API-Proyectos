@@ -15,7 +15,7 @@ const documento_1 = require("./documento");
 const status_1 = require("./status");
 const statusProyecto_1 = require("./statusProyecto");
 const alumnos_1 = require("./alumnos");
-let Proyecto = class Proyecto extends sequelize_typescript_1.Model {
+let Proyecto = exports.Proyecto = class Proyecto extends sequelize_typescript_1.Model {
 };
 __decorate([
     (0, sequelize_typescript_1.Column)({
@@ -30,14 +30,14 @@ __decorate([
     (0, sequelize_typescript_1.BelongsToMany)(() => status_1.Status, () => statusProyecto_1.statusProyecto)
 ], Proyecto.prototype, "statuses", void 0);
 __decorate([
-    (0, sequelize_typescript_1.BelongsTo)(() => maestros_1.Maestros, 'id')
-], Proyecto.prototype, "encargado", void 0);
-__decorate([
     (0, sequelize_typescript_1.HasMany)(() => tareas_1.Tarea, "Proyecto_id")
 ], Proyecto.prototype, "tareas", void 0);
 __decorate([
     (0, sequelize_typescript_1.HasMany)(() => documento_1.documentos, "Proyecto_id")
 ], Proyecto.prototype, "documentos", void 0);
+__decorate([
+    (0, sequelize_typescript_1.HasMany)(() => alumnos_1.Alumnos, "proyecto_id")
+], Proyecto.prototype, "alumnos", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.STRING,
@@ -61,6 +61,15 @@ __decorate([
 ], Proyecto.prototype, "objetivos", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.STRING,
+        allowNull: false
+    })
+], Proyecto.prototype, "codigo", void 0);
+__decorate([
+    (0, sequelize_typescript_1.BelongsTo)(() => maestros_1.Maestros, 'codigo')
+], Proyecto.prototype, "encargado", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.DATE,
         allowNull: false
     })
@@ -71,19 +80,9 @@ __decorate([
         allowNull: false
     })
 ], Proyecto.prototype, "fechafinal", void 0);
-__decorate([
-    (0, sequelize_typescript_1.Column)({
-        type: sequelize_typescript_1.DataType.STRING,
-        allowNull: true
-    })
-], Proyecto.prototype, "alumnos", void 0);
-__decorate([
-    (0, sequelize_typescript_1.HasMany)(() => alumnos_1.Alumnos, "proyecto_id")
-], Proyecto.prototype, "Alumnos", void 0);
-Proyecto = __decorate([
+exports.Proyecto = Proyecto = __decorate([
     (0, sequelize_typescript_1.Table)({
         timestamps: false,
         tableName: "proyecto",
     })
 ], Proyecto);
-exports.Proyecto = Proyecto;

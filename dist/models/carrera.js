@@ -9,7 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Carrera = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
 const proyectos_1 = require("./proyectos");
-let Carrera = class Carrera extends sequelize_typescript_1.Model {
+let Carrera = exports.Carrera = class Carrera extends sequelize_typescript_1.Model {
 };
 __decorate([
     (0, sequelize_typescript_1.Column)({
@@ -27,10 +27,9 @@ __decorate([
 __decorate([
     (0, sequelize_typescript_1.HasMany)(() => proyectos_1.Proyecto, "carrera_clave")
 ], Carrera.prototype, "proyecto", void 0);
-Carrera = __decorate([
+exports.Carrera = Carrera = __decorate([
     (0, sequelize_typescript_1.Table)({
         timestamps: false,
         tableName: "carrera"
     })
 ], Carrera);
-exports.Carrera = Carrera;

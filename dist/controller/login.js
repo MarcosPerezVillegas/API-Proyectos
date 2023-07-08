@@ -35,12 +35,10 @@ function login(req, res) {
                 return res.status(401).json({ message: "La contraseña es incorrecta" });
             }
             if (maestro.admin === 1) {
-                console.log("1111111111111111111111111111111111");
                 const token = jsonwebtoken_1.default.sign({ codigo: maestro.codigo, rol: 'administrador' }, "Prueba 123", { expiresIn: '5h' });
                 return res.json({ token });
             }
             else {
-                console.log("0000000000000000000000000000000000000");
                 const token = jsonwebtoken_1.default.sign({ codigo: maestro.codigo, rol: 'maestro' }, "Prueba 123", { expiresIn: '5h' });
                 return res.json({ token });
             }

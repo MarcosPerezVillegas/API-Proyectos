@@ -20,7 +20,7 @@ router.delete("/:codigo",autorizar,eliminarMaestro);
 router.get("/",autorizar,listarMaestros);
 router.get("/Admins",autorizar,listarAdmins);
 router.get("/Admins/Eliminados",autorizar,listarAdminsElimidanos);
-router.get("/Email/:email",autorizar,infoemailMaestro);
+router.get("/Email/:email",infoemailMaestro);
 router.get("/Eliminados",autorizar,listarMaestrosElimidanos);
 router.get("/Eliminados/:codigo",autorizar,infoCompletaMaestroEliminado);
 router.delete("/Eliminados/:codigo",autorizar,eliminarMaestroPerma);

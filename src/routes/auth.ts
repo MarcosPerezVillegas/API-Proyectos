@@ -7,7 +7,6 @@ router.post("/",login);
 router.get("/",autorizar,(req: any,res: any) => {
     const codigo=req.usuarioCodigo
     const rol=req.usuarioRol
-    const admin=req.usuarioAdmin
     res.json({codigo,rol})
 })
 

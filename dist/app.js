@@ -12,7 +12,6 @@ const proyectos_1 = __importDefault(require("./routes/proyectos"));
 const documentos_1 = __importDefault(require("./routes/documentos"));
 const status_1 = __importDefault(require("./routes/status"));
 const tareas_1 = __importDefault(require("./routes/tareas"));
-const roles_1 = __importDefault(require("./routes/roles"));
 const config_1 = __importDefault(require("./db/config"));
 const body_parser_1 = require("body-parser");
 const cors = require("cors");
@@ -33,7 +32,6 @@ app.use("/Proyectos", proyectos_1.default);
 app.use("/Status", status_1.default);
 app.use("/Documentos", documentos_1.default);
 app.use("/Tareas", tareas_1.default);
-app.use("/Roles", roles_1.default);
 app.use((err, req, res, next) => {
     res.status(500).json({ messege: err.message });
 });

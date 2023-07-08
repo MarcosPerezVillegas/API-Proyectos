@@ -22,12 +22,12 @@ export class Proyecto extends Model{
     id!:number;
     @BelongsToMany(() => Status, () => statusProyecto)
     statuses!: Status[];
-    @BelongsTo(() => Maestros,'id')
-    encargado!: Maestros
     @HasMany(()=>Tarea,"Proyecto_id")
     tareas!:Tarea[]
     @HasMany(()=>documentos,"Proyecto_id")
     documentos!:documentos[]
+    @HasMany(()=>Alumnos,"proyecto_id")
+    alumnos!:Alumnos[]
 
     @Column({
         type:DataType.STRING,
@@ -50,6 +50,14 @@ export class Proyecto extends Model{
     objetivos!:string
 
     @Column({
+        type:DataType.STRING,
+        allowNull:false
+    })
+    codigo!:string;
+    @BelongsTo(() => Maestros,'codigo')
+    encargado!: Maestros
+
+    @Column({
         type:DataType.DATE,
         allowNull:false
     })
@@ -60,12 +68,4 @@ export class Proyecto extends Model{
         allowNull:false
     })
     fechafinal!:string
-
-    @Column({
-        type:DataType.STRING,
-        allowNull:true
-    })
-    alumnos!:string
-    @HasMany(()=>Alumnos,"proyecto_id")
-    Alumnos!:Alumnos[]
 }

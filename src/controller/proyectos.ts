@@ -7,6 +7,7 @@ import { Model } from "sequelize";
 import { Status } from "../models/status";
 import { statusProyecto } from "../models/statusProyecto";
 import { Alumnos } from "../models/alumnos";
+import { Maestros } from "../models/maestros";
 
 export const crearProyecto: RequestHandler = async (req, res) => {
     try {
@@ -32,11 +33,13 @@ export const listarProyectos: RequestHandler = async (req, res) => {
         var proyectos = await Proyecto.findAll({
             include: [
                 Alumnos,
-                Carrera,
-                {model: Status,
+                {model: Maestros,
+                    attributes: { exclude: ["password", "telefono"]}
                 },
+                Carrera,
+                Status,
             ],
-            attributes: { exclude: ["carrera_clave"] },
+            attributes: { exclude: ["carrera_clave", "codigo"] },
         });
         if (!proyectos) {
             return res.status(401).json({ message: "No se pudo encontrar los proyectos" });

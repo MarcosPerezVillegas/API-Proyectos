@@ -16,7 +16,7 @@ const router = Router();
 router.post("/",crearAlumno);
 router.delete("/:codigo",autorizar,eliminarAlumno);
 router.get("/",autorizar,listarAlumnos);
-router.get("/Email/:email",autorizar,infoemailAlumno);
+router.get("/Email/:email",infoemailAlumno);
 router.get("/Eliminados",autorizar,listarAlumnosElimidanos);
 router.get("/Eliminados/:codigo",autorizar,infoCompletaAlumnoEliminado);
 router.delete("/Eliminados/:codigo",autorizar,eliminarAlumnoPerma);

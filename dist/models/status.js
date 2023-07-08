@@ -10,7 +10,7 @@ exports.Status = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
 const proyectos_1 = require("./proyectos");
 const statusProyecto_1 = require("./statusProyecto");
-let Status = class Status extends sequelize_typescript_1.Model {
+let Status = exports.Status = class Status extends sequelize_typescript_1.Model {
 };
 __decorate([
     (0, sequelize_typescript_1.Column)({
@@ -29,10 +29,9 @@ __decorate([
         allowNull: false
     })
 ], Status.prototype, "Estado", void 0);
-Status = __decorate([
+exports.Status = Status = __decorate([
     (0, sequelize_typescript_1.Table)({
         timestamps: false,
         tableName: "status"
     })
 ], Status);
-exports.Status = Status;

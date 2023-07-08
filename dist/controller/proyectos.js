@@ -15,6 +15,7 @@ const proyectos_1 = require("../models/proyectos");
 const carrera_1 = require("../models/carrera");
 const status_1 = require("../models/status");
 const alumnos_1 = require("../models/alumnos");
+const maestros_1 = require("../models/maestros");
 const crearProyecto = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const proyecto = yield proyectos_1.Proyecto.create(Object.assign({}, req.body));
@@ -37,11 +38,13 @@ const listarProyectos = (req, res) => __awaiter(void 0, void 0, void 0, function
         var proyectos = yield proyectos_1.Proyecto.findAll({
             include: [
                 alumnos_1.Alumnos,
-                carrera_1.Carrera,
-                { model: status_1.Status,
+                { model: maestros_1.Maestros,
+                    attributes: { exclude: ["password", "telefono"] }
                 },
+                carrera_1.Carrera,
+                status_1.Status,
             ],
-            attributes: { exclude: ["carrera_clave"] },
+            attributes: { exclude: ["carrera_clave", "codigo"] },
         });
         if (!proyectos) {
             return res.status(401).json({ message: "No se pudo encontrar los proyectos" });

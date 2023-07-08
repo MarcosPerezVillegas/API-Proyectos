@@ -8,7 +8,6 @@ router.post("/", login_1.login);
 router.get("/", verify_token_1.autorizar, (req, res) => {
     const codigo = req.usuarioCodigo;
     const rol = req.usuarioRol;
-    const admin = req.usuarioAdmin;
     res.json({ codigo, rol });
 });
 exports.default = router;

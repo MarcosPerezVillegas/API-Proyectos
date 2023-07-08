@@ -2,6 +2,7 @@ import { RequestHandler } from "express";
 import { Maestros } from "../models/maestros";
 import { Op } from "sequelize";
 import bcrypt from 'bcrypt';
+import { Proyecto } from "../models/proyectos";
 
 export const crearMaestro: RequestHandler = async (req, res) => {
     try {
@@ -29,7 +30,11 @@ export const listarMaestros: RequestHandler = async (req, res) => {
             where: {
                 admin: 0
             },
-            attributes: { exclude: ["password"] }
+            include:
+            {model: Proyecto,
+                attributes: { exclude: ["codigo"] }
+            },
+            attributes: { exclude: ["password","admin"] }
         });
         if (!maestros) {
             return res.status(401).json({ message: "No se pudo encontar los maestros", data: maestros });
@@ -46,6 +51,10 @@ export const listarAdmins: RequestHandler = async (req, res) => {
         var maestros = await Maestros.findAll({
             where: {
                 admin: 1
+            },
+            include:
+            {model: Proyecto,
+                attributes: { exclude: ["codigo"] }
             },
             attributes: { exclude: ["password", "admin"] }
         });

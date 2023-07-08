@@ -13,7 +13,7 @@ export class Maestros extends Model{
         primaryKey:true,
     })
     codigo!:string;
-    @HasMany(() => Proyecto, 'id')
+    @HasMany(() => Proyecto, 'codigo')
     Proyectos!: Proyecto[]
 
     @Column({
@@ -21,21 +21,25 @@ export class Maestros extends Model{
         allowNull:false
     })
     nombre!:string
+
     @Column({
         type:DataType.STRING,
         allowNull:false
     })
     email!:string
+
     @Column({
         type:DataType.STRING,
         allowNull:false
     })
     password!:string
+
     @Column({
         type:DataType.STRING,
         allowNull:true
     })
     telefono!:string
+
     @Column({
         type:DataType.INTEGER,
         allowNull:true

@@ -7,7 +7,6 @@ import { Tarea } from "../models/tareas";
 import { statusProyecto } from "../models/statusProyecto";
 import { Maestros } from "../models/maestros";
 import { Alumnos } from "../models/alumnos";
-import { Administradores } from "../models/administradores";
 
 
 export const connection = new Sequelize({
@@ -17,7 +16,7 @@ export const connection = new Sequelize({
     password: "wasd",
     database: "BancoDeProyectos",
     logging: true,
-    models:[Carrera,Proyecto,documentos,Status,Tarea,statusProyecto,Maestros,Alumnos,Administradores],
+    models:[Carrera,Proyecto,documentos,Status,Tarea,statusProyecto,Maestros,Alumnos],
 
 
     port: 33061

@@ -3,7 +3,6 @@ import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
 import { Maestros } from "../models/maestros";
 import { Alumnos } from "../models/alumnos";
-import { Administradores } from "../models/administradores";
 
 export async function login(req: Request, res: Response) {
     const { email, password } = req.body;
@@ -22,7 +21,6 @@ export async function login(req: Request, res: Response) {
             return res.status(401).json({ message: "La contraseña es incorrecta" })
         }
         if (maestro.admin === 1) {
-            console.log("1111111111111111111111111111111111")
             const token = jwt.sign(
                 { codigo: maestro.codigo, rol: 'administrador' },
                 "Prueba 123",
@@ -30,7 +28,6 @@ export async function login(req: Request, res: Response) {
             );
             return res.json({ token });
         } else {
-            console.log("0000000000000000000000000000000000000")
             const token = jwt.sign(
                 { codigo: maestro.codigo, rol: 'maestro'},
                 "Prueba 123",

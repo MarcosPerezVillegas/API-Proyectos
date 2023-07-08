@@ -9,7 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Tarea = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
 const proyectos_1 = require("./proyectos");
-let Tarea = class Tarea extends sequelize_typescript_1.Model {
+let Tarea = exports.Tarea = class Tarea extends sequelize_typescript_1.Model {
 };
 __decorate([
     (0, sequelize_typescript_1.Column)({
@@ -57,10 +57,9 @@ __decorate([
         allowNull: true
     })
 ], Tarea.prototype, "hora_limite", void 0);
-Tarea = __decorate([
+exports.Tarea = Tarea = __decorate([
     (0, sequelize_typescript_1.Table)({
         timestamps: false,
         tableName: "tareas"
     })
 ], Tarea);
-exports.Tarea = Tarea;
