@@ -9,8 +9,9 @@ import { Proyecto } from "./proyectos";
 export class Tarea extends Model{
     @Column({
         type: DataType.INTEGER,
-        allowNull:false,
-        primaryKey: true
+        allowNull: true,
+        primaryKey: true,
+        autoIncrement: true
     })
     id!:number
     @Column({

@@ -14,8 +14,8 @@ router.post("/",autorizar,crearProyecto);
 router.delete("/:id",autorizar,eliminarProyecto);
 router.get("/",listarProyectos);
 router.get("/:id",BuscarProyectoId);
-router.get("/Nombre/:nombrep",BuscarProyectoNombre);
-router.get("/Usuario/:usuario_codigo",BuscarProyectoUsuario);
+router.get("/Nombre/:nombre",BuscarProyectoNombre);
+router.get("/Usuario/:codigo",BuscarProyectoUsuario);
 router.get("/Carrera/:carrera_clave",BuscarProyectosCarrera);
 router.put("/:id",autorizar,actualizarProyecto);
 

@@ -111,7 +111,9 @@ export const listarAdminsElimidanos: RequestHandler = async (req, res) => {
 export const infoCompletaMaestro: RequestHandler = async (req, res) => {
     const { codigo } = req.params
     try {
-        var maestro = await Maestros.findByPk(codigo);
+        var maestro = await Maestros.findByPk(codigo,{
+            attributes: {exclude: ["password"]}
+        });
         if (!maestro) {
             return res.status(401).json({ message: "No se pudo encontar al maestro", data: maestro });
         }
@@ -140,7 +142,9 @@ export const buscarMaestroNombre: RequestHandler = async (req, res) => {
 export const infoemailMaestro: RequestHandler = async (req, res) => {
     const { email } = req.params
     try {
-        var maestro: Maestros | null = await Maestros.findOne({where: { email}, attributes: {exclude: ['password','telefono']}});
+        var maestro: Maestros | null = await Maestros.findOne({where: { email},
+            include: Proyecto,
+            attributes: {exclude: ['password','telefono']}});
         if (!maestro) {
             return res.status(401).json({ message: "No se pudo encontar al maestro", data: maestro });
         }

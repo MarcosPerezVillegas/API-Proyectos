@@ -1,5 +1,6 @@
 import { RequestHandler } from "express";
 import { Tarea } from "../models/tareas";
+import { Proyecto } from "../models/proyectos";
 
 export const addtarea: RequestHandler = async (req, res, next) => {
     try {
@@ -31,7 +32,7 @@ export const droptarea: RequestHandler = async (req, res, next) => {
 
 export const obttarea: RequestHandler = async (req, res, next) => {
     try {
-        const obttarea: Tarea[] = await Tarea.findAll();
+        const obttarea: Tarea[] = await Tarea.findAll({include: Proyecto});
         if (!obttarea) {
             return res.status(401).json({ message: "No se pudo encontrar las tareas" });
         }

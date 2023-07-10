@@ -14,8 +14,9 @@ let Tarea = exports.Tarea = class Tarea extends sequelize_typescript_1.Model {
 __decorate([
     (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.INTEGER,
-        allowNull: false,
-        primaryKey: true
+        allowNull: true,
+        primaryKey: true,
+        autoIncrement: true
     })
 ], Tarea.prototype, "id", void 0);
 __decorate([

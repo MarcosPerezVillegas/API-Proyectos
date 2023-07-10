@@ -71,18 +71,12 @@ const BuscarProyectoId = (req, res) => __awaiter(void 0, void 0, void 0, functio
 });
 exports.BuscarProyectoId = BuscarProyectoId;
 const BuscarProyectoNombre = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { nombrep } = req.params;
+    const { nombre } = req.params;
     try {
         const proyecto = yield proyectos_1.Proyecto.findOne({
-            where: { nombrep },
-            include: [
-                {
-                    //model: Usuario,
-                    attributes: { exclude: ["password"] },
-                },
-                carrera_1.Carrera,
-            ],
-            attributes: { exclude: ["usuario_codigo", "carrera_clave"] },
+            where: { nombre: nombre },
+            include: [],
+            attributes: { exclude: ["codigo", "carrera_clave"] },
         });
         if (!proyecto) {
             return res.status(401).json({ message: "No se pudo encontrar el proyecto" });
@@ -95,10 +89,10 @@ const BuscarProyectoNombre = (req, res) => __awaiter(void 0, void 0, void 0, fun
 });
 exports.BuscarProyectoNombre = BuscarProyectoNombre;
 const BuscarProyectoUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { usuario_codigo } = req.params;
+    const { codigo } = req.params;
     try {
-        const proyecto = yield proyectos_1.Proyecto.findOne({
-            where: { usuario_codigo },
+        const proyecto = yield proyectos_1.Proyecto.findAll({
+            where: { codigo },
             include: [
                 carrera_1.Carrera,
             ],

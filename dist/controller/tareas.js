@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updtarea = exports.obttareaid = exports.obttarea = exports.droptarea = exports.addtarea = void 0;
 const tareas_1 = require("../models/tareas");
+const proyectos_1 = require("../models/proyectos");
 const addtarea = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         var tarea = yield tareas_1.Tarea.create(Object.assign({}, req.body));
@@ -41,7 +42,7 @@ const droptarea = (req, res, next) => __awaiter(void 0, void 0, void 0, function
 exports.droptarea = droptarea;
 const obttarea = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const obttarea = yield tareas_1.Tarea.findAll();
+        const obttarea = yield tareas_1.Tarea.findAll({ include: proyectos_1.Proyecto });
         if (!obttarea) {
             return res.status(401).json({ message: "No se pudo encontrar las tareas" });
         }

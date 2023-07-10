@@ -66,18 +66,13 @@ export const BuscarProyectoId: RequestHandler = async (req, res) => {
 }
 
 export const BuscarProyectoNombre: RequestHandler = async (req, res) => {
-    const { nombrep } = req.params
+    const { nombre } = req.params
     try {
         const proyecto: Proyecto | null = await Proyecto.findOne({
-            where: { nombrep },
+            where: { nombre: nombre },
             include: [
-                {
-                    //model: Usuario,
-                    attributes: { exclude: ["password"] },
-                },
-                Carrera,
             ],
-            attributes: { exclude: ["usuario_codigo", "carrera_clave"] },
+            attributes: { exclude: ["codigo", "carrera_clave"] },
         });
         if (!proyecto) {
             return res.status(401).json({ message: "No se pudo encontrar el proyecto" });
@@ -90,10 +85,10 @@ export const BuscarProyectoNombre: RequestHandler = async (req, res) => {
 }
 
 export const BuscarProyectoUsuario: RequestHandler = async (req, res) => {
-    const { usuario_codigo } = req.params
+    const { codigo } = req.params
     try {
-        const proyecto: Proyecto | null = await Proyecto.findOne({
-            where: { usuario_codigo },
+        const proyecto: Proyecto[] = await Proyecto.findAll({
+            where: { codigo },
             include: [
                 Carrera,
             ],
