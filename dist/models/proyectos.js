@@ -37,7 +37,7 @@ __decorate([
 ], Proyecto.prototype, "documentos", void 0);
 __decorate([
     (0, sequelize_typescript_1.HasMany)(() => alumnos_1.Alumnos, "proyecto_id")
-], Proyecto.prototype, "alumnos", void 0);
+], Proyecto.prototype, "Alumnos", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.STRING,
@@ -80,6 +80,12 @@ __decorate([
         allowNull: false
     })
 ], Proyecto.prototype, "fechafinal", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.STRING,
+        allowNull: true
+    })
+], Proyecto.prototype, "alumnos", void 0);
 exports.Proyecto = Proyecto = __decorate([
     (0, sequelize_typescript_1.Table)({
         timestamps: false,

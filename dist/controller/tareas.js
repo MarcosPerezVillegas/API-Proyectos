@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updtarea = exports.obttareaid = exports.obttarea = exports.droptarea = exports.addtarea = void 0;
+exports.updtarea = exports.obttareapro = exports.obttareanombre = exports.obttareaid = exports.obttarea = exports.droptarea = exports.addtarea = void 0;
 const tareas_1 = require("../models/tareas");
 const proyectos_1 = require("../models/proyectos");
 const addtarea = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -67,6 +67,34 @@ const obttareaid = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.obttareaid = obttareaid;
+const obttareanombre = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { nombre } = req.params;
+    try {
+        const obttarea = yield tareas_1.Tarea.findOne({ where: { nombre } });
+        if (!obttarea) {
+            return res.status(401).json({ message: "No se pudo encontrar la tarea" });
+        }
+        return res.status(200).json({ message: "tarea obtenida", data: obttarea });
+    }
+    catch (error) {
+        return res.status(404).json({ message: "", error });
+    }
+});
+exports.obttareanombre = obttareanombre;
+const obttareapro = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { Proyecto_id } = req.params;
+    try {
+        const obttarea = yield tareas_1.Tarea.findAll({ where: { Proyecto_id }, include: proyectos_1.Proyecto });
+        if (!obttarea) {
+            return res.status(401).json({ message: "No se pudo encontrar la tarea" });
+        }
+        return res.status(200).json({ message: "tarea obtenida", data: obttarea });
+    }
+    catch (error) {
+        return res.status(404).json({ message: "", error });
+    }
+});
+exports.obttareapro = obttareapro;
 const updtarea = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
