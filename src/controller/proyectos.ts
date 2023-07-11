@@ -33,13 +33,11 @@ export const listarProyectos: RequestHandler = async (req, res) => {
         var proyectos = await Proyecto.findAll({
             include: [
                 Alumnos,
-                {model: Maestros,
-                    attributes: { exclude: ["password", "telefono"]}
-                },
                 Carrera,
-                Status,
+                {model: Status,
+                },
             ],
-            attributes: { exclude: ["carrera_clave", "codigo"] },
+            attributes: { exclude: ["carrera_clave"] },
         });
         if (!proyectos) {
             return res.status(401).json({ message: "No se pudo encontrar los proyectos" });
@@ -54,7 +52,15 @@ export const listarProyectos: RequestHandler = async (req, res) => {
 export const BuscarProyectoId: RequestHandler = async (req, res) => {
     const { id } = req.params
     try {
-        const proyecto: Proyecto | null = await Proyecto.findByPk(id);
+        const proyecto: Proyecto | null = await Proyecto.findByPk(id,{
+            include: [
+                Maestros,
+                Carrera,
+                {model: Status,
+                },
+            ],
+            attributes: { exclude: ["carrera_clave"] },
+        });
         if (!proyecto) {
             return res.status(401).json({ message: "No se pudo encontrar el proyecto" });
         }
@@ -69,10 +75,11 @@ export const BuscarProyectoNombre: RequestHandler = async (req, res) => {
     const { nombre } = req.params
     try {
         const proyecto: Proyecto | null = await Proyecto.findOne({
-            where: { nombre: nombre },
+            where: { nombre },
             include: [
+                Carrera,
             ],
-            attributes: { exclude: ["codigo", "carrera_clave"] },
+            attributes: { exclude: ["carrera_clave"]},
         });
         if (!proyecto) {
             return res.status(401).json({ message: "No se pudo encontrar el proyecto" });
@@ -87,10 +94,13 @@ export const BuscarProyectoNombre: RequestHandler = async (req, res) => {
 export const BuscarProyectoUsuario: RequestHandler = async (req, res) => {
     const { codigo } = req.params
     try {
-        const proyecto: Proyecto[] = await Proyecto.findAll({
+        var proyecto: Proyecto[] = await Proyecto.findAll({
             where: { codigo },
             include: [
+                Maestros,
                 Carrera,
+                {model: Status,
+                },
             ],
             attributes: { exclude: [ "carrera_clave"] },
         });

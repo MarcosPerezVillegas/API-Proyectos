@@ -1,6 +1,7 @@
 import { RequestHandler } from "express";
 import { Tarea } from "../models/tareas";
 import { Proyecto } from "../models/proyectos";
+import { where } from "sequelize";
 
 export const addtarea: RequestHandler = async (req, res, next) => {
     try {
@@ -47,6 +48,20 @@ export const obttareaid: RequestHandler = async (req, res, next) => {
     const { id } = req.params
     try {
         const obttarea: Tarea | null = await Tarea.findByPk(id);
+        if (!obttarea) {
+            return res.status(401).json({ message: "No se pudo encontrar la tarea" });
+        }
+        return res.status(200).json({ message: "tarea obtenida", data: obttarea });
+    } catch (error) {
+        return res.status(404).json({ message: "", error });
+    }
+
+}
+
+export const obttareapro: RequestHandler = async (req, res, next) => {
+    const { Proyecto_id } = req.params
+    try {
+        const obttarea: Tarea[] = await Tarea.findAll({where: {Proyecto_id}});
         if (!obttarea) {
             return res.status(401).json({ message: "No se pudo encontrar la tarea" });
         }

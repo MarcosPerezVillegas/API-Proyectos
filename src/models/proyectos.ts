@@ -27,7 +27,7 @@ export class Proyecto extends Model{
     @HasMany(()=>documentos,"Proyecto_id")
     documentos!:documentos[]
     @HasMany(()=>Alumnos,"proyecto_id")
-    alumnos!:Alumnos[]
+    Alumnos!:Alumnos[]
 
     @Column({
         type:DataType.STRING,
@@ -68,4 +68,10 @@ export class Proyecto extends Model{
         allowNull:false
     })
     fechafinal!:string
+
+    @Column({
+        type:DataType.STRING,
+        allowNull:true
+    })
+    alumnos!:string
 }
