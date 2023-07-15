@@ -59,7 +59,9 @@ export const listarAlumnosElimidanos: RequestHandler = async (req, res) => {
 export const infoCompletaAlumno: RequestHandler = async (req, res) => {
     const { codigo } = req.params
     try {
-        var alumno = await Alumnos.findByPk(codigo);
+        var alumno = await Alumnos.findByPk(codigo,{
+            attributes: {exclude: ["password"]}
+        });
         if (!alumno) {
             return res.status(401).json({ message: "No se pudo encontar al alumno", data: alumno });
         }

@@ -70,7 +70,7 @@ exports.obttareaid = obttareaid;
 const obttareanombre = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { nombre } = req.params;
     try {
-        const obttarea = yield tareas_1.Tarea.findOne({ where: { nombre } });
+        const obttarea = yield tareas_1.Tarea.findAll({ where: { nombre } });
         if (!obttarea) {
             return res.status(401).json({ message: "No se pudo encontrar la tarea" });
         }

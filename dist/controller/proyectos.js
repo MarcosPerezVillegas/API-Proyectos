@@ -37,7 +37,9 @@ const listarProyectos = (req, res) => __awaiter(void 0, void 0, void 0, function
     try {
         var proyectos = yield proyectos_1.Proyecto.findAll({
             include: [
-                alumnos_1.Alumnos,
+                { model: alumnos_1.Alumnos,
+                    attributes: { exclude: ["password", "telefono"] }
+                },
                 { model: maestros_1.Maestros,
                     attributes: { exclude: ["password", "telefono"] }
                 },
@@ -59,7 +61,12 @@ exports.listarProyectos = listarProyectos;
 const BuscarProyectoId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
-        const proyecto = yield proyectos_1.Proyecto.findByPk(id);
+        const proyecto = yield proyectos_1.Proyecto.findByPk(id, {
+            include: [maestros_1.Maestros,
+                carrera_1.Carrera,
+                { model: status_1.Status },],
+            attributes: { exclude: ["carrera_clave"] },
+        });
         if (!proyecto) {
             return res.status(401).json({ message: "No se pudo encontrar el proyecto" });
         }

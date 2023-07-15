@@ -61,7 +61,7 @@ export const obttareaid: RequestHandler = async (req, res, next) => {
 export const obttareanombre: RequestHandler = async (req, res, next) => {
     const { nombre } = req.params
     try {
-        const obttarea: Tarea | null = await Tarea.findOne({where: {nombre}});
+        const obttarea: Tarea[] = await Tarea.findAll({where: {nombre}});
         if (!obttarea) {
             return res.status(401).json({ message: "No se pudo encontrar la tarea" });
         }

@@ -32,7 +32,9 @@ export const listarProyectos: RequestHandler = async (req, res) => {
     try {
         var proyectos = await Proyecto.findAll({
             include: [
-                Alumnos,
+                {model: Alumnos,
+                    attributes: { exclude: ["password", "telefono"]}
+                },
                 {model: Maestros,
                     attributes: { exclude: ["password", "telefono"]}
                 },
@@ -54,7 +56,12 @@ export const listarProyectos: RequestHandler = async (req, res) => {
 export const BuscarProyectoId: RequestHandler = async (req, res) => {
     const { id } = req.params
     try {
-        const proyecto: Proyecto | null = await Proyecto.findByPk(id);
+        const proyecto: Proyecto | null = await Proyecto.findByPk(id,{
+            include: [Maestros,
+            Carrera,
+            {model: Status},],
+            attributes: { exclude: ["carrera_clave"] },
+        });
         if (!proyecto) {
             return res.status(401).json({ message: "No se pudo encontrar el proyecto" });
         }
