@@ -4,7 +4,6 @@ import rutasAlumnos from "./routes/alumnos"
 import rutaLogin from "./routes/auth"
 import rutaCarreras from "./routes/carreras"
 import rutaProyectos from "./routes/proyectos"
-import rutasDocumentos from "./routes/documentos"
 import rutasStatus from "./routes/status";
 import rutasTareas from "./routes/tareas"
 import connection from "./db/config";
@@ -29,7 +28,6 @@ app.use("/Login",rutaLogin);
 app.use("/Carreras",rutaCarreras);
 app.use("/Proyectos",rutaProyectos);
 app.use("/Status", rutasStatus);
-app.use("/Documentos", rutasDocumentos);
 app.use("/Tareas", rutasTareas);
 
 app.use(

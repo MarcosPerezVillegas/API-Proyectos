@@ -46,4 +46,9 @@ export class Tarea extends Model{
         allowNull: true
     })
     hora_limite!:string
+    @Column({
+        type:DataType.INTEGER,
+        allowNull:true
+    })
+    activo!:number
 }

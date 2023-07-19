@@ -2,7 +2,6 @@ import { Table, Column, Model, DataType, BelongsTo, HasMany, BelongsToMany, HasO
 import { Carrera } from "./carrera";
 import { Maestros } from "./maestros";
 import { Tarea } from "./tareas";
-import { documentos } from "./documento";
 import { Status } from "./status";
 import { statusProyecto } from "./statusProyecto";
 import { Alumnos } from "./alumnos";
@@ -24,8 +23,6 @@ export class Proyecto extends Model{
     statuses!: Status[];
     @HasMany(()=>Tarea,"Proyecto_id")
     tareas!:Tarea[]
-    @HasMany(()=>documentos,"Proyecto_id")
-    documentos!:documentos[]
     @HasMany(()=>Alumnos,"proyecto_id")
     Alumnos!:Alumnos[]
 

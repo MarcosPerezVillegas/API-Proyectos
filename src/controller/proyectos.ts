@@ -59,6 +59,7 @@ export const BuscarProyectoId: RequestHandler = async (req, res) => {
         const proyecto: Proyecto | null = await Proyecto.findByPk(id,{
             include: [Maestros,
             Carrera,
+            Alumnos,
             {model: Status},],
             attributes: { exclude: ["carrera_clave"] },
         });
@@ -98,6 +99,7 @@ export const BuscarProyectoUsuario: RequestHandler = async (req, res) => {
             where: { codigo },
             include: [
                 Carrera,
+                {model: Status},
             ],
             attributes: { exclude: [ "carrera_clave"] },
         });
