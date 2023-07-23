@@ -10,6 +10,6 @@ router.put("/:id", autorizar, updtarea);
 router.get("/", obttarea);
 router.get("/:id", obttareaid);
 router.get("/Nombre/:nombre", obttareanombre);
-router.get("/proyecto/:Proyecto_id", obttareapro);
+router.get("/Proyecto/:Proyecto_id", obttareapro);
 
 export default router;

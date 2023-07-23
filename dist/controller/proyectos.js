@@ -64,6 +64,7 @@ const BuscarProyectoId = (req, res) => __awaiter(void 0, void 0, void 0, functio
         const proyecto = yield proyectos_1.Proyecto.findByPk(id, {
             include: [maestros_1.Maestros,
                 carrera_1.Carrera,
+                alumnos_1.Alumnos,
                 { model: status_1.Status },],
             attributes: { exclude: ["carrera_clave"] },
         });
@@ -102,6 +103,7 @@ const BuscarProyectoUsuario = (req, res) => __awaiter(void 0, void 0, void 0, fu
             where: { codigo },
             include: [
                 carrera_1.Carrera,
+                { model: status_1.Status },
             ],
             attributes: { exclude: ["carrera_clave"] },
         });

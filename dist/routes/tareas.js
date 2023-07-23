@@ -10,5 +10,5 @@ router.put("/:id", verify_token_1.autorizar, tareas_1.updtarea);
 router.get("/", tareas_1.obttarea);
 router.get("/:id", tareas_1.obttareaid);
 router.get("/Nombre/:nombre", tareas_1.obttareanombre);
-router.get("/proyecto/:Proyecto_id", tareas_1.obttareapro);
+router.get("/Proyecto/:Proyecto_id", tareas_1.obttareapro);
 exports.default = router;

@@ -51,4 +51,9 @@ export class Tarea extends Model{
         allowNull:true
     })
     activo!:number
+    @Column({
+        type:DataType.INTEGER,
+        allowNull:true
+    })
+    entregada!:number
 }

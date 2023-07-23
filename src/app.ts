@@ -6,6 +6,7 @@ import rutaCarreras from "./routes/carreras"
 import rutaProyectos from "./routes/proyectos"
 import rutasStatus from "./routes/status";
 import rutasTareas from "./routes/tareas"
+import rutaEntregaTareas from "./routes/entregas"
 import connection from "./db/config";
 import { json, urlencoded } from "body-parser";
 
@@ -29,7 +30,7 @@ app.use("/Carreras",rutaCarreras);
 app.use("/Proyectos",rutaProyectos);
 app.use("/Status", rutasStatus);
 app.use("/Tareas", rutasTareas);
-
+app.use("/Tarea/Entrega", rutaEntregaTareas);
 app.use(
     (
         err: Error,

@@ -11,7 +11,6 @@ const sequelize_typescript_1 = require("sequelize-typescript");
 const carrera_1 = require("./carrera");
 const maestros_1 = require("./maestros");
 const tareas_1 = require("./tareas");
-const documento_1 = require("./documento");
 const status_1 = require("./status");
 const statusProyecto_1 = require("./statusProyecto");
 const alumnos_1 = require("./alumnos");
@@ -32,9 +31,6 @@ __decorate([
 __decorate([
     (0, sequelize_typescript_1.HasMany)(() => tareas_1.Tarea, "Proyecto_id")
 ], Proyecto.prototype, "tareas", void 0);
-__decorate([
-    (0, sequelize_typescript_1.HasMany)(() => documento_1.documentos, "Proyecto_id")
-], Proyecto.prototype, "documentos", void 0);
 __decorate([
     (0, sequelize_typescript_1.HasMany)(() => alumnos_1.Alumnos, "proyecto_id")
 ], Proyecto.prototype, "Alumnos", void 0);

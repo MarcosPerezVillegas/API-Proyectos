@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
 import { Tarea } from "../models/tareas";
 import { Proyecto } from "../models/proyectos";
-import { where } from "sequelize";
+import { Op, where } from "sequelize";
 
 export const addtarea: RequestHandler = async (req, res, next) => {
     try {
@@ -75,7 +75,7 @@ export const obttareanombre: RequestHandler = async (req, res, next) => {
 export const obttareapro: RequestHandler = async (req, res, next) => {
     const { Proyecto_id } = req.params
     try {
-        const obttarea: Tarea[] = await Tarea.findAll({where: {Proyecto_id}, include: Proyecto});
+        const obttarea: Tarea[] = await Tarea.findAll({where: { Proyecto_id }, include: Proyecto});
         if (!obttarea) {
             return res.status(401).json({ message: "No se pudo encontrar la tarea" });
         }
@@ -85,6 +85,7 @@ export const obttareapro: RequestHandler = async (req, res, next) => {
     }
 
 }
+
 
 export const updtarea: RequestHandler = async (req, res) => {
     const { id } = req.params;

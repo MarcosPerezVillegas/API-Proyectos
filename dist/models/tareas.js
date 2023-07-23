@@ -58,6 +58,18 @@ __decorate([
         allowNull: true
     })
 ], Tarea.prototype, "hora_limite", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.INTEGER,
+        allowNull: true
+    })
+], Tarea.prototype, "activo", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.INTEGER,
+        allowNull: true
+    })
+], Tarea.prototype, "entregada", void 0);
 exports.Tarea = Tarea = __decorate([
     (0, sequelize_typescript_1.Table)({
         timestamps: false,

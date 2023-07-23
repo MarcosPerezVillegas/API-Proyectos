@@ -12,8 +12,8 @@ export const connection = new Sequelize({
     dialect: "mysql",
     host: "localhost",
     username: "root",
-    password: "kaminomizo",
-    database: "banco2",
+    password: "wasd",
+    database: "BancoDeProyectos",
     logging: true,
     models:[Carrera,Proyecto,Status,Tarea,statusProyecto,Maestros,Alumnos],
 
