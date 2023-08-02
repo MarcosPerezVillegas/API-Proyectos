@@ -70,6 +70,12 @@ __decorate([
         allowNull: true
     })
 ], Tarea.prototype, "entregada", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.STRING,
+        allowNull: true
+    })
+], Tarea.prototype, "entregante", void 0);
 exports.Tarea = Tarea = __decorate([
     (0, sequelize_typescript_1.Table)({
         timestamps: false,

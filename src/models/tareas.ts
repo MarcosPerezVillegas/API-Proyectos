@@ -56,4 +56,9 @@ export class Tarea extends Model{
         allowNull:true
     })
     entregada!:number
+    @Column({
+        type:DataType.STRING,
+        allowNull:true
+    })
+    entregante!:string
 }
