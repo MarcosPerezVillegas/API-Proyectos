@@ -2,9 +2,22 @@ import { RequestHandler } from "express";
 import { Tarea } from "../models/tareas";
 import { Proyecto } from "../models/proyectos";
 import { Op, where } from "sequelize";
+import fs from 'fs'
+import path from "path";
 
 export const addtarea: RequestHandler = async (req, res, next) => {
     try {
+        const id = req.body.Proyecto_id
+        const proyecto: Proyecto | null = await Proyecto.findByPk(id)
+        if (!proyecto) {
+            return res.status(402).json({ message: "No se encontro proyecto para esta tarea" });
+        }
+        const dir = path.resolve(__dirname,'..')
+        const carpeta = path.join(dir,'Archivos', proyecto.nombre)
+
+        if(!fs.existsSync(carpeta)){
+            fs.mkdirSync(carpeta)
+        }
         var tarea = await Tarea.create({ ...req.body });
         if (!tarea) {
             return res.status(401).json({ message: "No se pudo crear la tarea" });

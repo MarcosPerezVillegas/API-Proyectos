@@ -7,7 +7,7 @@ const router: Router = express.Router();
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     const proyecto: string = req.params.proyecto;
-    const destinationPath = path.join('E:/Entregas/', proyecto); //proyecto= nombre del proyecto, se necesita tener creada su carpeta
+    const destinationPath = path.join('./Archivos', proyecto); //proyecto= nombre del proyecto, se necesita tener creada su carpeta
     cb(null, destinationPath);
   },
   //Asignar el nombre del archivo: primero el nombre de la tarea, luego el nombre del alumno y luego la fecha y la hora en que se

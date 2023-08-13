@@ -8,12 +8,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updtarea = exports.obttareapro = exports.obttareanombre = exports.obttareaid = exports.obttarea = exports.droptarea = exports.addtarea = void 0;
 const tareas_1 = require("../models/tareas");
 const proyectos_1 = require("../models/proyectos");
+const fs_1 = __importDefault(require("fs"));
+const path_1 = __importDefault(require("path"));
 const addtarea = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const id = req.body.Proyecto_id;
+        const proyecto = yield proyectos_1.Proyecto.findByPk(id);
+        if (!proyecto) {
+            return res.status(402).json({ message: "No se encontro proyecto para esta tarea" });
+        }
+        const dir = path_1.default.resolve(__dirname, '..');
+        const carpeta = path_1.default.join(dir, 'Archivos', proyecto.nombre);
+        if (!fs_1.default.existsSync(carpeta)) {
+            fs_1.default.mkdirSync(carpeta);
+        }
         var tarea = yield tareas_1.Tarea.create(Object.assign({}, req.body));
         if (!tarea) {
             return res.status(401).json({ message: "No se pudo crear la tarea" });
