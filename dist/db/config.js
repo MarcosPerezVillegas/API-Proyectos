@@ -11,12 +11,12 @@ const maestros_1 = require("../models/maestros");
 const alumnos_1 = require("../models/alumnos");
 exports.connection = new sequelize_typescript_1.Sequelize({
     dialect: "mysql",
-    host: "localhost",
+    host: "mysql",
     username: "root",
     password: "wasd",
     database: "BancoDeProyectos",
-    logging: true,
+    logging: false,
     models: [carrera_1.Carrera, proyectos_1.Proyecto, status_1.Status, tareas_1.Tarea, statusProyecto_1.statusProyecto, maestros_1.Maestros, alumnos_1.Alumnos],
-    port: 33061
+    port: 3306
 });
 exports.default = exports.connection;
