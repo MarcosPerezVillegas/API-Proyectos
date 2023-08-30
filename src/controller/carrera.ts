@@ -89,7 +89,6 @@ export const obtenerCarreraNombre: RequestHandler = async (req, res) => {
     }
 
 }
-
 export const actualizarCarrera: RequestHandler = async (req, res) => {
     const { clave } = req.params;
     try {

@@ -70,7 +70,7 @@ export const obttareaid: RequestHandler = async (req, res, next) => {
     }
 
 }
-
+/*
 export const obttareanombre: RequestHandler = async (req, res, next) => {
     const { nombre } = req.params
     try {
@@ -83,7 +83,7 @@ export const obttareanombre: RequestHandler = async (req, res, next) => {
         return res.status(404).json({ message: "", error });
     }
 
-}
+}*/
 
 export const obttareapro: RequestHandler = async (req, res, next) => {
     const { Proyecto_id } = req.params

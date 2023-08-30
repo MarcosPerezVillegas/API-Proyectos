@@ -72,24 +72,6 @@ export const infoCompletaAlumno: RequestHandler = async (req, res) => {
 
 }
 
-/*export const buscarAlumnoNombre: RequestHandler = async (req, res) => {
-    const { nombre } = req.params
-    try {
-        console.log(nombre)
-        var alumno = await Alumnos.findOne({where: {nombre},
-            include: Rol,
-            attributes: { exclude: ["rol_id"] }
-        });
-        if (!alumno) {
-            return res.status(401).json({ message: "No se pudo encontar al alumno", data: alumno });
-        }
-        return res.status(200).json({ message: "Alumno encontrado con toda su info", data: alumno });
-    } catch (error) {
-        return res.status(404).json({ message: "", error });
-    }
-
-}*/
-
 export const infoemailAlumno: RequestHandler = async (req, res) => {
     const { email } = req.params
     try {
@@ -103,7 +85,7 @@ export const infoemailAlumno: RequestHandler = async (req, res) => {
     }
 
 }
-
+/*
 export const infoCompletaAlumnoEliminado: RequestHandler = async (req, res) => {
     const { codigo } = req.params
     try {
@@ -118,7 +100,7 @@ export const infoCompletaAlumnoEliminado: RequestHandler = async (req, res) => {
         return res.status(404).json({ message: "", error });
     }
 
-}
+}*/
 
 export const actualizarAlumno: RequestHandler = async (req, res) => {
     const { codigo } = req.params

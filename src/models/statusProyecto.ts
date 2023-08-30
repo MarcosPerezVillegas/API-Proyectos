@@ -4,7 +4,8 @@ import { Status } from "./status";
 
 @Table({
   tableName: "status_proyecto",
-  timestamps: false,
+  timestamps: true,
+  paranoid: true
 })
 export class statusProyecto extends Model<statusProyecto> {
 

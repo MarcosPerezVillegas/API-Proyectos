@@ -6,7 +6,7 @@ import { crearAlumno,
     listarAlumnosElimidanos,
     infoemailAlumno,
     infoCompletaAlumno,
-    infoCompletaAlumnoEliminado,
+    //infoCompletaAlumnoEliminado,
     eliminarAlumnoPerma,
     //buscarAlumnoNombre,
     restaurarAlumno} from "../controller/alumnos";
@@ -18,7 +18,7 @@ router.delete("/:codigo",autorizar,eliminarAlumno);
 router.get("/",autorizar,listarAlumnos);
 router.get("/Email/:email",infoemailAlumno);
 router.get("/Eliminados",autorizar,listarAlumnosElimidanos);
-router.get("/Eliminados/:codigo",autorizar,infoCompletaAlumnoEliminado);
+//router.get("/Eliminados/:codigo",autorizar,infoCompletaAlumnoEliminado);
 router.delete("/Eliminados/:codigo",autorizar,eliminarAlumnoPerma);
 router.get("/:codigo",autorizar,infoCompletaAlumno);
 //router.get("/Nombre/:nombre",autorizar,buscarAlumnoNombre);

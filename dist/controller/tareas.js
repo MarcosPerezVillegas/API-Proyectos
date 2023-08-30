@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updtarea = exports.obttareapro = exports.obttareanombre = exports.obttareaid = exports.obttarea = exports.droptarea = exports.addtarea = void 0;
+exports.updtarea = exports.obttareapro = exports.obttareaid = exports.obttarea = exports.droptarea = exports.addtarea = void 0;
 const tareas_1 = require("../models/tareas");
 const proyectos_1 = require("../models/proyectos");
 const fs_1 = __importDefault(require("fs"));
@@ -82,20 +82,20 @@ const obttareaid = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.obttareaid = obttareaid;
-const obttareanombre = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { nombre } = req.params;
+/*
+export const obttareanombre: RequestHandler = async (req, res, next) => {
+    const { nombre } = req.params
     try {
-        const obttarea = yield tareas_1.Tarea.findAll({ where: { nombre } });
+        const obttarea: Tarea[] = await Tarea.findAll({where: {nombre}});
         if (!obttarea) {
             return res.status(401).json({ message: "No se pudo encontrar la tarea" });
         }
         return res.status(200).json({ message: "tarea obtenida", data: obttarea });
-    }
-    catch (error) {
+    } catch (error) {
         return res.status(404).json({ message: "", error });
     }
-});
-exports.obttareanombre = obttareanombre;
+
+}*/
 const obttareapro = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { Proyecto_id } = req.params;
     try {

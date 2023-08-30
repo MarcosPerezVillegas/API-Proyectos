@@ -154,7 +154,7 @@ export const infoemailMaestro: RequestHandler = async (req, res) => {
     }
 
 }
-
+/*
 export const infoCompletaMaestroEliminado: RequestHandler = async (req, res) => {
     const { codigo } = req.params
     try {
@@ -167,7 +167,7 @@ export const infoCompletaMaestroEliminado: RequestHandler = async (req, res) => 
         return res.status(404).json({ message: "", error });
     }
 
-}
+}*/
 
 export const actualizarMaestro: RequestHandler = async (req, res) => {
     const { codigo } = req.params

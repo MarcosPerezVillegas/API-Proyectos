@@ -10,6 +10,6 @@ router.get("/", proyectos_1.listarProyectos);
 router.get("/:id", proyectos_1.BuscarProyectoId);
 router.get("/Nombre/:nombre", proyectos_1.BuscarProyectoNombre);
 router.get("/Usuario/:codigo", proyectos_1.BuscarProyectoUsuario);
-router.get("/Carrera/:carrera_clave", proyectos_1.BuscarProyectosCarrera);
+//router.get("/Carrera/:carrera_clave",BuscarProyectosCarrera);
 router.put("/:id", verify_token_1.autorizar, proyectos_1.actualizarProyecto);
 exports.default = router;

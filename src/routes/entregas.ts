@@ -13,9 +13,9 @@ const storage = multer.diskStorage({
   //Asignar el nombre del archivo: primero el nombre de la tarea, luego el nombre del alumno y luego la fecha y la hora en que se
   //entregó la tarea 
   filename: function (req, file, cb) {
-    const nombre = req.params.nombre
+    const id = req.params.id
     //extname(file.originalname) es para concervar la extención de archivo que se subió originalmente como entrega
-    const nombreArchivo = `${nombre}${path.extname(file.originalname)}`; 
+    const nombreArchivo = `${id}${path.extname(file.originalname)}`; 
     cb(null, nombreArchivo);
   }
 });
@@ -24,7 +24,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // Ruta para la entrega de archivos
-router.post('/:nombre/:proyecto', upload.single('archivo'), (req, res) => {
+router.post('/:id/:proyecto', upload.single('archivo'), (req, res) => {
   //const tareaId: string = req.params.id;
   //const nombreArchivo: string = (req.file as Express.Multer.File).filename;
   res.status(200).json({ message: 'Archivo entregado con éxito' });

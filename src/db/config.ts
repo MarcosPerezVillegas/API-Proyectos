@@ -10,7 +10,7 @@ import { Alumnos } from "../models/alumnos";
 
 export const connection = new Sequelize({
     dialect: "mysql",
-    host: "mysql",
+    host: "localhost",
     username: "root",
     password: "wasd",
     database: "BancoDeProyectos",
@@ -18,7 +18,7 @@ export const connection = new Sequelize({
     models:[Carrera,Proyecto,Status,Tarea,statusProyecto,Maestros,Alumnos],
 
 
-    port: 3306
+    port: 33061
 });
 
 export default connection;

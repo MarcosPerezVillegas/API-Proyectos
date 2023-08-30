@@ -8,15 +8,21 @@ import { Status } from "../models/status";
 import { statusProyecto } from "../models/statusProyecto";
 import { Alumnos } from "../models/alumnos";
 import { Maestros } from "../models/maestros";
+import { UpdatedAt } from "sequelize-typescript";
 
 export const crearProyecto: RequestHandler = async (req, res) => {
     try {
         const proyecto = await Proyecto.create({ ...req.body });
 
         // Buscar el estado con ID 1 en la tabla Status
-        const estado = await Status.findByPk(1);
+        let estado = await Status.findByPk(1);
         if (!estado) {
-            return res.status(404).json({ message: "No se encontró el estado inicial" });
+            estado = await Status.create(
+                {
+                    id: 1,
+                    Estado: "Activo"
+                }
+            )
         }
 
         // Asociar el estado al proyecto creado
@@ -32,11 +38,13 @@ export const listarProyectos: RequestHandler = async (req, res) => {
     try {
         var proyectos = await Proyecto.findAll({
             include: [
-                {model: Alumnos,
-                    attributes: { exclude: ["password", "telefono"]}
+                {
+                    model: Alumnos,
+                    attributes: { exclude: ["password", "telefono"] }
                 },
-                {model: Maestros,
-                    attributes: { exclude: ["password", "telefono"]}
+                {
+                    model: Maestros,
+                    attributes: { exclude: ["password", "telefono"] }
                 },
                 Carrera,
                 Status,
@@ -56,12 +64,11 @@ export const listarProyectos: RequestHandler = async (req, res) => {
 export const BuscarProyectoId: RequestHandler = async (req, res) => {
     const { id } = req.params
     try {
-        const proyecto: Proyecto | null = await Proyecto.findByPk(id,{
+        const proyecto: Proyecto | null = await Proyecto.findByPk(id, {
             include: [Maestros,
-            Carrera,
-            Alumnos,
-            {model: Status},],
-            attributes: { exclude: ["carrera_clave"] },
+                Carrera,
+                Alumnos,
+                { model: Status },],
         });
         if (!proyecto) {
             return res.status(401).json({ message: "No se pudo encontrar el proyecto" });
@@ -99,9 +106,9 @@ export const BuscarProyectoUsuario: RequestHandler = async (req, res) => {
             where: { codigo },
             include: [
                 Carrera,
-                {model: Status},
+                { model: Status },
             ],
-            attributes: { exclude: [ "carrera_clave"] },
+            attributes: { exclude: ["carrera_clave"] },
         });
         if (!proyecto) {
             return res.status(401).json({ message: "No se pudo encontrar el proyecto" });
@@ -112,7 +119,7 @@ export const BuscarProyectoUsuario: RequestHandler = async (req, res) => {
     }
 
 }
-
+/*
 export const BuscarProyectosCarrera: RequestHandler = async (req, res) => {
     const { carrera_clave } = req.params
     try {
@@ -135,11 +142,21 @@ export const BuscarProyectosCarrera: RequestHandler = async (req, res) => {
         return res.status(404).json({ message: "", error });
     }
 
-}
+}*/
 
 export const actualizarProyecto: RequestHandler = async (req, res) => {
     const { id } = req.params;
+    const { estado } = req.body
     try {
+        if (estado) {
+            const status: Status | null = await Status.findOne({ where: { estado } });
+            if (status) {
+                const proyecto: Proyecto | null = await Proyecto.findByPk(id);
+                if(proyecto){
+                    await proyecto.$add('statuses', status);
+                }
+            }
+        }
         const proyectoActualizado: Proyecto | null = await Proyecto.findByPk(id);
         var proyecto = await Proyecto.update({ ...req.body }, { where: { id } });
         if (!proyecto) {
@@ -154,16 +171,7 @@ export const actualizarProyecto: RequestHandler = async (req, res) => {
 
 export const eliminarProyecto: RequestHandler = async (req, res) => {
     const { id } = req.params;
-    //const proyecto_id=id;
     try {
-       /* console.log(proyecto_id)
-        const statusEliminado: Status | null = await Status.findOne({
-            where: {proyecto_id},
-        });
-        if (!statusEliminado) {
-            return res.status(401).json({ message: "No se pudo eliminar el status ligado al proyecto" });
-        }
-        await Status.destroy({ where: { proyecto_id } });*/
         const proyectoEliminado: Proyecto | null = await Proyecto.findByPk(id);
         if (!proyectoEliminado) {
             return res.status(401).json({ message: "No se pudo eliminar el proyecto" });

@@ -37,6 +37,7 @@ __decorate([
 exports.statusProyecto = statusProyecto = __decorate([
     (0, sequelize_typescript_1.Table)({
         tableName: "status_proyecto",
-        timestamps: false,
+        timestamps: true,
+        paranoid: true
     })
 ], statusProyecto);
