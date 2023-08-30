@@ -153,7 +153,7 @@ export const actualizarProyecto: RequestHandler = async (req, res) => {
             if (status) {
                 const proyecto: Proyecto | null = await Proyecto.findByPk(id);
                 if(proyecto){
-                    await proyecto.$add('statuses', status);
+                    await proyecto.$set('statuses', status);
                 }
             }
         }
