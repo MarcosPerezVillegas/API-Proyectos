@@ -163,7 +163,7 @@ const actualizarProyecto = (req, res) => __awaiter(void 0, void 0, void 0, funct
                     return res.status(401).json({ message: "Este proyecto ya cuenta con este estado" });
                 }
                 yield proyecto.$add('statuses', status);
-                yield statusProyecto_1.statusProyecto.update({ nota }, { where: { proyecto_id: id } });
+                yield statusProyecto_1.statusProyecto.update({ nota }, { where: { proyecto_id: id, status_id } });
             }
         }
         const proyectoActualizado = yield proyectos_1.Proyecto.findByPk(id);

@@ -161,7 +161,7 @@ export const actualizarProyecto: RequestHandler = async (req, res) => {
                     return res.status(401).json({ message: "Este proyecto ya cuenta con este estado" });
                 }
                 await proyecto.$add('statuses', status!);
-                await statusProyecto.update({ nota }, { where: { proyecto_id: id } })
+                await statusProyecto.update({ nota }, { where: { proyecto_id: id, status_id} })
             }
         }
         const proyectoActualizado: Proyecto | null = await Proyecto.findByPk(id);
