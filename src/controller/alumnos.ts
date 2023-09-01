@@ -85,7 +85,7 @@ export const infoemailAlumno: RequestHandler = async (req, res) => {
     }
 
 }
-/*
+
 export const infoCompletaAlumnoEliminado: RequestHandler = async (req, res) => {
     const { codigo } = req.params
     try {
@@ -100,7 +100,7 @@ export const infoCompletaAlumnoEliminado: RequestHandler = async (req, res) => {
         return res.status(404).json({ message: "", error });
     }
 
-}*/
+}
 
 export const actualizarAlumno: RequestHandler = async (req, res) => {
     const { codigo } = req.params

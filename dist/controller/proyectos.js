@@ -14,11 +14,13 @@ const proyectos_1 = require("../models/proyectos");
 //import { Usuario } from "../models/maestros";
 const carrera_1 = require("../models/carrera");
 const status_1 = require("../models/status");
+const statusProyecto_1 = require("../models/statusProyecto");
 const alumnos_1 = require("../models/alumnos");
 const maestros_1 = require("../models/maestros");
 const crearProyecto = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const proyecto = yield proyectos_1.Proyecto.create(Object.assign({}, req.body));
+        const { id } = req.body;
         // Buscar el estado con ID 1 en la tabla Status
         let estado = yield status_1.Status.findByPk(1);
         if (!estado) {
@@ -29,6 +31,8 @@ const crearProyecto = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         }
         // Asociar el estado al proyecto creado
         yield proyecto.$add('statuses', estado);
+        //await statusProyecto.findOne({where: {proyecto_id : proyecto.id}});
+        yield statusProyecto_1.statusProyecto.update({ nota: "Proyecto creado" }, { where: { proyecto_id: proyecto.id } });
         return res.status(200).json({ message: "Proyecto creado!", data: proyecto });
     }
     catch (error) {
@@ -147,15 +151,19 @@ export const BuscarProyectosCarrera: RequestHandler = async (req, res) => {
 }*/
 const actualizarProyecto = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const { estado } = req.body;
+    const { status_id } = req.body;
+    const { nota } = req.body;
     try {
-        if (estado) {
-            const status = yield status_1.Status.findOne({ where: { estado } });
-            if (status) {
-                const proyecto = yield proyectos_1.Proyecto.findByPk(id);
-                if (proyecto) {
-                    yield proyecto.$add('statuses', status);
+        if (status_id) {
+            let status = yield status_1.Status.findOne({ where: { id: status_id } });
+            const proyecto = yield proyectos_1.Proyecto.findByPk(id);
+            if (proyecto) {
+                let estatus = yield statusProyecto_1.statusProyecto.findOne({ where: { proyecto_id: id, status_id } });
+                if (estatus) {
+                    return res.status(401).json({ message: "Este proyecto ya cuenta con este estado" });
                 }
+                yield proyecto.$add('statuses', status);
+                yield statusProyecto_1.statusProyecto.update({ nota }, { where: { proyecto_id: id } });
             }
         }
         const proyectoActualizado = yield proyectos_1.Proyecto.findByPk(id);

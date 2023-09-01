@@ -1,6 +1,7 @@
 import { RequestHandler } from "express";
 import { Status } from "../models/status";
 import { Proyecto } from "../models/proyectos";
+import { statusProyecto } from "../models/statusProyecto";
 
 export const addstat: RequestHandler = async (req, res, next) => {
     try {
@@ -70,6 +71,22 @@ export const updstat: RequestHandler = async (req, res) => {
             return res.status(401).json({ message: "No se pudo actualizar el status" });
         }
         return res.status(200).json({ message: "Status actualizado!", statActualizado });
+    } catch (error) {
+        return res.status(404).json({ message: "", error });
+    }
+
+}
+
+export const BuscarStatus: RequestHandler = async (req, res) => {
+    const { Estado } = req.params;
+    try {
+        const status: Status | null = await Status.findOne({
+            where: { Estado },
+        });
+        if (!status) {
+            return res.status(401).json({ message: "No se pudo encontrar el estado" });
+        }
+        return res.status(200).json({ message: "Estado encontrado", data: status });
     } catch (error) {
         return res.status(404).json({ message: "", error });
     }

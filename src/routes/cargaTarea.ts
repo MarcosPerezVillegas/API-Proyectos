@@ -9,9 +9,9 @@ const router: Router = express.Router();
 const dir = path.resolve(__dirname,'..')
 const carpeta = path.join(dir,'Archivos')
 // Ruta para la entrega de archivos
-router.get('/:nombre/:proyecto', (req, res) => {
-    const proyecto: string = req.params.proyecto;
-    const nombre: string = req.params.nombre;
+router.get('/:id/:proyecto_id', (req, res) => {
+    const proyecto: string = req.params.proyecto_id;
+    const nombre: string = req.params.id;
     const tarea = `${carpeta}/${proyecto}/${nombre}.pdf`
     if (fs.existsSync(tarea)) {
         res.setHeader('Content-Type', 'application/pdf');

@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updstat = exports.BuscarProyecto = exports.obtstat = exports.dropstat = exports.addstat = void 0;
+exports.BuscarStatus = exports.updstat = exports.BuscarProyecto = exports.obtstat = exports.dropstat = exports.addstat = void 0;
 const status_1 = require("../models/status");
 const proyectos_1 = require("../models/proyectos");
 const addstat = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -86,3 +86,19 @@ const updstat = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.updstat = updstat;
+const BuscarStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { Estado } = req.params;
+    try {
+        const status = yield status_1.Status.findOne({
+            where: { Estado },
+        });
+        if (!status) {
+            return res.status(401).json({ message: "No se pudo encontrar el estado" });
+        }
+        return res.status(200).json({ message: "Estado encontrado", data: status });
+    }
+    catch (error) {
+        return res.status(404).json({ message: "", error });
+    }
+});
+exports.BuscarStatus = BuscarStatus;

@@ -8,7 +8,7 @@ import { crearMaestro,
     listarAdminsElimidanos,
     infoemailMaestro,
     infoCompletaMaestro,
-    //infoCompletaMaestroEliminado,
+    infoCompletaMaestroEliminado,
     eliminarMaestroPerma,
     buscarMaestroNombre,
     restaurarMaestro} from "../controller/maestros";
@@ -22,9 +22,9 @@ router.get("/Admins",autorizar,listarAdmins);
 router.get("/Admins/Eliminados",autorizar,listarAdminsElimidanos);
 router.get("/Email/:email",infoemailMaestro);
 router.get("/Eliminados",autorizar,listarMaestrosElimidanos);
-//router.get("/Eliminados/:codigo",autorizar,infoCompletaMaestroEliminado);
+router.get("/Eliminados/:codigo",autorizar,infoCompletaMaestroEliminado);
 router.delete("/Eliminados/:codigo",autorizar,eliminarMaestroPerma);
-router.get("/:codigo",autorizar,infoCompletaMaestro);
+router.get("/:codigo",infoCompletaMaestro);
 router.get("/Nombre/:nombre",autorizar,buscarMaestroNombre);
 router.put("/:codigo",autorizar,actualizarMaestro);
 router.get("/Restaurar/:codigo",autorizar,restaurarMaestro);

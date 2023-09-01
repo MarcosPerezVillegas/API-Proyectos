@@ -30,4 +30,9 @@ export class statusProyecto extends Model<statusProyecto> {
     allowNull: false,
   })
   proyecto_id!: number;
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  nota!: string;
 }

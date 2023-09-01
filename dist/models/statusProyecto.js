@@ -34,6 +34,12 @@ __decorate([
         allowNull: false,
     })
 ], statusProyecto.prototype, "proyecto_id", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.STRING,
+        allowNull: true,
+    })
+], statusProyecto.prototype, "nota", void 0);
 exports.statusProyecto = statusProyecto = __decorate([
     (0, sequelize_typescript_1.Table)({
         tableName: "status_proyecto",
