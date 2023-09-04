@@ -9,6 +9,7 @@ import { crearAlumno,
     infoCompletaAlumnoEliminado,
     eliminarAlumnoPerma,
     //buscarAlumnoNombre,
+    CambiarPassword,
     restaurarAlumno} from "../controller/alumnos";
 import { autorizar } from "../middleware/verify_token";
 
@@ -23,6 +24,7 @@ router.delete("/Eliminados/:codigo",autorizar,eliminarAlumnoPerma);
 router.get("/:codigo",infoCompletaAlumno);
 //router.get("/Nombre/:nombre",autorizar,buscarAlumnoNombre);
 router.put("/:codigo",autorizar,actualizarAlumno);
+router.put("/Cambiar/:codigo",CambiarPassword);
 router.get("/Restaurar/:codigo",autorizar,restaurarAlumno);
 
 export default router;

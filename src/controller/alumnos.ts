@@ -117,6 +117,24 @@ export const actualizarAlumno: RequestHandler = async (req, res) => {
 
 }
 
+export const CambiarPassword: RequestHandler = async (req, res) => {
+    const { codigo } = req.params
+    const { password2 } = req.body
+    try {
+        if(password2){
+            const alumnoActualizado: Alumnos | null = await Alumnos.findByPk(codigo);
+            var alumno = await Alumnos.update({password: await bcrypt.hash(req.body.password2, 10)}, { where: { codigo: codigo } });
+            if (!alumno) {
+                return res.status(401).json({ message: "No se pudo actualizar el Alumno", data: alumno });
+            }
+            return res.status(200).json({ message: "Alumno actualizado", data: alumnoActualizado });
+        }
+    } catch (error) {
+        return res.status(404).json({ message: "", error });
+    }
+
+}
+
 export const eliminarAlumno: RequestHandler = async (req, res) => {
     const { codigo } = req.params;
     try {
