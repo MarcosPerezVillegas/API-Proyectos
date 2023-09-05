@@ -26,10 +26,10 @@ const addstat = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
 });
 exports.addstat = addstat;
 const dropstat = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { proyecto_id } = req.params;
+    const { id } = req.params;
     try {
-        const stateliminado = yield status_1.Status.findByPk(proyecto_id);
-        var stat = yield status_1.Status.destroy({ where: { proyecto_id } });
+        const stateliminado = yield status_1.Status.findByPk(id);
+        const stat = yield status_1.Status.destroy({ where: { id } });
         if (!stat) {
             return res.status(401).json({ message: "No se pudo eliminar el status" });
         }
@@ -72,10 +72,10 @@ const BuscarProyecto = (req, res) => __awaiter(void 0, void 0, void 0, function*
 });
 exports.BuscarProyecto = BuscarProyecto;
 const updstat = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { Proyecto_id } = req.params;
+    const { id } = req.params;
     try {
-        const statActualizado = yield status_1.Status.findOne({ where: { Proyecto_id } });
-        var stat = yield status_1.Status.update(Object.assign({}, req.body), { where: { Proyecto_id } });
+        const statActualizado = yield status_1.Status.findOne({ where: { id } });
+        const stat = yield status_1.Status.update(Object.assign({}, req.body), { where: { id } });
         if (!stat) {
             return res.status(401).json({ message: "No se pudo actualizar el status" });
         }

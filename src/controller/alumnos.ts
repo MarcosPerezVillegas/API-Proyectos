@@ -106,6 +106,10 @@ export const actualizarAlumno: RequestHandler = async (req, res) => {
     const { codigo } = req.params
     try {
         const alumnoActualizado: Alumnos | null = await Alumnos.findByPk(codigo);
+        let user = req.body
+        if(user.password){
+            user.password= await bcrypt.hash(req.body.password, 10)//cuando actualizamos el alumno, hasheamos el password con bcrypt
+        }
         var alumno = await Alumnos.update({ ...req.body }, { where: { codigo: codigo } });
         if (!alumno) {
             return res.status(401).json({ message: "No se pudo actualizar el Alumno", data: alumno });

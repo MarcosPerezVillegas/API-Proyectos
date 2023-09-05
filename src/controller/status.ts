@@ -17,10 +17,10 @@ export const addstat: RequestHandler = async (req, res, next) => {
 }
 
 export const dropstat: RequestHandler = async (req, res, next) => {
-    const { proyecto_id } = req.params;
+    const { id } = req.params;
     try {
-        const stateliminado: Status | null = await Status.findByPk(proyecto_id);
-        var stat = await Status.destroy({ where: { proyecto_id } });
+        const stateliminado: Status | null = await Status.findByPk(id);
+        const stat = await Status.destroy({ where: { id } });
         if (!stat) {
             return res.status(401).json({ message: "No se pudo eliminar el status" });
         }
@@ -63,10 +63,10 @@ export const BuscarProyecto: RequestHandler = async (req, res) => {
 }
 
 export const updstat: RequestHandler = async (req, res) => {
-    const { Proyecto_id } = req.params;
+    const { id } = req.params;
     try {
-        const statActualizado: Status | null = await Status.findOne({ where: { Proyecto_id } });
-        var stat = await Status.update({ ...req.body }, { where: { Proyecto_id } });
+        const statActualizado: Status | null = await Status.findOne({ where: { id } });
+        const stat = await Status.update({ ...req.body }, { where: { id } });
         if (!stat) {
             return res.status(401).json({ message: "No se pudo actualizar el status" });
         }

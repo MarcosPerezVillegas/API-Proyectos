@@ -68,7 +68,9 @@ export const BuscarProyectoId: RequestHandler = async (req, res) => {
     const { id } = req.params
     try {
         const proyecto: Proyecto | null = await Proyecto.findByPk(id, {
-            include: [Maestros,
+            include: [
+                { model: Maestros,
+                    attributes: { exclude: ["password", "telefono"] }},
                 Carrera,
                 Alumnos,
                 { model: Status },],
@@ -151,13 +153,27 @@ export const actualizarProyecto: RequestHandler = async (req, res) => {
     const { id } = req.params;
     const { status_id } = req.body
     const { nota } = req.body
+    const { dele } = req.body
     try {
         if (status_id) {
             let status: Status | null = await Status.findOne({ where: { id: status_id } });
             const proyecto: Proyecto | null = await Proyecto.findByPk(id);
             if (proyecto) {
+                const term: statusProyecto | null = await statusProyecto.findOne({ where: { proyecto_id: id, status_id: 3 } });
                 let estatus: statusProyecto | null = await statusProyecto.findOne({ where: { proyecto_id: id, status_id } });
+                if(term && !dele){
+                    return res.status(401).json({ message: "No puedes agregar mas estados a un proyecto terminado" });
+                }
+                if(term && status_id !== 3){
+                    return res.status(401).json({ message: "No puedes quitar estados de un proyecto terminado" });
+                }
                 if(estatus){
+                    if(dele){
+                        let stat: Status | null = await Status.findOne({ where: { id: status_id} });
+                        await proyecto.$remove('statuses', stat!);
+                        await statusProyecto.destroy({where: { id: estatus.id }, force: true})
+                        return res.status(200).json({ message: "Se eliminó el estado del registro del proyecto con exito" });
+                    }
                     return res.status(401).json({ message: "Este proyecto ya cuenta con este estado" });
                 }
                 await proyecto.$add('statuses', status!);

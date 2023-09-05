@@ -71,10 +71,13 @@ const BuscarProyectoId = (req, res) => __awaiter(void 0, void 0, void 0, functio
     const { id } = req.params;
     try {
         const proyecto = yield proyectos_1.Proyecto.findByPk(id, {
-            include: [maestros_1.Maestros,
+            include: [
+                { model: maestros_1.Maestros,
+                    attributes: { exclude: ["password", "telefono"] } },
                 carrera_1.Carrera,
                 alumnos_1.Alumnos,
-                { model: status_1.Status },],
+                { model: status_1.Status },
+            ],
         });
         if (!proyecto) {
             return res.status(401).json({ message: "No se pudo encontrar el proyecto" });
@@ -153,13 +156,27 @@ const actualizarProyecto = (req, res) => __awaiter(void 0, void 0, void 0, funct
     const { id } = req.params;
     const { status_id } = req.body;
     const { nota } = req.body;
+    const { dele } = req.body;
     try {
         if (status_id) {
             let status = yield status_1.Status.findOne({ where: { id: status_id } });
             const proyecto = yield proyectos_1.Proyecto.findByPk(id);
             if (proyecto) {
+                const term = yield statusProyecto_1.statusProyecto.findOne({ where: { proyecto_id: id, status_id: 3 } });
                 let estatus = yield statusProyecto_1.statusProyecto.findOne({ where: { proyecto_id: id, status_id } });
+                if (term && !dele) {
+                    return res.status(401).json({ message: "No puedes agregar mas estados a un proyecto terminado" });
+                }
+                if (term && status_id !== 3) {
+                    return res.status(401).json({ message: "No puedes quitar estados de un proyecto terminado" });
+                }
                 if (estatus) {
+                    if (dele) {
+                        let stat = yield status_1.Status.findOne({ where: { id: status_id } });
+                        yield proyecto.$remove('statuses', stat);
+                        yield statusProyecto_1.statusProyecto.destroy({ where: { id: estatus.id }, force: true });
+                        return res.status(200).json({ message: "Se eliminó el estado del registro del proyecto con exito" });
+                    }
                     return res.status(401).json({ message: "Este proyecto ya cuenta con este estado" });
                 }
                 yield proyecto.$add('statuses', status);
