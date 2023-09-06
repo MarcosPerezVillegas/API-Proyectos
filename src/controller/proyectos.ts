@@ -21,7 +21,19 @@ export const crearProyecto: RequestHandler = async (req, res) => {
             estado = await Status.create(
                 {
                     id: 1,
+                    Estado: "En espera"
+                }
+            )
+            const estado1 = await Status.create(
+                {
+                    id: 2,
                     Estado: "Activo"
+                }
+            )
+            const estado2 = await Status.create(
+                {
+                    id: 3,
+                    Estado: "Terminado"
                 }
             )
         }

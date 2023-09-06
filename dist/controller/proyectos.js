@@ -26,7 +26,7 @@ const crearProyecto = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         if (!estado) {
             estado = yield status_1.Status.create({
                 id: 1,
-                Estado: "Activo"
+                Estado: "En espera"
             });
         }
         // Asociar el estado al proyecto creado
