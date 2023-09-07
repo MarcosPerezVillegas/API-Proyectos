@@ -123,11 +123,11 @@ export const actualizarAlumno: RequestHandler = async (req, res) => {
 
 export const CambiarPassword: RequestHandler = async (req, res) => {
     const { codigo } = req.params
-    const { password2 } = req.body
+    const { password } = req.body
     try {
-        if(password2){
+        if(password){
             const alumnoActualizado: Alumnos | null = await Alumnos.findByPk(codigo);
-            var alumno = await Alumnos.update({password: await bcrypt.hash(req.body.password2, 10)}, { where: { codigo: codigo } });
+            var alumno = await Alumnos.update({password: await bcrypt.hash(req.body.password, 10)}, { where: { codigo: codigo } });
             if (!alumno) {
                 return res.status(401).json({ message: "No se pudo actualizar el Alumno", data: alumno });
             }
