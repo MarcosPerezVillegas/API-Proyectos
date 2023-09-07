@@ -16,7 +16,7 @@ import { crearMaestro,
 import { autorizar } from "../middleware/verify_token";
 
 const router = Router();
-router.post("/",crearMaestro);
+router.post("/",autorizar,crearMaestro);
 router.delete("/:codigo",autorizar,eliminarMaestro);
 router.get("/",autorizar,listarMaestros);
 router.get("/Admins",autorizar,listarAdmins);

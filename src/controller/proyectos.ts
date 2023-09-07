@@ -84,7 +84,10 @@ export const BuscarProyectoId: RequestHandler = async (req, res) => {
                 { model: Maestros,
                     attributes: { exclude: ["password", "telefono"] }},
                 Carrera,
-                Alumnos,
+                {
+                    model: Alumnos,
+                    attributes: { exclude: ["password", "telefono"] }
+                },
                 { model: Status },],
         });
         if (!proyecto) {
@@ -102,8 +105,6 @@ export const BuscarProyectoNombre: RequestHandler = async (req, res) => {
     try {
         const proyecto: Proyecto | null = await Proyecto.findOne({
             where: { nombre: nombre },
-            include: [
-            ],
             attributes: { exclude: ["codigo", "carrera_clave"] },
         });
         if (!proyecto) {

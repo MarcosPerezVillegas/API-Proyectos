@@ -128,7 +128,7 @@ export const buscarMaestroNombre: RequestHandler = async (req, res) => {
     const { nombre } = req.params
     try {
         console.log(nombre)
-        var maestro = await Maestros.findOne({where: {nombre}});
+        var maestro = await Maestros.findOne({where: {nombre},attributes: { exclude: ["password"] }});
         if (!maestro) {
             return res.status(401).json({ message: "No se pudo encontar al maestro", data: maestro });
         }
