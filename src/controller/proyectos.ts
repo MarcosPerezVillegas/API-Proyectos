@@ -174,10 +174,10 @@ export const actualizarProyecto: RequestHandler = async (req, res) => {
                 const term: statusProyecto | null = await statusProyecto.findOne({ where: { proyecto_id: id, status_id: 3 } });
                 let estatus: statusProyecto | null = await statusProyecto.findOne({ where: { proyecto_id: id, status_id } });
                 if(term && !dele){
-                    return res.status(401).json({ message: "No puedes agregar mas estados a un proyecto terminado" });
+                    return res.status(404).json({ message: "No puedes agregar mas estados a un proyecto terminado" });
                 }
                 if(term && status_id !== 3){
-                    return res.status(401).json({ message: "No puedes quitar estados de un proyecto terminado" });
+                    return res.status(404).json({ message: "No puedes quitar estados de un proyecto terminado" });
                 }
                 if(estatus){
                     if(dele){
@@ -186,7 +186,7 @@ export const actualizarProyecto: RequestHandler = async (req, res) => {
                         await statusProyecto.destroy({where: { id: estatus.id }, force: true})
                         return res.status(200).json({ message: "Se eliminó el estado del registro del proyecto con exito" });
                     }
-                    return res.status(401).json({ message: "Este proyecto ya cuenta con este estado" });
+                    return res.status(403).json({ message: "Este proyecto ya cuenta con este estado" });
                 }
                 await proyecto.$add('statuses', status!);
                 await statusProyecto.update({ nota }, { where: { proyecto_id: id, status_id} })
@@ -195,11 +195,11 @@ export const actualizarProyecto: RequestHandler = async (req, res) => {
         const proyectoActualizado: Proyecto | null = await Proyecto.findByPk(id);
         var proyecto = await Proyecto.update({ ...req.body }, { where: { id } });
         if (!proyecto) {
-            return res.status(401).json({ message: "No se pudo actualizar el proyecto" });
+            return res.status(404).json({ message: "No se pudo actualizar el proyecto" });
         }
         return res.status(200).json({ message: "Proyecto actualizado", data: proyectoActualizado });
     } catch (error) {
-        return res.status(404).json({ message: "", error });
+        return res.status(400).json({ message: "", error });
     }
 
 }
@@ -209,7 +209,7 @@ export const eliminarProyecto: RequestHandler = async (req, res) => {
     try {
         const proyectoEliminado: Proyecto | null = await Proyecto.findByPk(id);
         if (!proyectoEliminado) {
-            return res.status(401).json({ message: "No se pudo eliminar el proyecto" });
+            return res.status(500).json({ message: "No se pudo eliminar el proyecto" });
         }
         await Proyecto.destroy({ where: { id } });
         return res.status(200).json({ message: "Proyecto eliminado", data: proyectoEliminado });

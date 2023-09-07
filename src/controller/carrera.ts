@@ -7,7 +7,7 @@ export const crearCarrera: RequestHandler = async (req, res) => {
     try {
         var carrera = await Carrera.create({ ...req.body });
         if (!carrera) {
-            return res.status(401).json({ message: "No se pudo crear la tarea" });
+            return res.status(404).json({ message: "No se pudo crear la carrera" });
         }
         return res.status(200).json({ message: "Carrera creada ok!", data: carrera });
     } catch (error) {
@@ -22,7 +22,7 @@ export const borrarCarrera: RequestHandler = async (req, res) => {
         const carreraEliminada: Carrera | null = await Carrera.findByPk(clave);
         var carrera = await Carrera.destroy({ where: { clave } });
         if (!carrera) {
-            return res.status(401).json({ message: "No se pudo eliminar la tarea" });
+            return res.status(404).json({ message: "No se pudo eliminar la tarea" });
         }
         return res.status(200).json({ message: "Carrera eliminada ok!", data: carreraEliminada })
     } catch (error) {
@@ -95,7 +95,7 @@ export const actualizarCarrera: RequestHandler = async (req, res) => {
         const carreraActualizada: Carrera | null = await Carrera.findByPk(clave);
         var carrera = await Carrera.update({ ...req.body }, { where: { clave } });
         if (!carrera) {
-            return res.status(401).json({ message: "No se pudo actualizar la carrera" });
+            return res.status(404).json({ message: "No se pudo actualizar la carrera" });
         }
         return res.status(200).json({ message: "Carrera actualizada!", carreraActualizada });
     } catch (error) {

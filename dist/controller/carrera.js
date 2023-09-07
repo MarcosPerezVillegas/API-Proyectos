@@ -16,7 +16,7 @@ const crearCarrera = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     try {
         var carrera = yield carrera_1.Carrera.create(Object.assign({}, req.body));
         if (!carrera) {
-            return res.status(401).json({ message: "No se pudo crear la tarea" });
+            return res.status(404).json({ message: "No se pudo crear la carrera" });
         }
         return res.status(200).json({ message: "Carrera creada ok!", data: carrera });
     }
@@ -31,7 +31,7 @@ const borrarCarrera = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         const carreraEliminada = yield carrera_1.Carrera.findByPk(clave);
         var carrera = yield carrera_1.Carrera.destroy({ where: { clave } });
         if (!carrera) {
-            return res.status(401).json({ message: "No se pudo eliminar la tarea" });
+            return res.status(404).json({ message: "No se pudo eliminar la tarea" });
         }
         return res.status(200).json({ message: "Carrera eliminada ok!", data: carreraEliminada });
     }
@@ -104,7 +104,7 @@ const actualizarCarrera = (req, res) => __awaiter(void 0, void 0, void 0, functi
         const carreraActualizada = yield carrera_1.Carrera.findByPk(clave);
         var carrera = yield carrera_1.Carrera.update(Object.assign({}, req.body), { where: { clave } });
         if (!carrera) {
-            return res.status(401).json({ message: "No se pudo actualizar la carrera" });
+            return res.status(404).json({ message: "No se pudo actualizar la carrera" });
         }
         return res.status(200).json({ message: "Carrera actualizada!", carreraActualizada });
     }

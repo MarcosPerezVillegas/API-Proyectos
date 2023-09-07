@@ -15,7 +15,7 @@ export const crearMaestro: RequestHandler = async (req, res) => {
             admin: req.body.admin
         });
         if (!maestro) {
-            return res.status(401).json({ message: "No se pudo crear al maestro", data: maestro });
+            return res.status(404).json({ message: "No se pudo crear al maestro", data: maestro });
         }
         return res.status(200).json({ message: "Maestro creado", data: maestro });
     } catch (error) {
@@ -68,7 +68,7 @@ export const listarAdmins: RequestHandler = async (req, res) => {
 
 }
 
-export const listarMaestrosElimidanos: RequestHandler = async (req, res) => {
+export const listarMaestrosEliminados: RequestHandler = async (req, res) => {
     try {
         var maestros = await Maestros.findAll({
             where: {
@@ -88,7 +88,7 @@ export const listarMaestrosElimidanos: RequestHandler = async (req, res) => {
 
 }
 
-export const listarAdminsElimidanos: RequestHandler = async (req, res) => {
+export const listarAdminsEliminados: RequestHandler = async (req, res) => {
     try {
         var maestros = await Maestros.findAll({
             where: {
@@ -179,9 +179,27 @@ export const actualizarMaestro: RequestHandler = async (req, res) => {
         }
         const maestro = await Maestros.update({ ...user }, { where: { codigo: codigo } });
         if (!maestro) {
-            return res.status(401).json({ message: "No se pudo actualizar el maestro", data: maestro });
+            return res.status(404).json({ message: "No se pudo actualizar el maestro", data: maestro });
         }
         return res.status(200).json({ message: "Maestro actualizado", data: maestroActualizado });
+    } catch (error) {
+        return res.status(404).json({ message: "", error });
+    }
+
+}
+
+export const CambiarPassword: RequestHandler = async (req, res) => {
+    const { codigo } = req.params
+    const { password } = req.body
+    try {
+        if(password){
+            const maestroActualizado: Maestros | null = await Maestros.findByPk(codigo);
+            var maestro = await Maestros.update({password: await bcrypt.hash(req.body.password, 10)}, { where: { codigo: codigo } });
+            if (!maestro) {
+                return res.status(401).json({ message: "No se pudo actualizar el maestro", data: maestro });
+            }
+            return res.status(200).json({ message: "Maestro actualizado", data: maestroActualizado });
+        }
     } catch (error) {
         return res.status(404).json({ message: "", error });
     }
@@ -194,7 +212,7 @@ export const eliminarMaestro: RequestHandler = async (req, res) => {
         const maestroEliminado: Maestros | null = await Maestros.findByPk(codigo);
         var maestro = await Maestros.destroy({ where: { codigo } });
         if (!maestro) {
-            return res.status(401).json({ message: "No se pudo eliminar el maestro", data: maestro });
+            return res.status(404).json({ message: "No se pudo eliminar el maestro", data: maestro });
         }
         return res.status(200).json({ message: "Maestro eliminado", data: maestroEliminado });
     } catch (error) {

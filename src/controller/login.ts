@@ -13,7 +13,7 @@ export async function login(req: Request, res: Response) {
         where: { email }
     })
     if (!maestro && !alumno) {
-        return res.status(401).json({ message: "El usuario no existe" });
+        return res.status(404).json({ message: "El usuario no existe" });
     }
     if (maestro) {
         const passValida = await bcrypt.compareSync(password, maestro.password);

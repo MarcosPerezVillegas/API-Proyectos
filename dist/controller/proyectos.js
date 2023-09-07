@@ -28,6 +28,14 @@ const crearProyecto = (req, res) => __awaiter(void 0, void 0, void 0, function* 
                 id: 1,
                 Estado: "En espera"
             });
+            const estado1 = yield status_1.Status.create({
+                id: 2,
+                Estado: "Activo"
+            });
+            const estado2 = yield status_1.Status.create({
+                id: 3,
+                Estado: "Terminado"
+            });
         }
         // Asociar el estado al proyecto creado
         yield proyecto.$add('statuses', estado);
@@ -165,10 +173,10 @@ const actualizarProyecto = (req, res) => __awaiter(void 0, void 0, void 0, funct
                 const term = yield statusProyecto_1.statusProyecto.findOne({ where: { proyecto_id: id, status_id: 3 } });
                 let estatus = yield statusProyecto_1.statusProyecto.findOne({ where: { proyecto_id: id, status_id } });
                 if (term && !dele) {
-                    return res.status(401).json({ message: "No puedes agregar mas estados a un proyecto terminado" });
+                    return res.status(404).json({ message: "No puedes agregar mas estados a un proyecto terminado" });
                 }
                 if (term && status_id !== 3) {
-                    return res.status(401).json({ message: "No puedes quitar estados de un proyecto terminado" });
+                    return res.status(404).json({ message: "No puedes quitar estados de un proyecto terminado" });
                 }
                 if (estatus) {
                     if (dele) {
@@ -177,7 +185,7 @@ const actualizarProyecto = (req, res) => __awaiter(void 0, void 0, void 0, funct
                         yield statusProyecto_1.statusProyecto.destroy({ where: { id: estatus.id }, force: true });
                         return res.status(200).json({ message: "Se eliminó el estado del registro del proyecto con exito" });
                     }
-                    return res.status(401).json({ message: "Este proyecto ya cuenta con este estado" });
+                    return res.status(403).json({ message: "Este proyecto ya cuenta con este estado" });
                 }
                 yield proyecto.$add('statuses', status);
                 yield statusProyecto_1.statusProyecto.update({ nota }, { where: { proyecto_id: id, status_id } });
@@ -186,12 +194,12 @@ const actualizarProyecto = (req, res) => __awaiter(void 0, void 0, void 0, funct
         const proyectoActualizado = yield proyectos_1.Proyecto.findByPk(id);
         var proyecto = yield proyectos_1.Proyecto.update(Object.assign({}, req.body), { where: { id } });
         if (!proyecto) {
-            return res.status(401).json({ message: "No se pudo actualizar el proyecto" });
+            return res.status(404).json({ message: "No se pudo actualizar el proyecto" });
         }
         return res.status(200).json({ message: "Proyecto actualizado", data: proyectoActualizado });
     }
     catch (error) {
-        return res.status(404).json({ message: "", error });
+        return res.status(400).json({ message: "", error });
     }
 });
 exports.actualizarProyecto = actualizarProyecto;
@@ -200,7 +208,7 @@ const eliminarProyecto = (req, res) => __awaiter(void 0, void 0, void 0, functio
     try {
         const proyectoEliminado = yield proyectos_1.Proyecto.findByPk(id);
         if (!proyectoEliminado) {
-            return res.status(401).json({ message: "No se pudo eliminar el proyecto" });
+            return res.status(500).json({ message: "No se pudo eliminar el proyecto" });
         }
         yield proyectos_1.Proyecto.destroy({ where: { id } });
         return res.status(200).json({ message: "Proyecto eliminado", data: proyectoEliminado });

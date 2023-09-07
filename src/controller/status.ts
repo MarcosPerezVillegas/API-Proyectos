@@ -44,23 +44,6 @@ export const obtstat: RequestHandler = async (req, res, next) => {
 
 }
 
-export const BuscarProyecto: RequestHandler = async (req, res) => {
-    const { Proyecto_id } = req.params;
-    try {
-        const proyecto: Status | null = await Status.findOne({
-            where: { Proyecto_id },
-            include: Proyecto,
-            attributes: { exclude: ["Proyecto_id"] }
-        });
-        if (!proyecto) {
-            return res.status(401).json({ message: "No se pudo encontrar el documento" });
-        }
-        return res.status(200).json({ message: "Proyecto encontrado", data: proyecto });
-    } catch (error) {
-        return res.status(404).json({ message: "", error });
-    }
-
-}
 
 export const updstat: RequestHandler = async (req, res) => {
     const { id } = req.params;
