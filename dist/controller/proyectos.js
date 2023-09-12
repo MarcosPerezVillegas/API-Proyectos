@@ -8,6 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.eliminarProyecto = exports.actualizarProyecto = exports.BuscarProyectoUsuario = exports.BuscarProyectoNombre = exports.BuscarProyectoId = exports.listarProyectos = exports.crearProyecto = void 0;
 const proyectos_1 = require("../models/proyectos");
@@ -17,6 +20,9 @@ const status_1 = require("../models/status");
 const statusProyecto_1 = require("../models/statusProyecto");
 const alumnos_1 = require("../models/alumnos");
 const maestros_1 = require("../models/maestros");
+const path_1 = __importDefault(require("path"));
+const rimraf_1 = require("rimraf");
+const fs_1 = __importDefault(require("fs"));
 const crearProyecto = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const proyecto = yield proyectos_1.Proyecto.create(Object.assign({}, req.body));
@@ -80,10 +86,15 @@ const BuscarProyectoId = (req, res) => __awaiter(void 0, void 0, void 0, functio
     try {
         const proyecto = yield proyectos_1.Proyecto.findByPk(id, {
             include: [
-                { model: maestros_1.Maestros,
-                    attributes: { exclude: ["password", "telefono"] } },
+                {
+                    model: maestros_1.Maestros,
+                    attributes: { exclude: ["password", "telefono"] }
+                },
                 carrera_1.Carrera,
-                alumnos_1.Alumnos,
+                {
+                    model: alumnos_1.Alumnos,
+                    attributes: { exclude: ["password", "telefono"] }
+                },
                 { model: status_1.Status },
             ],
         });
@@ -102,7 +113,6 @@ const BuscarProyectoNombre = (req, res) => __awaiter(void 0, void 0, void 0, fun
     try {
         const proyecto = yield proyectos_1.Proyecto.findOne({
             where: { nombre: nombre },
-            include: [],
             attributes: { exclude: ["codigo", "carrera_clave"] },
         });
         if (!proyecto) {
@@ -211,10 +221,18 @@ const eliminarProyecto = (req, res) => __awaiter(void 0, void 0, void 0, functio
             return res.status(500).json({ message: "No se pudo eliminar el proyecto" });
         }
         yield proyectos_1.Proyecto.destroy({ where: { id } });
+        const dir = path_1.default.resolve(__dirname, '..');
+        const carpeta = path_1.default.join(dir, 'Archivos');
+        const ruta = path_1.default.join(carpeta, proyectoEliminado.id.toString());
+        try {
+            fs_1.default.readdirSync(ruta);
+            rimraf_1.rimraf.sync(ruta);
+        }
+        catch (_a) { }
         return res.status(200).json({ message: "Proyecto eliminado", data: proyectoEliminado });
     }
     catch (error) {
-        return res.status(404).json({ message: "", error });
+        return res.status(404).json({ message: error });
     }
 });
 exports.eliminarProyecto = eliminarProyecto;

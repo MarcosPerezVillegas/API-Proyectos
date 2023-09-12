@@ -4,6 +4,7 @@ import { Proyecto } from "../models/proyectos";
 import { Op, where } from "sequelize";
 import fs from 'fs'
 import path from "path";
+import { rimraf } from "rimraf";
 
 export const addtarea: RequestHandler = async (req, res, next) => {
     try {
@@ -13,12 +14,16 @@ export const addtarea: RequestHandler = async (req, res, next) => {
             return res.status(402).json({ message: "No se encontro proyecto para esta tarea" });
         }
         const dir = path.resolve(__dirname,'..')
-        const carpeta = path.join(dir,'Archivos', proyecto.nombre)
+        const carpeta = path.join(dir,'Archivos', id)
 
         if(!fs.existsSync(carpeta)){
             fs.mkdirSync(carpeta)
         }
         var tarea = await Tarea.create({ ...req.body });
+        const carpetaMat =path.join(dir,'Archivos',id,tarea.id.toString()+'-Material')
+        if(!fs.existsSync(carpetaMat)){
+            fs.mkdirSync(carpetaMat)
+        }
         if (!tarea) {
             return res.status(401).json({ message: "No se pudo crear la tarea" });
         }
@@ -37,6 +42,26 @@ export const droptarea: RequestHandler = async (req, res, next) => {
         if (!tareaeliminada) {
             return res.status(401).json({ message: "No se pudo eliminar la tarea" });
         }
+        const dir = path.resolve(__dirname,'..')
+        const carpeta = path.join(dir,'Archivos',tareaeliminada.Proyecto_id.toString())
+
+        let archivos = fs.readdirSync(carpeta);
+
+        console.log(archivos)
+        archivos = archivos.filter((archivo) => archivo.includes(id));
+        console.log(archivos)
+
+        archivos.forEach((archivo) => {
+            const rutaArchivo = path.join(carpeta, archivo);
+            if (fs.statSync(rutaArchivo).isFile()) {
+                // Si es un archivo, eliminarlo
+                fs.unlinkSync(rutaArchivo);
+            } else {
+                // Si es una carpeta, eliminarla de manera recursiva
+                rimraf.sync(rutaArchivo);
+            }
+        });
+        
         return res.status(200).json({ message: "Tarea eliminada", data: tareaeliminada });
     } catch (error) {
         return res.status(404).json({ message: "", error });

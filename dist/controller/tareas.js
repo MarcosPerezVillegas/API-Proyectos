@@ -17,6 +17,7 @@ const tareas_1 = require("../models/tareas");
 const proyectos_1 = require("../models/proyectos");
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
+const rimraf_1 = require("rimraf");
 const addtarea = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = req.body.Proyecto_id;
@@ -25,11 +26,15 @@ const addtarea = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
             return res.status(402).json({ message: "No se encontro proyecto para esta tarea" });
         }
         const dir = path_1.default.resolve(__dirname, '..');
-        const carpeta = path_1.default.join(dir, 'Archivos', proyecto.nombre);
+        const carpeta = path_1.default.join(dir, 'Archivos', id);
         if (!fs_1.default.existsSync(carpeta)) {
             fs_1.default.mkdirSync(carpeta);
         }
         var tarea = yield tareas_1.Tarea.create(Object.assign({}, req.body));
+        const carpetaMat = path_1.default.join(dir, 'Archivos', id, tarea.id.toString() + '-Material');
+        if (!fs_1.default.existsSync(carpetaMat)) {
+            fs_1.default.mkdirSync(carpetaMat);
+        }
         if (!tarea) {
             return res.status(401).json({ message: "No se pudo crear la tarea" });
         }
@@ -48,6 +53,23 @@ const droptarea = (req, res, next) => __awaiter(void 0, void 0, void 0, function
         if (!tareaeliminada) {
             return res.status(401).json({ message: "No se pudo eliminar la tarea" });
         }
+        const dir = path_1.default.resolve(__dirname, '..');
+        const carpeta = path_1.default.join(dir, 'Archivos', tareaeliminada.Proyecto_id.toString());
+        let archivos = fs_1.default.readdirSync(carpeta);
+        console.log(archivos);
+        archivos = archivos.filter((archivo) => archivo.includes(id));
+        console.log(archivos);
+        archivos.forEach((archivo) => {
+            const rutaArchivo = path_1.default.join(carpeta, archivo);
+            if (fs_1.default.statSync(rutaArchivo).isFile()) {
+                // Si es un archivo, eliminarlo
+                fs_1.default.unlinkSync(rutaArchivo);
+            }
+            else {
+                // Si es una carpeta, eliminarla de manera recursiva
+                rimraf_1.rimraf.sync(rutaArchivo);
+            }
+        });
         return res.status(200).json({ message: "Tarea eliminada", data: tareaeliminada });
     }
     catch (error) {

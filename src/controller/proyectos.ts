@@ -9,6 +9,9 @@ import { statusProyecto } from "../models/statusProyecto";
 import { Alumnos } from "../models/alumnos";
 import { Maestros } from "../models/maestros";
 import { UpdatedAt } from "sequelize-typescript";
+import path from "path";
+import { rimraf } from "rimraf";
+import fs from 'fs'
 
 export const crearProyecto: RequestHandler = async (req, res) => {
     try {
@@ -81,8 +84,10 @@ export const BuscarProyectoId: RequestHandler = async (req, res) => {
     try {
         const proyecto: Proyecto | null = await Proyecto.findByPk(id, {
             include: [
-                { model: Maestros,
-                    attributes: { exclude: ["password", "telefono"] }},
+                {
+                    model: Maestros,
+                    attributes: { exclude: ["password", "telefono"] }
+                },
                 Carrera,
                 {
                     model: Alumnos,
@@ -174,23 +179,23 @@ export const actualizarProyecto: RequestHandler = async (req, res) => {
             if (proyecto) {
                 const term: statusProyecto | null = await statusProyecto.findOne({ where: { proyecto_id: id, status_id: 3 } });
                 let estatus: statusProyecto | null = await statusProyecto.findOne({ where: { proyecto_id: id, status_id } });
-                if(term && !dele){
+                if (term && !dele) {
                     return res.status(404).json({ message: "No puedes agregar mas estados a un proyecto terminado" });
                 }
-                if(term && status_id !== 3){
+                if (term && status_id !== 3) {
                     return res.status(404).json({ message: "No puedes quitar estados de un proyecto terminado" });
                 }
-                if(estatus){
-                    if(dele){
-                        let stat: Status | null = await Status.findOne({ where: { id: status_id} });
+                if (estatus) {
+                    if (dele) {
+                        let stat: Status | null = await Status.findOne({ where: { id: status_id } });
                         await proyecto.$remove('statuses', stat!);
-                        await statusProyecto.destroy({where: { id: estatus.id }, force: true})
+                        await statusProyecto.destroy({ where: { id: estatus.id }, force: true })
                         return res.status(200).json({ message: "Se eliminó el estado del registro del proyecto con exito" });
                     }
                     return res.status(403).json({ message: "Este proyecto ya cuenta con este estado" });
                 }
                 await proyecto.$add('statuses', status!);
-                await statusProyecto.update({ nota }, { where: { proyecto_id: id, status_id} })
+                await statusProyecto.update({ nota }, { where: { proyecto_id: id, status_id } })
             }
         }
         const proyectoActualizado: Proyecto | null = await Proyecto.findByPk(id);
@@ -213,9 +218,17 @@ export const eliminarProyecto: RequestHandler = async (req, res) => {
             return res.status(500).json({ message: "No se pudo eliminar el proyecto" });
         }
         await Proyecto.destroy({ where: { id } });
+        const dir = path.resolve(__dirname, '..')
+        const carpeta = path.join(dir, 'Archivos')
+        const ruta = path.join(carpeta, proyectoEliminado.id.toString());
+        try {
+            fs.readdirSync(ruta)
+            rimraf.sync(ruta);
+        } catch { }
+    
         return res.status(200).json({ message: "Proyecto eliminado", data: proyectoEliminado });
     } catch (error) {
-        return res.status(404).json({ message: "", error });
+        return res.status(404).json({ message: error });
     }
 
 }
