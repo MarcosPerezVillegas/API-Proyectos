@@ -50,8 +50,6 @@ router.get('/Material/:id/:proyecto_id', (req, res) => {
         if (archivoEncontrado) {
             const tareaDir = path.join(tarea, archivoEncontrado)
             const contentType = mime.getType(path.extname(tareaDir));
-            console.log(contentType)
-
             res.setHeader('Content-Type', contentType);
             res.setHeader('Content-Disposition', `attachment; filename="${nombreSinExtension}"`);
             fs.createReadStream(tareaDir).pipe(res);

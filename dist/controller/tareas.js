@@ -56,9 +56,7 @@ const droptarea = (req, res, next) => __awaiter(void 0, void 0, void 0, function
         const dir = path_1.default.resolve(__dirname, '..');
         const carpeta = path_1.default.join(dir, 'Archivos', tareaeliminada.Proyecto_id.toString());
         let archivos = fs_1.default.readdirSync(carpeta);
-        console.log(archivos);
         archivos = archivos.filter((archivo) => archivo.includes(id));
-        console.log(archivos);
         archivos.forEach((archivo) => {
             const rutaArchivo = path_1.default.join(carpeta, archivo);
             if (fs_1.default.statSync(rutaArchivo).isFile()) {

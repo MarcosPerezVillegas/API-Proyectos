@@ -23,6 +23,7 @@ const maestros_1 = require("../models/maestros");
 const path_1 = __importDefault(require("path"));
 const rimraf_1 = require("rimraf");
 const fs_1 = __importDefault(require("fs"));
+const tareas_1 = require("../models/tareas");
 const crearProyecto = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const proyecto = yield proyectos_1.Proyecto.create(Object.assign({}, req.body));
@@ -219,6 +220,10 @@ const eliminarProyecto = (req, res) => __awaiter(void 0, void 0, void 0, functio
         const proyectoEliminado = yield proyectos_1.Proyecto.findByPk(id);
         if (!proyectoEliminado) {
             return res.status(500).json({ message: "No se pudo eliminar el proyecto" });
+        }
+        const tareas = yield tareas_1.Tarea.findAll({ where: { Proyecto_id: id } });
+        for (const tarea of tareas) {
+            yield tarea.destroy();
         }
         yield proyectos_1.Proyecto.destroy({ where: { id } });
         const dir = path_1.default.resolve(__dirname, '..');

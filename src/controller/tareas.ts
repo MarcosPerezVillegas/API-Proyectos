@@ -47,9 +47,7 @@ export const droptarea: RequestHandler = async (req, res, next) => {
 
         let archivos = fs.readdirSync(carpeta);
 
-        console.log(archivos)
         archivos = archivos.filter((archivo) => archivo.includes(id));
-        console.log(archivos)
 
         archivos.forEach((archivo) => {
             const rutaArchivo = path.join(carpeta, archivo);

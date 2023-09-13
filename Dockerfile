@@ -12,6 +12,8 @@ RUN npm install
 RUN npm install -g typescript
 RUN npm i -g reflect-metadata
 RUN npm i -g portfinder
+RUN npm install rimraf
+RUN npm install mime
 
 
 # Compila el proyecto TypeScript

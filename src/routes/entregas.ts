@@ -6,10 +6,11 @@ const router: Router = express.Router();
 //configurar el destino del archivo
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
+    const id = req.params.id
     const proyecto: string = req.params.proyecto_id;
     let destinationPath = path.join('./dist/Archivos', proyecto); //proyecto= nombre del proyecto, se necesita tener creada su carpeta
     if (req.path.includes('/Material')) {
-      destinationPath = path.join(destinationPath, 'Material');
+      destinationPath = path.join(destinationPath, `${id}-Material`);
     }
     cb(null, destinationPath);
   },

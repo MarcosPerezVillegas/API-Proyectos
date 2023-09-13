@@ -14,7 +14,7 @@ export const connection = new Sequelize({
     username: "root",
     password: "wasd",
     database: "BancoDeProyectos",
-    logging: true,
+    logging: false,
     models:[Carrera,Proyecto,Status,Tarea,statusProyecto,Maestros,Alumnos],
 
 

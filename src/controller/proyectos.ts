@@ -12,6 +12,7 @@ import { UpdatedAt } from "sequelize-typescript";
 import path from "path";
 import { rimraf } from "rimraf";
 import fs from 'fs'
+import { Tarea } from "../models/tareas";
 
 export const crearProyecto: RequestHandler = async (req, res) => {
     try {
@@ -217,6 +218,10 @@ export const eliminarProyecto: RequestHandler = async (req, res) => {
         if (!proyectoEliminado) {
             return res.status(500).json({ message: "No se pudo eliminar el proyecto" });
         }
+        const tareas: Tarea[] = await Tarea.findAll({ where: { Proyecto_id: id } });
+        for (const tarea of tareas) {
+            await tarea.destroy();
+        }
         await Proyecto.destroy({ where: { id } });
         const dir = path.resolve(__dirname, '..')
         const carpeta = path.join(dir, 'Archivos')
@@ -225,7 +230,6 @@ export const eliminarProyecto: RequestHandler = async (req, res) => {
             fs.readdirSync(ruta)
             rimraf.sync(ruta);
         } catch { }
-    
         return res.status(200).json({ message: "Proyecto eliminado", data: proyectoEliminado });
     } catch (error) {
         return res.status(404).json({ message: error });
