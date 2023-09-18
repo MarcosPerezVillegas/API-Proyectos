@@ -6,6 +6,25 @@ import { Proyecto } from "../models/proyectos";
 
 export const crearMaestro: RequestHandler = async (req, res) => {
     try {
+        const email = req.body.email
+        const codigo = req.body.codigo
+        const m = await Maestros.findByPk(codigo);
+        const me = await Maestros.findByPk(codigo, { paranoid: false, });
+        if (m || me) {
+            return res.status(404).json({ message: "Ya existe un maestro con ese código" });
+        }
+        const ma = await Maestros.findOne({ where: { email } });
+        const mae = await Maestros.findOne({
+            where: {
+                email,
+                deletedAt: { [Op.not]: null }
+            },
+            paranoid: false,
+        });
+        if (ma || mae) {
+            return res.status(404).json({ message: "Ya existe un maestro con ese correo" });
+        }
+
         var maestro = await Maestros.create({/*...req.body});*/
             codigo: req.body.codigo,
             nombre: req.body.nombre,
@@ -31,10 +50,11 @@ export const listarMaestros: RequestHandler = async (req, res) => {
                 admin: 0
             },
             include:
-            {model: Proyecto,
+            {
+                model: Proyecto,
                 attributes: { exclude: ["codigo"] }
             },
-            attributes: { exclude: ["password","admin"] }
+            attributes: { exclude: ["password", "admin"] }
         });
         if (!maestros) {
             return res.status(401).json({ message: "No se pudo encontar los maestros", data: maestros });
@@ -53,7 +73,8 @@ export const listarAdmins: RequestHandler = async (req, res) => {
                 admin: 1
             },
             include:
-            {model: Proyecto,
+            {
+                model: Proyecto,
                 attributes: { exclude: ["codigo"] }
             },
             attributes: { exclude: ["password", "admin"] }
@@ -73,7 +94,7 @@ export const listarMaestrosEliminados: RequestHandler = async (req, res) => {
         var maestros = await Maestros.findAll({
             where: {
                 admin: 0,
-                deletedAt: {[Op.not]: null}
+                deletedAt: { [Op.not]: null }
             },
             paranoid: false,
             attributes: { exclude: ["password"] }
@@ -93,7 +114,7 @@ export const listarAdminsEliminados: RequestHandler = async (req, res) => {
         var maestros = await Maestros.findAll({
             where: {
                 admin: 1,
-                deletedAt: {[Op.not]: null}
+                deletedAt: { [Op.not]: null }
             },
             paranoid: false,
             attributes: { exclude: ["password"] }
@@ -111,8 +132,8 @@ export const listarAdminsEliminados: RequestHandler = async (req, res) => {
 export const infoCompletaMaestro: RequestHandler = async (req, res) => {
     const { codigo } = req.params
     try {
-        var maestro = await Maestros.findByPk(codigo,{
-            attributes: {exclude: ["password"]}
+        var maestro = await Maestros.findByPk(codigo, {
+            attributes: { exclude: ["password"] }
         });
         if (!maestro) {
             return res.status(401).json({ message: "No se pudo encontar al maestro", data: maestro });
@@ -128,7 +149,7 @@ export const buscarMaestroNombre: RequestHandler = async (req, res) => {
     const { nombre } = req.params
     try {
         console.log(nombre)
-        var maestro = await Maestros.findOne({where: {nombre},attributes: { exclude: ["password"] }});
+        var maestro = await Maestros.findOne({ where: { nombre }, attributes: { exclude: ["password"] } });
         if (!maestro) {
             return res.status(401).json({ message: "No se pudo encontar al maestro", data: maestro });
         }
@@ -142,9 +163,11 @@ export const buscarMaestroNombre: RequestHandler = async (req, res) => {
 export const infoemailMaestro: RequestHandler = async (req, res) => {
     const { email } = req.params
     try {
-        var maestro: Maestros | null = await Maestros.findOne({where: { email},
+        var maestro: Maestros | null = await Maestros.findOne({
+            where: { email },
             include: Proyecto,
-            attributes: {exclude: ['password','telefono']}});
+            attributes: { exclude: ['password', 'telefono'] }
+        });
         if (!maestro) {
             return res.status(401).json({ message: "No se pudo encontar al maestro", data: maestro });
         }
@@ -158,7 +181,7 @@ export const infoemailMaestro: RequestHandler = async (req, res) => {
 export const infoCompletaMaestroEliminado: RequestHandler = async (req, res) => {
     const { codigo } = req.params
     try {
-        var maestro = await Maestros.findByPk(codigo, {paranoid: false,});
+        var maestro = await Maestros.findByPk(codigo, { paranoid: false, });
         if (!maestro) {
             return res.status(401).json({ message: "No se pudo encontar al maestro", data: maestro });
         }
@@ -174,8 +197,8 @@ export const actualizarMaestro: RequestHandler = async (req, res) => {
     try {
         const maestroActualizado: Maestros | null = await Maestros.findByPk(codigo);
         let user = req.body
-        if(user.password){
-            user.password= await bcrypt.hash(req.body.password, 10)//cuando actualizamos el maestro, hasheamos el password con bcrypt
+        if (user.password) {
+            user.password = await bcrypt.hash(req.body.password, 10)//cuando actualizamos el maestro, hasheamos el password con bcrypt
         }
         const maestro = await Maestros.update({ ...user }, { where: { codigo: codigo } });
         if (!maestro) {
@@ -192,9 +215,9 @@ export const CambiarPassword: RequestHandler = async (req, res) => {
     const { codigo } = req.params
     const { password } = req.body
     try {
-        if(password){
+        if (password) {
             const maestroActualizado: Maestros | null = await Maestros.findByPk(codigo);
-            var maestro = await Maestros.update({password: await bcrypt.hash(req.body.password, 10)}, { where: { codigo: codigo } });
+            var maestro = await Maestros.update({ password: await bcrypt.hash(req.body.password, 10) }, { where: { codigo: codigo } });
             if (!maestro) {
                 return res.status(401).json({ message: "No se pudo actualizar el maestro", data: maestro });
             }
@@ -225,7 +248,7 @@ export const eliminarMaestroPerma: RequestHandler = async (req, res) => {
     const { codigo } = req.params;
     try {
         const maestroEliminado: Maestros | null = await Maestros.findByPk(codigo);
-        var maestro = await Maestros.destroy({ where: { codigo}, force: true });
+        var maestro = await Maestros.destroy({ where: { codigo }, force: true });
         if (!maestro) {
             return res.status(401).json({ message: "No se pudo eliminar el maestro", data: maestro });
         }

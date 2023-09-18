@@ -5,6 +5,26 @@ import bcrypt from 'bcrypt';
 
 export const crearAlumno: RequestHandler = async (req, res) => {
     try {
+        const email = req.body.email
+        const codigo = req.body.codigo
+        var a = await Alumnos.findByPk(codigo);
+        const ae = await Alumnos.findByPk(codigo, { paranoid: false, });
+
+        if(a || ae){
+            return res.status(404).json({ message: "Ya existe un alumno con ese código"});
+        }
+        const aa = await Alumnos.findOne({ where: { email } });
+        const aae = await Alumnos.findOne({
+            where: {
+                email,
+                deletedAt: { [Op.not]: null }
+            },
+            paranoid: false,
+        });
+        if (aa || aae) {
+            return res.status(404).json({ message: "Ya existe un alumno con ese correo" });
+        }
+
         var alumno = await Alumnos.create({/*...req.body});*/
             codigo: req.body.codigo,
             nombre: req.body.nombre,
