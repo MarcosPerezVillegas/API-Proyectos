@@ -15,7 +15,7 @@ export function autorizar(req:AuthenticatedRequest, res:Response, next:NextFunct
     }
 
     try{
-        const payload = jwt.verify(token,"Prueba 123");
+        const payload = jwt.verify(token,"q$x;-#g$(-mKN7#P#SFYjZekVU{)wm");
         req.usuarioCodigo = (payload as any).codigo;
         req.usuarioRol = (payload as any).rol;
         next();

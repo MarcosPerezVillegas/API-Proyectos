@@ -23,15 +23,15 @@ export async function login(req: Request, res: Response) {
         if (maestro.admin === 1) {
             const token = jwt.sign(
                 { codigo: maestro.codigo, rol: 'administrador' },
-                "Prueba 123",
-                { expiresIn: '5h' }
+                "q$x;-#g$(-mKN7#P#SFYjZekVU{)wm",
+                { expiresIn: '2h' }
             );
             return res.json({ token });
         } else {
             const token = jwt.sign(
                 { codigo: maestro.codigo, rol: 'maestro'},
-                "Prueba 123",
-                { expiresIn: '5h' }
+                "q$x;-#g$(-mKN7#P#SFYjZekVU{)wm",
+                { expiresIn: '2h' }
             );
             return res.json({ token });
         }
@@ -43,8 +43,8 @@ export async function login(req: Request, res: Response) {
         }
         const token = jwt.sign(
             { codigo: alumno.codigo, rol: 'alumno' },
-            "Prueba 123",
-            { expiresIn: '5h' }
+            "q$x;-#g$(-mKN7#P#SFYjZekVU{)wm",
+            { expiresIn: '2h' }
         );
         return res.json({ token });
     }

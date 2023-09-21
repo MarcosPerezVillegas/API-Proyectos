@@ -35,11 +35,11 @@ function login(req, res) {
                 return res.status(401).json({ message: "La contraseña es incorrecta" });
             }
             if (maestro.admin === 1) {
-                const token = jsonwebtoken_1.default.sign({ codigo: maestro.codigo, rol: 'administrador' }, "Prueba 123", { expiresIn: '5h' });
+                const token = jsonwebtoken_1.default.sign({ codigo: maestro.codigo, rol: 'administrador' }, "q$x;-#g$(-mKN7#P#SFYjZekVU{)wm", { expiresIn: '2h' });
                 return res.json({ token });
             }
             else {
-                const token = jsonwebtoken_1.default.sign({ codigo: maestro.codigo, rol: 'maestro' }, "Prueba 123", { expiresIn: '5h' });
+                const token = jsonwebtoken_1.default.sign({ codigo: maestro.codigo, rol: 'maestro' }, "q$x;-#g$(-mKN7#P#SFYjZekVU{)wm", { expiresIn: '2h' });
                 return res.json({ token });
             }
         }
@@ -48,7 +48,7 @@ function login(req, res) {
             if (!passValida) {
                 return res.status(401).json({ message: "La contraseña es incorrecta" });
             }
-            const token = jsonwebtoken_1.default.sign({ codigo: alumno.codigo, rol: 'alumno' }, "Prueba 123", { expiresIn: '5h' });
+            const token = jsonwebtoken_1.default.sign({ codigo: alumno.codigo, rol: 'alumno' }, "q$x;-#g$(-mKN7#P#SFYjZekVU{)wm", { expiresIn: '2h' });
             return res.json({ token });
         }
     });

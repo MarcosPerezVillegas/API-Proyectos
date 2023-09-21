@@ -32,7 +32,7 @@ function autorizar(req, res, next) {
         return res.status(401).json({ message: "El token es necesario" });
     }
     try {
-        const payload = jwt.verify(token, "Prueba 123");
+        const payload = jwt.verify(token, "q$x;-#g$(-mKN7#P#SFYjZekVU{)wm");
         req.usuarioCodigo = payload.codigo;
         req.usuarioRol = payload.rol;
         next();
