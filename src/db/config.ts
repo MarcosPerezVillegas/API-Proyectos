@@ -19,7 +19,7 @@ export const connection = new Sequelize({
     models:[Carrera,Proyecto,Status,Tarea,statusProyecto,Maestros,Alumnos],
 
 
-    port: 33061
+    port: Number(process.env.DB_PORT)
 });
 
 export default connection;

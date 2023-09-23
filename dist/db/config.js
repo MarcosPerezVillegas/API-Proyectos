@@ -18,6 +18,6 @@ exports.connection = new sequelize_typescript_1.Sequelize({
     database: process.env.DATABASE,
     logging: false,
     models: [carrera_1.Carrera, proyectos_1.Proyecto, status_1.Status, tareas_1.Tarea, statusProyecto_1.statusProyecto, maestros_1.Maestros, alumnos_1.Alumnos],
-    port: 33061
+    port: Number(process.env.DB_PORT)
 });
 exports.default = exports.connection;

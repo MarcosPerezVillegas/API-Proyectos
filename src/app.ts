@@ -1,3 +1,4 @@
+require('dotenv').config()
 import express from "express";
 import rutasMaestros from "./routes/maestros"
 import rutasAlumnos from "./routes/alumnos"
@@ -49,6 +50,6 @@ connection.sync().then(()=>{
 }).catch((error)=>{
     console.log("Error",error);
 });
-app.listen(3001,()=>{
-    console.log("Server iniciado en el puerto 3001");
+app.listen(Number(process.env.PORT),()=>{
+    console.log(`Server iniciado en el puerto ${process.env.PORT}`);
 });

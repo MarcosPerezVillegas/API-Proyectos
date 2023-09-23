@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+require('dotenv').config();
 const express_1 = __importDefault(require("express"));
 const maestros_1 = __importDefault(require("./routes/maestros"));
 const alumnos_1 = __importDefault(require("./routes/alumnos"));
@@ -42,6 +43,11 @@ config_1.default.sync().then(() => {
 }).catch((error) => {
     console.log("Error", error);
 });
-app.listen(3001, () => {
-    console.log("Server iniciado en el puerto 3001");
+app.listen(Number(process.env.PORT), () => {
+    console.log(process.env.DB_PORT);
+    console.log(process.env.PORT);
+    console.log(process.env.DB_PASSWORD);
+    console.log(process.env.DB_USERNAME);
+    console.log(process.env.DB_HOST);
+    console.log(`Server iniciado en el puerto ${process.env.PORT}`);
 });
