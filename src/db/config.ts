@@ -1,3 +1,4 @@
+require('dotenv').config()
 import {Sequelize} from "sequelize-typescript";
 import { Carrera } from "../models/carrera";
 import { Proyecto } from "../models/proyectos";
@@ -10,10 +11,10 @@ import { Alumnos } from "../models/alumnos";
 
 export const connection = new Sequelize({
     dialect: "mysql",
-    host: "localhost",
-    username: "root",
-    password: "wasd",
-    database: "BancoDeProyectos",
+    host: process.env.DB_HOST,
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DATABASE,
     logging: false,
     models:[Carrera,Proyecto,Status,Tarea,statusProyecto,Maestros,Alumnos],
 
