@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . .
 
 # Instala las dependencias
-RUN npm install
+RUN NODE_ENV=development npm i
 RUN npm install -g typescript
 RUN npm i -g reflect-metadata
 RUN npm i -g portfinder
