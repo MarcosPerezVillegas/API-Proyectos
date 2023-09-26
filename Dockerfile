@@ -8,11 +8,11 @@ WORKDIR /app
 COPY . .
 
 # Instala las dependencias
-RUN NODE_ENV=development npm i
+RUN npm install
+RUN npm install rimraf -g
 RUN npm install -g typescript
 RUN npm i -g reflect-metadata
 RUN npm i -g portfinder
-RUN npm install rimraf
 RUN npm install mime
 
 
