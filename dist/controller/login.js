@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.login = void 0;
-const bcrypt_1 = __importDefault(require("bcrypt"));
+var bcrypt = require('bcryptjs');
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const maestros_1 = require("../models/maestros");
 const alumnos_1 = require("../models/alumnos");
@@ -30,7 +30,7 @@ function login(req, res) {
             return res.status(404).json({ message: "El usuario no existe" });
         }
         if (maestro) {
-            const passValida = yield bcrypt_1.default.compareSync(password, maestro.password);
+            const passValida = yield bcrypt.compareSync(password, maestro.password);
             if (!passValida) {
                 return res.status(401).json({ message: "La contraseña es incorrecta" });
             }
@@ -44,7 +44,7 @@ function login(req, res) {
             }
         }
         if (alumno) {
-            const passValida = yield bcrypt_1.default.compareSync(password, alumno.password);
+            const passValida = yield bcrypt.compareSync(password, alumno.password);
             if (!passValida) {
                 return res.status(401).json({ message: "La contraseña es incorrecta" });
             }

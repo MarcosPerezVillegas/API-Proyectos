@@ -10,6 +10,7 @@ COPY . .
 # Instala las dependencias
 RUN npm install
 RUN npm install rimraf -g
+RUN npm install bcryptjs
 RUN npm install -g typescript
 RUN npm i -g reflect-metadata
 RUN npm i -g portfinder

@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
 import { Alumnos } from "../models/alumnos";
 import { Op } from "sequelize";
-import bcrypt from 'bcrypt';
+var bcrypt = require('bcryptjs');
 
 export const crearAlumno: RequestHandler = async (req, res) => {
     try {

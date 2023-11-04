@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
 import { Maestros } from "../models/maestros";
 import { Op } from "sequelize";
-import bcrypt from 'bcrypt';
+var bcrypt = require('bcryptjs');
 import { Proyecto } from "../models/proyectos";
 
 export const crearMaestro: RequestHandler = async (req, res) => {

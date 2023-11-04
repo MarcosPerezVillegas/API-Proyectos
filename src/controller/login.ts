@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import bcrypt from 'bcrypt';
+var bcrypt = require('bcryptjs');
 import jwt from "jsonwebtoken";
 import { Maestros } from "../models/maestros";
 import { Alumnos } from "../models/alumnos";
