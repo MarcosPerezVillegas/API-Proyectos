@@ -17,8 +17,6 @@ import { Tarea } from "../models/tareas";
 export const crearProyecto: RequestHandler = async (req, res) => {
     try {
         const proyecto = await Proyecto.create({ ...req.body });
-        const { id } = req.body
-
         // Buscar el estado con ID 1 en la tabla Status
         let estado = await Status.findByPk(1);
         if (!estado) {
@@ -40,9 +38,18 @@ export const crearProyecto: RequestHandler = async (req, res) => {
                     Estado: "Terminado"
                 }
             )
+            // Asociar el estado al proyecto creado
         }
 
-        // Asociar el estado al proyecto creado
+        const dir = path.resolve(__dirname,'..')
+            const carpeta = path.join(dir,'Archivos', `${proyecto.id}`)
+            const carpetaP = path.join(dir,'Archivos', `${proyecto.id}`,'Propuesta')
+            if(!fs.existsSync(carpeta)){
+                fs.mkdirSync(carpeta)
+            }
+            if(!fs.existsSync(carpetaP)){
+                fs.mkdirSync(carpetaP)
+            }
         await proyecto.$add('statuses', estado);
         //await statusProyecto.findOne({where: {proyecto_id : proyecto.id}});
         await statusProyecto.update({ nota: "Proyecto creado" }, { where: { proyecto_id: proyecto.id } })
